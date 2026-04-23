@@ -47,6 +47,12 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     path === "/api/payments/razorpay/verify" ||
     path === "/api/auth/google" ||
     isBackendAppPath;
+  if (globalThis.window !== undefined && isRemoteRequiredPath && !base) {
+    throw new ApiError(
+      "Missing VITE_API_URL for authenticated APIs. Set it in local .env or Vercel Environment Variables.",
+      500,
+    );
+  }
   if (globalThis.window !== undefined && isRemoteRequiredPath && base) {
     const res = await fetch(`${base}${path}`, { ...init, headers });
     const text = await res.text();
