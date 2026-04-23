@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck } from "lucide-react";
+import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck, Eye, EyeOff } from "lucide-react";
 import { api } from "@/lib/api";
 import { setAuth, type StoredUser } from "@/lib/auth-storage";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
@@ -77,6 +77,7 @@ function LoginPage() {
   const [accountRole, setAccountRole] = useState<AccountRole>("customer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [vendorCompanyName, setVendorCompanyName] = useState("");
   const [isGooglePrompting, setIsGooglePrompting] = useState(false);
   const googleClientId =
@@ -385,15 +386,26 @@ function LoginPage() {
                     <Label htmlFor="password" className="flex items-center gap-1.5">
                       <Lock className="h-4 w-4 text-primary" /> Password
                     </Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      autoComplete="current-password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="current-password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="pr-10"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute inset-y-0 right-0 inline-flex items-center px-3 text-muted-foreground hover:text-foreground"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
                   </div>
                   <div className="flex justify-end">
                     <a
