@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck, LayoutDashboard } from "lucide-react";
+import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck } from "lucide-react";
 import { api } from "@/lib/api";
 import { setAuth, type StoredUser } from "@/lib/auth-storage";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
@@ -71,28 +71,9 @@ const roleLabels: Record<AccountRole, { title: string; description: string }> = 
   admin: { title: "Admin", description: "Platform staff only" },
 };
 
-const dashboardLinks: Record<AccountRole, { to: string; label: string; hint: string }> = {
-  customer: {
-    to: "/customer/dashboard",
-    label: "Customer dashboard",
-    hint: "Bookings, quotes, profile",
-  },
-  vendor: {
-    to: "/vendor/dashboard",
-    label: "Vendor dashboard",
-    hint: "Leads, fleet, earnings",
-  },
-  admin: {
-    to: "/admin/dashboard",
-    label: "Admin dashboard",
-    hint: "Vendors, CMS, settings",
-  },
-};
-
 function LoginPage() {
   const navigate = useNavigate();
   const { role: roleFromUrl } = Route.useSearch();
-  const [portalTab, setPortalTab] = useState<"signin" | "dashboards">("signin");
   const [accountRole, setAccountRole] = useState<AccountRole>("customer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -351,19 +332,7 @@ function LoginPage() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-lg sm:p-8">
-            <Tabs value={portalTab} onValueChange={(v) => setPortalTab(v as "signin" | "dashboards")}>
-              <TabsList className="mb-6 grid h-auto w-full grid-cols-2 gap-1 p-1">
-                <TabsTrigger value="signin" className="gap-2 py-2.5">
-                  <Lock className="h-4 w-4 shrink-0" />
-                  Sign in
-                </TabsTrigger>
-                <TabsTrigger value="dashboards" className="gap-2 py-2.5">
-                  <LayoutDashboard className="h-4 w-4 shrink-0" />
-                  Dashboards
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="signin" className="mt-0 outline-none">
+            <div className="mt-0 outline-none">
                 <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">Portal</p>
                 <Tabs
                   value={accountRole}
@@ -525,39 +494,7 @@ function LoginPage() {
                     Admin accounts are created by platform staff only.
                   </p>
                 )}
-              </TabsContent>
-
-              <TabsContent value="dashboards" className="mt-0 space-y-4 outline-none">
-                <p className="text-sm text-muted-foreground">
-                  Open the correct portal. If you are not signed in, the app will prompt you from that area.
-                </p>
-                <div className="flex flex-col gap-3">
-                  {(Object.keys(dashboardLinks) as AccountRole[]).map((role) => {
-                    const d = dashboardLinks[role];
-                    return (
-                      <Button key={role} variant="outline" className="h-auto justify-start py-3 text-left" asChild>
-                        <Link to={d.to} className="flex flex-col items-start gap-0.5">
-                          <span className="flex items-center gap-2 font-semibold text-foreground">
-                            {role === "customer" ? (
-                              <User className="h-4 w-4 text-primary" />
-                            ) : role === "vendor" ? (
-                              <Bus className="h-4 w-4 text-primary" />
-                            ) : (
-                              <ShieldCheck className="h-4 w-4 text-primary" />
-                            )}
-                            {d.label}
-                          </span>
-                          <span className="text-xs font-normal text-muted-foreground">{d.hint}</span>
-                        </Link>
-                      </Button>
-                    );
-                  })}
-                </div>
-                <Button type="button" variant="secondary" className="w-full" onClick={() => setPortalTab("signin")}>
-                  Back to sign in
-                </Button>
-              </TabsContent>
-            </Tabs>
+            </div>
           </div>
         </div>
       </main>
