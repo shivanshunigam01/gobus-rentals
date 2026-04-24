@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, Outlet, useChildMatches } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, Outlet, redirect, useChildMatches } from "@tanstack/react-router";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -19,6 +19,15 @@ import { BUS_TYPE_ROUTES } from "@/data/city-bus-type-routes";
 
 const CITY_SUFFIX = "-bus-rental";
 const SERVICE_CITY_SUFFIX = "-bus-rental-guide";
+/** Legacy SEO URLs from older sitemaps: /bus-rental-in-{citySlug} → canonical /{citySlug}-bus-rental */
+const LEGACY_BUS_RENTAL_IN_PREFIX = "bus-rental-in-";
+
+function extractLegacyBusRentalInCitySlug(seoSlug: string) {
+  if (!seoSlug.startsWith(LEGACY_BUS_RENTAL_IN_PREFIX)) return null;
+  const citySlug = seoSlug.slice(LEGACY_BUS_RENTAL_IN_PREFIX.length).trim();
+  if (!citySlug || !getCityBySlug(citySlug)) return null;
+  return citySlug;
+}
 
 function extractCitySlug(seoSlug: string) {
   // Must end with "-bus-rental" but NOT "-bus-rental-guide"
@@ -33,8 +42,48 @@ function extractServiceCitySlug(seoSlug: string) {
   return citySlug || null;
 }
 
+function headForCityBusRentalPage(city: CityRecord) {
+  const title = `Bus Rental in ${city.name} | Luxury Bus Hire at Best Price`;
+  const description = `Book luxury buses in ${city.name} with ${COMPANY.legalName}. AC, Volvo, sleeper buses at best prices. Compare quotes on ${COMPANY.platformBrand}.`;
+  const path = `/${city.slug}-bus-rental`;
+  const { meta, links } = buildPageMeta({
+    title,
+    description,
+    path,
+    keywords: `bus rental in ${city.name}, bus hire in ${city.name}, luxury bus rental in ${city.name}, Volvo bus ${city.name}, wedding bus rental ${city.name}, corporate bus hire ${city.name}`,
+  });
+  const faqs = cityPageFaqs(city.name, city.state);
+  return {
+    meta: [
+      ...meta,
+      { "script:ld+json": localBusinessSchemaForCity(city) },
+      { "script:ld+json": productBusMarketplaceSchema() },
+      { "script:ld+json": faqPageSchema(faqs) },
+      {
+        "script:ld+json": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+            { "@type": "ListItem", position: 2, name: `Bus rental ${city.name}`, item: absoluteUrl(path) },
+          ],
+        },
+      },
+    ],
+    links,
+  };
+}
+
 export const Route = createFileRoute("/$seoSlug")({
   beforeLoad: ({ params }) => {
+    const legacyCitySlug = extractLegacyBusRentalInCitySlug(params.seoSlug);
+    if (legacyCitySlug) {
+      throw redirect({
+        to: "/$seoSlug",
+        params: { seoSlug: `${legacyCitySlug}-bus-rental` },
+        replace: true,
+      });
+    }
     const citySlug = extractCitySlug(params.seoSlug);
     if (citySlug && getCityBySlug(citySlug)) return;
     if (getBusTypePageBySlug(params.seoSlug)) return;
@@ -45,39 +94,15 @@ export const Route = createFileRoute("/$seoSlug")({
     throw notFound();
   },
   head: ({ params }) => {
+    const legacyCitySlug = extractLegacyBusRentalInCitySlug(params.seoSlug);
+    if (legacyCitySlug) {
+      const city = getCityBySlug(legacyCitySlug)!;
+      return headForCityBusRentalPage(city);
+    }
     const citySlug = extractCitySlug(params.seoSlug);
     const city = citySlug ? getCityBySlug(citySlug) : null;
     if (citySlug && city) {
-      // city page head
-      const title = `Bus Rental in ${city.name} | Luxury Bus Hire at Best Price`;
-      const description = `Book luxury buses in ${city.name} with ${COMPANY.legalName}. AC, Volvo, sleeper buses at best prices. Compare quotes on ${COMPANY.platformBrand}.`;
-      const path = `/${city.slug}-bus-rental`;
-      const { meta, links } = buildPageMeta({
-        title,
-        description,
-        path,
-        keywords: `bus rental in ${city.name}, bus hire in ${city.name}, luxury bus rental in ${city.name}, Volvo bus ${city.name}, wedding bus rental ${city.name}, corporate bus hire ${city.name}`,
-      });
-      const faqs = cityPageFaqs(city.name, city.state);
-      return {
-        meta: [
-          ...meta,
-          { "script:ld+json": localBusinessSchemaForCity(city) },
-          { "script:ld+json": productBusMarketplaceSchema() },
-          { "script:ld+json": faqPageSchema(faqs) },
-          {
-            "script:ld+json": {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-                { "@type": "ListItem", position: 2, name: `Bus rental ${city.name}`, item: absoluteUrl(path) },
-              ],
-            },
-          },
-        ],
-        links,
-      };
+      return headForCityBusRentalPage(city);
     }
 
     const busTypePage = getBusTypePageBySlug(params.seoSlug);
