@@ -102,7 +102,7 @@ export function HeroSection() {
           </span>
 
           <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary-foreground leading-[1.15] mb-3 sm:mb-4">
-            Tempo Traveller &amp; Luxury Bus Rental in India{" "}
+            India's Trusted Platform for Bus Rental{" "}
             <span className="block text-accent mt-1">Compare. Choose. Book Instantly</span>
           </h1>
 
@@ -123,7 +123,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Link to="/book">
               <Button variant="hero" size="xl" className="gap-2 bg-primary">
-                Book Tempo Traveller Now <ArrowRight className="w-5 h-5" />
+                Get Best Price Instantly <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
             <a href={`tel:+91${COMPANY.contactPhone}`}>

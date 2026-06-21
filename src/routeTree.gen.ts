@@ -35,6 +35,7 @@ import { Route as VendorFleetRouteImport } from './routes/vendor.fleet'
 import { Route as VendorEarningsRouteImport } from './routes/vendor.earnings'
 import { Route as VendorDashboardRouteImport } from './routes/vendor.dashboard'
 import { Route as VendorBookingsRouteImport } from './routes/vendor.bookings'
+import { Route as ServicesServiceSlugRouteImport } from './routes/services.$serviceSlug'
 import { Route as ServiceCityCitySlugRouteImport } from './routes/service-city.$citySlug'
 import { Route as PoliciesRefundCancellationRouteImport } from './routes/policies.refund-cancellation'
 import { Route as CustomerReviewsRouteImport } from './routes/customer.reviews'
@@ -188,6 +189,11 @@ const VendorBookingsRoute = VendorBookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => VendorRoute,
 } as any)
+const ServicesServiceSlugRoute = ServicesServiceSlugRouteImport.update({
+  id: '/services/$serviceSlug',
+  path: '/services/$serviceSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServiceCityCitySlugRoute = ServiceCityCitySlugRouteImport.update({
   id: '/service-city/$citySlug',
   path: '/service-city/$citySlug',
@@ -340,6 +346,7 @@ export interface FileRoutesByFullPath {
   '/customer/reviews': typeof CustomerReviewsRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
+  '/services/$serviceSlug': typeof ServicesServiceSlugRoute
   '/vendor/bookings': typeof VendorBookingsRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
   '/vendor/earnings': typeof VendorEarningsRoute
@@ -390,6 +397,7 @@ export interface FileRoutesByTo {
   '/customer/reviews': typeof CustomerReviewsRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
+  '/services/$serviceSlug': typeof ServicesServiceSlugRoute
   '/vendor/bookings': typeof VendorBookingsRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
   '/vendor/earnings': typeof VendorEarningsRoute
@@ -441,6 +449,7 @@ export interface FileRoutesById {
   '/customer/reviews': typeof CustomerReviewsRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
+  '/services/$serviceSlug': typeof ServicesServiceSlugRoute
   '/vendor/bookings': typeof VendorBookingsRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
   '/vendor/earnings': typeof VendorEarningsRoute
@@ -493,6 +502,7 @@ export interface FileRouteTypes {
     | '/customer/reviews'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
+    | '/services/$serviceSlug'
     | '/vendor/bookings'
     | '/vendor/dashboard'
     | '/vendor/earnings'
@@ -543,6 +553,7 @@ export interface FileRouteTypes {
     | '/customer/reviews'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
+    | '/services/$serviceSlug'
     | '/vendor/bookings'
     | '/vendor/dashboard'
     | '/vendor/earnings'
@@ -593,6 +604,7 @@ export interface FileRouteTypes {
     | '/customer/reviews'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
+    | '/services/$serviceSlug'
     | '/vendor/bookings'
     | '/vendor/dashboard'
     | '/vendor/earnings'
@@ -625,6 +637,7 @@ export interface RootRouteChildren {
   VendorRoute: typeof VendorRouteWithChildren
   PoliciesRefundCancellationRoute: typeof PoliciesRefundCancellationRoute
   ServiceCityCitySlugRoute: typeof ServiceCityCitySlugRoute
+  ServicesServiceSlugRoute: typeof ServicesServiceSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -810,6 +823,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/vendor/bookings'
       preLoaderRoute: typeof VendorBookingsRouteImport
       parentRoute: typeof VendorRoute
+    }
+    '/services/$serviceSlug': {
+      id: '/services/$serviceSlug'
+      path: '/services/$serviceSlug'
+      fullPath: '/services/$serviceSlug'
+      preLoaderRoute: typeof ServicesServiceSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/service-city/$citySlug': {
       id: '/service-city/$citySlug'
@@ -1100,6 +1120,7 @@ const rootRouteChildren: RootRouteChildren = {
   VendorRoute: VendorRouteWithChildren,
   PoliciesRefundCancellationRoute: PoliciesRefundCancellationRoute,
   ServiceCityCitySlugRoute: ServiceCityCitySlugRoute,
+  ServicesServiceSlugRoute: ServicesServiceSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

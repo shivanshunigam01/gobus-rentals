@@ -3,10 +3,12 @@ export type VehicleCatalogItem = {
   title: string;
   description: string;
   bestFor: string;
+  slug: string
 };
 
 export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
   {
+    slug: "12-seater",
     seats: "12 Seater",
     title: "Tempo Traveller (Compact Premium)",
     description:
@@ -14,6 +16,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Airport pickup, local sightseeing, wedding family movement",
   },
   {
+    slug: "14-seater",
     seats: "14 Seater",
     title: "Extended Tempo Traveller",
     description:
@@ -21,6 +24,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Corporate team travel, station transfers, weekend road trips",
   },
   {
+    slug: "17-slug",
     seats: "17 Seater",
     title: "Urbania / Traveller Group Van",
     description:
@@ -28,6 +32,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Small wedding groups, crew transport, school activity runs",
   },
   {
+    slug: "20-seater",
     seats: "20 Seater",
     title: "Mini Coach",
     description:
@@ -35,6 +40,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Pilgrimage batches, college clubs, event shuttle loops",
   },
   {
+    slug: "26-seater",
     seats: "26 Seater",
     title: "AC Mid-Size Bus",
     description:
@@ -42,6 +48,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "School excursions, office outings, convention feeder routes",
   },
   {
+    slug: "30-seater",
     seats: "30 Seater",
     title: "Premium Mid-Coach",
     description:
@@ -49,6 +56,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Corporate events, destination ceremonies, city-to-city transfer",
   },
   {
+    slug: "32-seater",
     seats: "32 Seater",
     title: "Touring Bus",
     description:
@@ -56,6 +64,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Multi-day tours, educational institutions, spiritual circuits",
   },
   {
+    slug: "35-seater",
     seats: "35 Seater",
     title: "Large Mid-Size Coach",
     description:
@@ -63,6 +72,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Wedding guest batches, employee transport, private group tours",
   },
   {
+    slug: "40=seater",
     seats: "40 Seater",
     title: "Luxury Seater Coach",
     description:
@@ -70,6 +80,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Luxury bus rental, corporate VIP movement, intercity groups",
   },
   {
+    slug: "45-seater",
     seats: "45 Seater",
     title: "Event Mobility Coach",
     description:
@@ -77,6 +88,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Wedding guest routing, MICE transport, festival group movement",
   },
   {
+    slug: "49-seater",
     seats: "49 Seater",
     title: "High-Capacity AC Coach",
     description:
@@ -84,6 +96,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "School annual trips, social organizations, city shuttle plans",
   },
   {
+    slug: "52-seater",
     seats: "52 Seater",
     title: "Full-Size Luxury Coach",
     description:
@@ -91,6 +104,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Large wedding programs, interstate tours, convention transport",
   },
   {
+    slug: "56-seater",
     seats: "56 Seater",
     title: "Maxi Capacity Coach",
     description:
@@ -98,6 +112,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Mass guest transfer, educational tours, bulk corporate movement",
   },
   {
+    slug: "60-seater",
     seats: "60 Seater",
     title: "Super Coach",
     description:
@@ -105,6 +120,7 @@ export const VEHICLE_CATALOG: VehicleCatalogItem[] = [
     bestFor: "Election duty movement, staff transport, mega event operations",
   },
   {
+    slug: "66-seater",
     seats: "66 Seater",
     title: "Ultra High Capacity Bus",
     description:

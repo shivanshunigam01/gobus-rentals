@@ -6,6 +6,7 @@ import { COMPANY } from "@/lib/company";
 import { cn } from "@/lib/utils";
 import { NAVBAR_CITY_WISE_LINKS } from "@/data/navbar-city-wise-links";
 import { NAVBAR_BUS_TYPE_LINKS } from "@/data/navbar-bus-type-links";
+import { NAVBAR_SERVICE_TYPE_LINKS, NavbarServiceTypeLink } from "@/data/service-links";
 
 /** Scrollbar styling scoped only to the open City Wise panel (never the nav bar). */
 const navDropdownPanelClass =
@@ -184,6 +185,75 @@ function BusTypesDesktopMenu() {
   );
 }
 
+function ServicesDesktopMenu() {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      const el = wrapRef.current;
+      if (!el || el.contains(e.target as Node)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("click", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("click", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className="relative flex shrink-0 items-center" ref={wrapRef}>
+      <button
+        type="button"
+        className={cn(navDropdownTriggerClass, open && navDropdownTriggerOpenClass)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((v) => !v);
+        }}
+      >
+        Services
+        <ChevronDown
+          className={cn("h-4 w-4 shrink-0 opacity-70 transition-transform", open && "rotate-180")}
+          aria-hidden
+        />
+      </button>
+      {open ? (
+        <div
+          className={cn(
+            navDropdownPanelClass,
+            navDropdownPanelScrollClass,
+            "absolute left-0 top-full z-[200] mt-1.5 py-1 shadow-2xl",
+          )}
+          role="menu"
+        >
+          {NAVBAR_SERVICE_TYPE_LINKS.map((row: NavbarServiceTypeLink) => (
+            <Link
+              key={row.to}
+              to={row.to as any}
+              role="menuitem"
+              className={cn(
+                navDropdownRowClass,
+                "block w-full text-left no-underline focus-visible:z-10 focus-visible:outline-none",
+              )}
+              onClick={() => setOpen(false)}
+            >
+              {row.label}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -213,6 +283,7 @@ export function Navbar() {
           </Link>
           <CityWiseDesktopMenu />
           <BusTypesDesktopMenu />
+          <ServicesDesktopMenu />
           <Link to="/bus-rental-guides" className={navCenterLinkClass}>
             Guides
           </Link>

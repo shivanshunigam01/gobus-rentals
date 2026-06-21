@@ -16,6 +16,7 @@ import { getServiceCityPage, listServiceCitySlugs, serviceCityImageUrl } from "@
 import { fleetImages } from "@/lib/media";
 import { CheckCircle2, Users, MapPin, Star, Bus, ArrowRight, Phone, MessageCircle } from "lucide-react";
 import { BUS_TYPE_ROUTES } from "@/data/city-bus-type-routes";
+import { CapacityGuideSection } from "@/components/CapacityGuideSection";
 
 const CITY_SUFFIX = "-bus-rental";
 const SERVICE_CITY_SUFFIX = "-bus-rental-guide";
@@ -444,6 +445,7 @@ function CityBusRentalPage({ citySlug }: Readonly<{ citySlug: string }>) {
               and policy-backed payments. Operators compete on service and price - ideal when you are comparing{" "}
               <strong>tempo traveller vs bus</strong> configurations for the same itinerary.
             </p>
+            <CapacityGuideSection city={city.name} />
             <h2 className="font-display text-2xl font-semibold text-foreground mt-10 mb-3">
               All rental vehicles in {city.name}
             </h2>
@@ -467,22 +469,23 @@ function CityBusRentalPage({ citySlug }: Readonly<{ citySlug: string }>) {
             <h2 className="font-display text-2xl font-semibold text-foreground mt-10 mb-3">Available buses (AC, Volvo, sleeper)</h2>
             <div className="grid gap-3 mb-8">
               {VEHICLE_CATALOG.map((vehicle) => (
-                <div key={vehicle.seats} className="rounded-xl border border-border bg-card p-4 sm:p-5">
-                  <h3 className="font-semibold text-foreground">
-                    {vehicle.seats} - {vehicle.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1">{vehicle.description}</p>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Best for: <span className="text-foreground/90">{vehicle.bestFor}</span>
-                  </p>
-                </div>
+                <Link key={vehicle.slug} to="/$seoSlug/$busTypeSlug" params={{ seoSlug: city.slug, busTypeSlug: vehicle.slug }}>
+                  <div key={vehicle.seats} className="rounded-xl border border-border bg-card p-4 sm:p-5">
+                    <h3 className="font-semibold text-foreground">
+                      {vehicle.seats} - {vehicle.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1">{vehicle.description}</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Best for: <span className="text-foreground/90">{vehicle.bestFor}</span>
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
             <h2 className="font-display text-2xl font-semibold text-foreground mt-10 mb-3">Popular routes from {city.name}</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Demand patterns vary by season, but groups often book outstation charters from {city.name} to nearby business and
               leisure hubs across {city.state} and neighbouring states. Share your exact pickup and drop when requesting{" "}
-              <strong>bus rental in {city.name}</strong> so operators price tolls, driver allowance, and minimum km correctly.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
               For inspiration, read our guides on{" "}
