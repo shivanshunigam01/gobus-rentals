@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/dialog";
 import { api } from "@/lib/api";
 import { panelPage, panelStatePadding } from "@/lib/panel-page";
+import { fetchVehicleTypes } from "@/lib/api/content";
+import { VEHICLE_TYPE_FALLBACK } from "@/data/vehicle-types";
 
 export const Route = createFileRoute("/vendor/fleet")({
   component: VendorFleet,
@@ -43,11 +45,22 @@ function VendorFleet() {
 
   const [name, setName] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
-  const [busType, setBusType] = useState("seater");
+  const [busType, setBusType] = useState("luxury-bus");
   const [capacity, setCapacity] = useState("");
   const [ac, setAc] = useState("ac");
   const [pricePerKm, setPricePerKm] = useState("");
   const [pricePerDay, setPricePerDay] = useState("");
+  const [model, setModel] = useState("");
+  const [fuelType, setFuelType] = useState("diesel");
+  const [transmission, setTransmission] = useState("manual");
+  const [amenities, setAmenities] = useState("AC, Music System");
+  const [calendarJson, setCalendarJson] = useState("");
+
+  const vehicleTypesQ = useQuery({
+    queryKey: ["vendor-vehicle-types"],
+    queryFn: () => fetchVehicleTypes(),
+  });
+  const vehicleOptions = vehicleTypesQ.data?.length ? vehicleTypesQ.data : [...VEHICLE_TYPE_FALLBACK];
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["vendor-buses"],
@@ -58,7 +71,7 @@ function VendorFleet() {
         id: String(b.id || b._id || ""),
         name: b.name || b.busType || "Bus",
         registrationNumber: b.registrationNumber || "",
-        type: b.type || b.busType || "seater",
+        type: b.vehicleTypeSlug || b.type || b.busType || "luxury-bus",
         capacity: Number(b.capacity ?? b.seats ?? 0),
         ac: Boolean(b.ac),
         pricePerKm: Number(b.pricePerKm ?? b.pricingPerKm ?? 0),
@@ -73,11 +86,16 @@ function VendorFleet() {
   const resetForm = () => {
     setName("");
     setRegistrationNumber("");
-    setBusType("seater");
+    setBusType("luxury-bus");
     setCapacity("");
     setAc("ac");
     setPricePerKm("");
     setPricePerDay("");
+    setModel("");
+    setFuelType("diesel");
+    setTransmission("manual");
+    setAmenities("AC, Music System");
+    setCalendarJson("");
   };
 
   const createMut = useMutation({
@@ -85,12 +103,19 @@ function VendorFleet() {
       api("/api/vendor/buses", {
         method: "POST",
         body: JSON.stringify({
+          name: name || vehicleOptions.find((v) => v.slug === busType)?.name,
           registrationNumber,
-          busType,
+          vehicleTypeSlug: busType,
+          busType: vehicleOptions.find((v) => v.slug === busType)?.name || busType,
           seats: Number(capacity),
           ac: ac === "ac",
           pricingPerKm: Number(pricePerKm) || 0,
           pricingPerDay: Number(pricePerDay) || 0,
+          model,
+          fuelType,
+          transmission,
+          amenities,
+          availabilityCalendar: calendarJson ? JSON.parse(calendarJson) : undefined,
         }),
       }),
     onSuccess: () => {
@@ -107,12 +132,19 @@ function VendorFleet() {
       api("/api/vendor/buses/" + editBus!.id, {
         method: "PATCH",
         body: JSON.stringify({
+          name: name || vehicleOptions.find((v) => v.slug === busType)?.name,
           registrationNumber,
-          busType,
+          vehicleTypeSlug: busType,
+          busType: vehicleOptions.find((v) => v.slug === busType)?.name || busType,
           seats: Number(capacity),
           ac: ac === "ac",
           pricingPerKm: Number(pricePerKm) || 0,
           pricingPerDay: Number(pricePerDay) || 0,
+          model,
+          fuelType,
+          transmission,
+          amenities,
+          availabilityCalendar: calendarJson ? JSON.parse(calendarJson) : undefined,
         }),
       }),
     onSuccess: () => {
@@ -137,12 +169,28 @@ function VendorFleet() {
     setEditBus(b);
     setName(b.name);
     setRegistrationNumber(b.registrationNumber);
-    setBusType(b.type === "Sleeper" ? "sleeper" : "seater");
+    const match = vehicleOptions.find((v) => v.slug === b.type || v.name === b.type);
+    setBusType(match?.slug || b.type || "luxury-bus");
     setCapacity(String(b.capacity));
     setAc(b.ac ? "ac" : "non-ac");
     setPricePerKm(String(b.pricePerKm));
     setPricePerDay(String(b.pricePerDay));
   };
+
+  const TypeSelect = (
+    <Select value={busType} onValueChange={setBusType}>
+      <SelectTrigger>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="max-h-64">
+        {vehicleOptions.map((v) => (
+          <SelectItem key={v.slug} value={v.slug}>
+            {v.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
 
   const buses = data?.buses ?? [];
 
@@ -180,14 +228,8 @@ function VendorFleet() {
               <Input placeholder="e.g. CH01AB1234" value={registrationNumber} onChange={(e) => setRegistrationNumber(e.target.value)} required />
             </div>
             <div className="space-y-2">
-              <Label>Type</Label>
-              <Select value={busType} onValueChange={setBusType}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="seater">Seater</SelectItem>
-                  <SelectItem value="sleeper">Sleeper</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label>Vehicle type</Label>
+              {TypeSelect}
             </div>
             <div className="space-y-2">
               <Label>Seating Capacity</Label>
@@ -210,6 +252,43 @@ function VendorFleet() {
             <div className="space-y-2">
               <Label>Price per Day (₹)</Label>
               <Input type="number" value={pricePerDay} onChange={(e) => setPricePerDay(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label>Model</Label>
+              <Input value={model} onChange={(e) => setModel(e.target.value)} placeholder="e.g. Force Urbania 2024" />
+            </div>
+            <div className="space-y-2">
+              <Label>Fuel</Label>
+              <Select value={fuelType} onValueChange={setFuelType}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {["diesel", "petrol", "cng", "electric", "hybrid"].map((x) => (
+                    <SelectItem key={x} value={x}>{x}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Transmission</Label>
+              <Select value={transmission} onValueChange={setTransmission}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="manual">Manual</SelectItem>
+                  <SelectItem value="automatic">Automatic</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label>Amenities</Label>
+              <Input value={amenities} onChange={(e) => setAmenities(e.target.value)} placeholder="AC, WiFi, Charging" />
+            </div>
+            <div className="space-y-2 sm:col-span-3">
+              <Label>Availability calendar (JSON optional)</Label>
+              <Input
+                value={calendarJson}
+                onChange={(e) => setCalendarJson(e.target.value)}
+                placeholder='[{"date":"2026-08-10","available":false}]'
+              />
             </div>
             <div className="sm:col-span-3 flex gap-2">
               <Button type="submit" disabled={createMut.isPending}>{createMut.isPending ? "Saving…" : "Save Bus"}</Button>
@@ -266,14 +345,8 @@ function VendorFleet() {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-2">
-                <Label>Type</Label>
-                <Select value={busType} onValueChange={setBusType}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="seater">Seater</SelectItem>
-                    <SelectItem value="sleeper">Sleeper</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label>Vehicle type</Label>
+                {TypeSelect}
               </div>
               <div className="space-y-2">
                 <Label>Capacity</Label>

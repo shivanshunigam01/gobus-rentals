@@ -39,9 +39,12 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     path.startsWith("/api/auth") ||
     path.startsWith("/api/customer") ||
     path.startsWith("/api/vendor") ||
+    path.startsWith("/api/b2b") ||
     path.startsWith("/api/admin") ||
+    path.startsWith("/api/enterprise") ||
     path.startsWith("/api/leads") ||
     path.startsWith("/api/payments");
+  const isPublicPath = path.startsWith("/api/public");
   const isRemoteRequiredPath =
     path === "/api/payments/razorpay/order" ||
     path === "/api/payments/razorpay/verify" ||
@@ -53,7 +56,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
       500,
     );
   }
-  if (globalThis.window !== undefined && isRemoteRequiredPath && base) {
+  if (globalThis.window !== undefined && ((isRemoteRequiredPath && base) || (isPublicPath && base))) {
     const res = await fetch(`${base}${path}`, { ...init, headers });
     const text = await res.text();
     let data: unknown = {};
@@ -84,7 +87,23 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     }
   }
 
-  const res = await fetch(`${base}${path}`, { ...init, headers });
+  // SSR / no-window: prefer configured API, else local content fallback for public routes
+  if (globalThis.window === undefined && isPublicPath && !base) {
+    try {
+      return (await localApiRequest(path, { ...init, headers })) as T;
+    } catch (e) {
+      const err = e as { status?: number; message?: string };
+      throw new ApiError(err.message || "Local API failed", err.status || 500);
+    }
+  }
+
+  const origin =
+    base ||
+    (typeof process !== "undefined" && process.env?.VITE_API_URL
+      ? String(process.env.VITE_API_URL).replace(/\/$/, "")
+      : "") ||
+    "http://127.0.0.1:4000";
+  const res = await fetch(`${origin}${path}`, { ...init, headers });
   const text = await res.text();
   let data: unknown = {};
   if (text) {

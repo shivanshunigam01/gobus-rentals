@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { IndianRupee, TrendingUp, Clock, Percent, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
@@ -30,9 +31,32 @@ type Res = {
 };
 
 function VendorEarnings() {
+  const qc = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["vendor-earnings"],
     queryFn: () => api<Res>("/api/vendor/earnings"),
+  });
+  const payoutsQ = useQuery({
+    queryKey: ["vendor-payouts"],
+    queryFn: () =>
+      api<{
+        payouts: Array<{
+          id: string;
+          amountRequestedDisplay: string;
+          amountApprovedDisplay: string;
+          status: string;
+          transactionId: string;
+          createdAt?: string;
+        }>;
+      }>("/api/vendor/payouts"),
+  });
+  const requestPayout = useMutation({
+    mutationFn: () => api("/api/vendor/payouts", { method: "POST", body: JSON.stringify({}) }),
+    onSuccess: () => {
+      toast.success("Payout request submitted");
+      qc.invalidateQueries({ queryKey: ["vendor-payouts"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
   });
 
   if (isLoading) return <div className={`${panelStatePadding} text-sm text-muted-foreground`}>Loading…</div>;
@@ -42,8 +66,15 @@ function VendorEarnings() {
 
   return (
     <div className={panelPage.standard}>
-      <h1 className="font-display text-2xl font-bold text-foreground mb-1">Earnings Dashboard</h1>
-      <p className="text-muted-foreground text-sm mb-6">Track your revenue and pending payouts</p>
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="font-display text-2xl font-bold text-foreground mb-1">Earnings Dashboard</h1>
+          <p className="text-muted-foreground text-sm">Track your revenue and pending payouts</p>
+        </div>
+        <Button type="button" disabled={requestPayout.isPending} onClick={() => requestPayout.mutate()}>
+          Request payout
+        </Button>
+      </div>
       <p className="text-xs text-muted-foreground mb-6 rounded-lg border border-border bg-muted/30 px-3 py-2">
         {data?.payoutRule ?? "Automatic payout runs after trip completion. Commission is deducted on your side before payout."}
       </p>
@@ -103,6 +134,40 @@ function VendorEarnings() {
             </tbody>
           </table>
         )}
+      </div>
+
+      <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-card">
+        <div className="border-b border-border p-5">
+          <h2 className="font-display font-semibold text-foreground">Payout requests</h2>
+        </div>
+        <table className="w-full min-w-[560px] text-sm">
+          <thead>
+            <tr className="border-b border-border text-muted-foreground">
+              <th className="px-5 py-3 text-left font-medium">Requested</th>
+              <th className="px-5 py-3 text-left font-medium">Approved</th>
+              <th className="px-5 py-3 text-left font-medium">Status</th>
+              <th className="px-5 py-3 text-left font-medium">UTR</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(payoutsQ.data?.payouts ?? []).length === 0 ? (
+              <tr>
+                <td colSpan={4} className="px-5 py-6 text-muted-foreground">
+                  No payout requests yet
+                </td>
+              </tr>
+            ) : (
+              payoutsQ.data!.payouts.map((p) => (
+                <tr key={p.id} className="border-b border-border last:border-0">
+                  <td className="px-5 py-3">{p.amountRequestedDisplay}</td>
+                  <td className="px-5 py-3">{p.amountApprovedDisplay}</td>
+                  <td className="px-5 py-3 capitalize">{p.status}</td>
+                  <td className="px-5 py-3 font-mono text-xs">{p.transactionId || "—"}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

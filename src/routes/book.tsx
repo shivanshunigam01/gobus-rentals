@@ -7,6 +7,7 @@ import { BOOKING_BUS_TYPES } from "@/data/booking-bus-types";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
 import { Button } from "@/components/ui/button";
 import { Check, MessageCircle, Phone, Shield } from "lucide-react";
+import { FareEstimator } from "@/components/enterprise/FareEstimator";
 
 export const Route = createFileRoute("/book")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -61,6 +62,7 @@ function BookPage() {
             </div>
 
             <aside className="lg:col-span-5 xl:col-span-5 order-2 space-y-5 lg:sticky lg:top-24 lg:self-start">
+              <FareEstimator />
               <div className="rounded-2xl border border-border bg-muted/30 p-5 sm:p-6">
                 <div className="flex items-center gap-2 text-foreground font-semibold mb-4">
                   <Shield className="w-5 h-5 text-primary shrink-0" />

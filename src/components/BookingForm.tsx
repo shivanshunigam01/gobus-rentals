@@ -1,5 +1,5 @@
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Bot, Bus, Calendar, CheckCircle2, MapPin, Users } from "lucide-react";
 import { api } from "@/lib/api";
 import { COMPANY } from "@/lib/company";
 import { BOOKING_BUS_TYPES } from "@/data/booking-bus-types";
+import { fetchVehicleTypes } from "@/lib/api/content";
 
 const purposes = ["Wedding", "Corporate", "Tour", "School/College", "Pilgrimage", "Airport Transfer", "Other"];
 
@@ -97,10 +98,12 @@ function StepInput({
   step,
   form,
   setForm,
+  vehicleTypes = [],
 }: Readonly<{
   step: StepKey;
   form: FormState;
   setForm: Dispatch<SetStateAction<FormState>>;
+  vehicleTypes?: string[];
 }>) {
   const optionBtn =
     "rounded-full border border-border bg-muted/40 px-3 py-1.5 text-sm text-foreground hover:bg-primary/10 hover:border-primary/40 transition-colors";
@@ -139,8 +142,8 @@ function StepInput({
       );
     case "busType":
       return (
-        <div className="flex flex-wrap gap-2">
-          {BOOKING_BUS_TYPES.map((t) => (
+        <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto">
+          {(vehicleTypes.length ? vehicleTypes : BOOKING_BUS_TYPES).map((t) => (
             <button
               key={t}
               type="button"
@@ -237,8 +240,20 @@ export function BookingForm({
 }: Readonly<{ compact?: boolean; initialBusType?: string }>) {
   const [submitted, setSubmitted] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const vehicleTypesQ = useQuery({
+    queryKey: ["booking-vehicle-types"],
+    queryFn: () => fetchVehicleTypes(),
+  });
+  const vehicleTypeNames = useMemo(
+    () => (vehicleTypesQ.data?.length ? vehicleTypesQ.data.map((v) => v.name) : [...BOOKING_BUS_TYPES]),
+    [vehicleTypesQ.data],
+  );
   const prefilledBusType =
-    initialBusType && (BOOKING_BUS_TYPES as readonly string[]).includes(initialBusType) ? initialBusType : "";
+    initialBusType && vehicleTypeNames.some((t) => t.toLowerCase() === initialBusType.toLowerCase())
+      ? vehicleTypeNames.find((t) => t.toLowerCase() === initialBusType.toLowerCase()) || initialBusType
+      : initialBusType && (BOOKING_BUS_TYPES as readonly string[]).includes(initialBusType)
+        ? initialBusType
+        : "";
   const [form, setForm] = useState<FormState>({
     pickup: "",
     drop: "",
@@ -377,7 +392,7 @@ export function BookingForm({
             </div>
           </div>
 
-          <StepInput step={current.key} form={form} setForm={setForm} />
+          <StepInput step={current.key} form={form} setForm={setForm} vehicleTypes={vehicleTypeNames} />
         </div>
 
         <div className="flex flex-wrap gap-2">

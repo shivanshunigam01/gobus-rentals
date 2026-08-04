@@ -1,17 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
 import { HomeGallerySection } from "@/components/HomeGallerySection";
-import { FleetSection } from "@/components/FleetSection";
-import { HomeSeoContentSection } from "@/components/HomeSeoContentSection";
-import { HowItWorks } from "@/components/HowItWorks";
 import { StatsSection } from "@/components/StatsSection";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { HowItWorks } from "@/components/HowItWorks";
 import { CTASection } from "@/components/CTASection";
+import { FleetSliderSection } from "@/components/home/FleetSliderSection";
+import { UrbaniaSection, CabSection } from "@/components/home/UrbaniaCabSections";
+import {
+  FeaturedServicesSection,
+  CorporateSolutionsSection,
+  IndustrySolutionsSection,
+  CustomerReviewsSection,
+  CorporateClientsSection,
+  LatestBlogsSection,
+  HomeFaqsSection,
+} from "@/components/home/SolutionsSections";
+import { OffersSection } from "@/components/home/OffersSection";
 import { COMPANY } from "@/lib/company";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
 import { faqPageSchema } from "@/lib/seo/schemas";
+
+const HomeSeoContentSection = lazy(() =>
+  import("@/components/HomeSeoContentSection").then((m) => ({ default: m.HomeSeoContentSection })),
+);
 
 const homeFaqs = [
   {
@@ -23,20 +37,31 @@ const homeFaqs = [
     answer:
       "Yes. We serve 400+ cities across all of India — North, South, East, and West. Submit your trip details and verified operators in your region will respond with quotes.",
   },
+  {
+    question: "Which vehicles can companies book?",
+    answer:
+      "Luxury buses, mini buses, Tempo Traveller, Urbania, Force Urbania, luxury coaches, employee/corporate/airport shuttles, and cabs including sedan, SUV, MUV, hatchback, and Innova Crysta.",
+  },
 ];
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => {
     const { meta, links } = buildPageMeta({
-      title: "Tempo Traveller & Bus Rental in India | Affordable Luxury Bus Hire",
-      description: "Book tempo traveller and luxury bus rental across India. Best price, verified drivers, GST-transparent quotes. Get free bus hire quote now — instant booking!",
+      title: "Corporate Transportation & Luxury Bus Rental India",
+      description:
+        "India’s corporate transportation platform — employee shuttles, Urbania, luxury buses, and cabs. Pan-India coverage, GST quotes, verified operators.",
       path: "/",
       keywords:
-        "tempo traveller on rent, bus rental in India, luxury bus rental, mini bus on rent, tempo traveller booking, tempo traveller in Delhi, tempo traveller in Patna, bus rental in Mumbai, bus hire in Bangalore, luxury bus rental in India, bus rental for wedding, bus rental for corporate travel, bus rental for outstation trip, tempo traveller for group travel, cheap tempo traveller, best bus rental service, affordable bus hire, book tempo traveller online, bus rental price per km, Volvo bus rental, AC bus booking, 12 seater to 66 seater bus, wedding bus hire, corporate bus charter",
+        "corporate transportation India, employee transportation, luxury bus rental, Urbania rental, corporate shuttle, Innova Crysta hire, tempo traveller on rent, bus rental in India",
     });
     return {
-      meta: [...meta, { "script:ld+json": faqPageSchema(homeFaqs.map((f) => ({ question: f.question, answer: f.answer }))) }],
+      meta: [
+        ...meta,
+        {
+          "script:ld+json": faqPageSchema(homeFaqs.map((f) => ({ question: f.question, answer: f.answer }))),
+        },
+      ],
       links,
     };
   },
@@ -50,10 +75,21 @@ function Index() {
         <HeroSection />
         <HomeGallerySection />
         <StatsSection />
-        <FleetSection />
-        <HomeSeoContentSection />
+        <FleetSliderSection />
+        <UrbaniaSection />
+        <CabSection />
+        <FeaturedServicesSection />
+        <OffersSection />
+        <CorporateSolutionsSection />
+        <IndustrySolutionsSection />
+        <CustomerReviewsSection />
+        <CorporateClientsSection />
+        <LatestBlogsSection />
+        <HomeFaqsSection />
+        <Suspense fallback={null}>
+          <HomeSeoContentSection />
+        </Suspense>
         <HowItWorks />
-        <TestimonialsSection />
         <CTASection />
       </main>
       <Footer />

@@ -9,129 +9,99 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VendorRouteImport } from './routes/vendor'
-import { Route as SignupRouteImport } from './routes/signup'
-import { Route as RoutesRouteImport } from './routes/routes'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as GuidesRouteImport } from './routes/guides'
-import { Route as CustomerRouteImport } from './routes/customer'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BusTypesForHireRouteImport } from './routes/bus-types-for-hire'
-import { Route as BusTypesRouteImport } from './routes/bus-types'
-import { Route as BusRentalGuidesRouteImport } from './routes/bus-rental-guides'
-import { Route as BusRentalRouteImport } from './routes/bus-rental'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as SeoSlugRouteImport } from './routes/$seoSlug'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as VendorRegisterRouteImport } from './routes/vendor.register'
-import { Route as VendorQuotesRouteImport } from './routes/vendor.quotes'
-import { Route as VendorProfileRouteImport } from './routes/vendor.profile'
-import { Route as VendorLoginRouteImport } from './routes/vendor.login'
-import { Route as VendorLeadsRouteImport } from './routes/vendor.leads'
-import { Route as VendorFleetRouteImport } from './routes/vendor.fleet'
-import { Route as VendorEarningsRouteImport } from './routes/vendor.earnings'
-import { Route as VendorDashboardRouteImport } from './routes/vendor.dashboard'
-import { Route as VendorBookingsRouteImport } from './routes/vendor.bookings'
-import { Route as ServicesServiceSlugRouteImport } from './routes/services.$serviceSlug'
-import { Route as ServiceCityCitySlugRouteImport } from './routes/service-city.$citySlug'
-import { Route as PoliciesRefundCancellationRouteImport } from './routes/policies.refund-cancellation'
-import { Route as CustomerReviewsRouteImport } from './routes/customer.reviews'
-import { Route as CustomerQuotesRouteImport } from './routes/customer.quotes'
-import { Route as CustomerProfileRouteImport } from './routes/customer.profile'
-import { Route as CustomerLoginRouteImport } from './routes/customer.login'
-import { Route as CustomerDashboardRouteImport } from './routes/customer.dashboard'
-import { Route as CustomerBookingsRouteImport } from './routes/customer.bookings'
-import { Route as BusRentalCitySlugRouteImport } from './routes/bus-rental.$citySlug'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as AdminVendorsRouteImport } from './routes/admin.vendors'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
-import { Route as AdminQuotesRouteImport } from './routes/admin.quotes'
-import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
-import { Route as AdminNotificationsRouteImport } from './routes/admin.notifications'
-import { Route as AdminLoginRouteImport } from './routes/admin.login'
-import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
-import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
-import { Route as AdminCmsRouteImport } from './routes/admin.cms'
-import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as SeoSlugRouteImport } from './routes/$seoSlug'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as B2bRouteImport } from './routes/b2b'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as BusRentalRouteImport } from './routes/bus-rental'
+import { Route as BusRentalGuidesRouteImport } from './routes/bus-rental-guides'
+import { Route as BusTypesRouteImport } from './routes/bus-types'
+import { Route as BusTypesForHireRouteImport } from './routes/bus-types-for-hire'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CustomerRouteImport } from './routes/customer'
+import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RoutesRouteImport } from './routes/routes'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as VendorRouteImport } from './routes/vendor'
 import { Route as SeoSlugBusTypeSlugRouteImport } from './routes/$seoSlug.$busTypeSlug'
+import { Route as AdminActivityRouteImport } from './routes/admin.activity'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminAuditLogsRouteImport } from './routes/admin.audit-logs'
+import { Route as AdminBlogCategoriesRouteImport } from './routes/admin.blog-categories'
+import { Route as AdminBlogTagsRouteImport } from './routes/admin.blog-tags'
+import { Route as AdminBlogsRouteImport } from './routes/admin.blogs'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
+import { Route as AdminCmsRouteImport } from './routes/admin.cms'
+import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminDriversRouteImport } from './routes/admin.drivers'
+import { Route as AdminFaqsRouteImport } from './routes/admin.faqs'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminNotificationsRouteImport } from './routes/admin.notifications'
+import { Route as AdminOffersRouteImport } from './routes/admin.offers'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminPayoutsRouteImport } from './routes/admin.payouts'
+import { Route as AdminQuotesRouteImport } from './routes/admin.quotes'
+import { Route as AdminSeoRouteImport } from './routes/admin.seo'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminVehicleTypesRouteImport } from './routes/admin.vehicle-types'
+import { Route as AdminVendorsRouteImport } from './routes/admin.vendors'
+import { Route as B2bBookingsRouteImport } from './routes/b2b.bookings'
+import { Route as B2bContractsRouteImport } from './routes/b2b.contracts'
+import { Route as B2bDashboardRouteImport } from './routes/b2b.dashboard'
+import { Route as B2bEmployeesRouteImport } from './routes/b2b.employees'
+import { Route as B2bFavouritesRouteImport } from './routes/b2b.favourites'
+import { Route as B2bInvoicesRouteImport } from './routes/b2b.invoices'
+import { Route as B2bPaymentsRouteImport } from './routes/b2b.payments'
+import { Route as B2bRegisterRouteImport } from './routes/b2b.register'
+import { Route as B2bTripsRouteImport } from './routes/b2b.trips'
+import { Route as B2bWalletRouteImport } from './routes/b2b.wallet'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BusRentalCitySlugRouteImport } from './routes/bus-rental.$citySlug'
+import { Route as CorporateIndexRouteImport } from './routes/corporate.index'
+import { Route as CorporateSlugRouteImport } from './routes/corporate.$slug'
+import { Route as CustomerB2bRegisterRouteImport } from './routes/customer.b2b-register'
+import { Route as CustomerBookingsRouteImport } from './routes/customer.bookings'
+import { Route as CustomerDashboardRouteImport } from './routes/customer.dashboard'
+import { Route as CustomerLoginRouteImport } from './routes/customer.login'
+import { Route as CustomerProfileRouteImport } from './routes/customer.profile'
+import { Route as CustomerQuotesRouteImport } from './routes/customer.quotes'
+import { Route as CustomerReviewsRouteImport } from './routes/customer.reviews'
+import { Route as CustomerSavedTripsRouteImport } from './routes/customer.saved-trips'
+import { Route as CustomerWishlistRouteImport } from './routes/customer.wishlist'
+import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
+import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as PoliciesRefundCancellationRouteImport } from './routes/policies.refund-cancellation'
+import { Route as ServiceCityCitySlugRouteImport } from './routes/service-city.$citySlug'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesServiceSlugRouteImport } from './routes/services.$serviceSlug'
+import { Route as VendorAnalyticsRouteImport } from './routes/vendor.analytics'
+import { Route as VendorBookingsRouteImport } from './routes/vendor.bookings'
+import { Route as VendorCalendarRouteImport } from './routes/vendor.calendar'
+import { Route as VendorDashboardRouteImport } from './routes/vendor.dashboard'
+import { Route as VendorDocumentsRouteImport } from './routes/vendor.documents'
+import { Route as VendorDriversRouteImport } from './routes/vendor.drivers'
+import { Route as VendorEarningsRouteImport } from './routes/vendor.earnings'
+import { Route as VendorFleetRouteImport } from './routes/vendor.fleet'
+import { Route as VendorLeadsRouteImport } from './routes/vendor.leads'
+import { Route as VendorLoginRouteImport } from './routes/vendor.login'
+import { Route as VendorNotificationsRouteImport } from './routes/vendor.notifications'
+import { Route as VendorPaymentsRouteImport } from './routes/vendor.payments'
+import { Route as VendorProfileRouteImport } from './routes/vendor.profile'
+import { Route as VendorQuotesRouteImport } from './routes/vendor.quotes'
+import { Route as VendorRegisterRouteImport } from './routes/vendor.register'
 import { Route as SeoSlugRentalBusTypeSlugRouteImport } from './routes/$seoSlug.rental.$busTypeSlug'
 
-const VendorRoute = VendorRouteImport.update({
-  id: '/vendor',
-  path: '/vendor',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoutesRoute = RoutesRouteImport.update({
-  id: '/routes',
-  path: '/routes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GuidesRoute = GuidesRouteImport.update({
-  id: '/guides',
-  path: '/guides',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomerRoute = CustomerRouteImport.update({
-  id: '/customer',
-  path: '/customer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BusTypesForHireRoute = BusTypesForHireRouteImport.update({
-  id: '/bus-types-for-hire',
-  path: '/bus-types-for-hire',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BusTypesRoute = BusTypesRouteImport.update({
-  id: '/bus-types',
-  path: '/bus-types',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BusRentalGuidesRoute = BusRentalGuidesRouteImport.update({
-  id: '/bus-rental-guides',
-  path: '/bus-rental-guides',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BusRentalRoute = BusRentalRouteImport.update({
-  id: '/bus-rental',
-  path: '/bus-rental',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SeoSlugRoute = SeoSlugRouteImport.update({
@@ -139,64 +109,339 @@ const SeoSlugRoute = SeoSlugRouteImport.update({
   path: '/$seoSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VendorRegisterRoute = VendorRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => VendorRoute,
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const VendorQuotesRoute = VendorQuotesRouteImport.update({
-  id: '/quotes',
-  path: '/quotes',
-  getParentRoute: () => VendorRoute,
+const B2bRoute = B2bRouteImport.update({
+  id: '/b2b',
+  path: '/b2b',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const VendorProfileRoute = VendorProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => VendorRoute,
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const VendorLoginRoute = VendorLoginRouteImport.update({
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusRentalRoute = BusRentalRouteImport.update({
+  id: '/bus-rental',
+  path: '/bus-rental',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusRentalGuidesRoute = BusRentalGuidesRouteImport.update({
+  id: '/bus-rental-guides',
+  path: '/bus-rental-guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusTypesRoute = BusTypesRouteImport.update({
+  id: '/bus-types',
+  path: '/bus-types',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusTypesForHireRoute = BusTypesForHireRouteImport.update({
+  id: '/bus-types-for-hire',
+  path: '/bus-types-for-hire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerRoute = CustomerRouteImport.update({
+  id: '/customer',
+  path: '/customer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesRoute = GuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorLeadsRoute = VendorLeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorFleetRoute = VendorFleetRouteImport.update({
-  id: '/fleet',
-  path: '/fleet',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorEarningsRoute = VendorEarningsRouteImport.update({
-  id: '/earnings',
-  path: '/earnings',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorDashboardRoute = VendorDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorBookingsRoute = VendorBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => VendorRoute,
-} as any)
-const ServicesServiceSlugRoute = ServicesServiceSlugRouteImport.update({
-  id: '/services/$serviceSlug',
-  path: '/services/$serviceSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServiceCityCitySlugRoute = ServiceCityCitySlugRouteImport.update({
-  id: '/service-city/$citySlug',
-  path: '/service-city/$citySlug',
+const RoutesRoute = RoutesRouteImport.update({
+  id: '/routes',
+  path: '/routes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VendorRoute = VendorRouteImport.update({
+  id: '/vendor',
+  path: '/vendor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeoSlugBusTypeSlugRoute = SeoSlugBusTypeSlugRouteImport.update({
+  id: '/$busTypeSlug',
+  path: '/$busTypeSlug',
+  getParentRoute: () => SeoSlugRoute,
+} as any)
+const AdminActivityRoute = AdminActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditLogsRoute = AdminAuditLogsRouteImport.update({
+  id: '/audit-logs',
+  path: '/audit-logs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogCategoriesRoute = AdminBlogCategoriesRouteImport.update({
+  id: '/blog-categories',
+  path: '/blog-categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogTagsRoute = AdminBlogTagsRouteImport.update({
+  id: '/blog-tags',
+  path: '/blog-tags',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogsRoute = AdminBlogsRouteImport.update({
+  id: '/blogs',
+  path: '/blogs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCalendarRoute = AdminCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCmsRoute = AdminCmsRouteImport.update({
+  id: '/cms',
+  path: '/cms',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDriversRoute = AdminDriversRouteImport.update({
+  id: '/drivers',
+  path: '/drivers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFaqsRoute = AdminFaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOffersRoute = AdminOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPayoutsRoute = AdminPayoutsRouteImport.update({
+  id: '/payouts',
+  path: '/payouts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminQuotesRoute = AdminQuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSeoRoute = AdminSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVehicleTypesRoute = AdminVehicleTypesRouteImport.update({
+  id: '/vehicle-types',
+  path: '/vehicle-types',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVendorsRoute = AdminVendorsRouteImport.update({
+  id: '/vendors',
+  path: '/vendors',
+  getParentRoute: () => AdminRoute,
+} as any)
+const B2bBookingsRoute = B2bBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bContractsRoute = B2bContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bDashboardRoute = B2bDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bEmployeesRoute = B2bEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bFavouritesRoute = B2bFavouritesRouteImport.update({
+  id: '/favourites',
+  path: '/favourites',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bInvoicesRoute = B2bInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bPaymentsRoute = B2bPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bRegisterRoute = B2bRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bTripsRoute = B2bTripsRouteImport.update({
+  id: '/trips',
+  path: '/trips',
+  getParentRoute: () => B2bRoute,
+} as any)
+const B2bWalletRoute = B2bWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => B2bRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BusRentalCitySlugRoute = BusRentalCitySlugRouteImport.update({
+  id: '/$citySlug',
+  path: '/$citySlug',
+  getParentRoute: () => BusRentalRoute,
+} as any)
+const CorporateIndexRoute = CorporateIndexRouteImport.update({
+  id: '/corporate/',
+  path: '/corporate/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorporateSlugRoute = CorporateSlugRouteImport.update({
+  id: '/corporate/$slug',
+  path: '/corporate/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerB2bRegisterRoute = CustomerB2bRegisterRouteImport.update({
+  id: '/b2b-register',
+  path: '/b2b-register',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerBookingsRoute = CustomerBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerDashboardRoute = CustomerDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerLoginRoute = CustomerLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerProfileRoute = CustomerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerQuotesRoute = CustomerQuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerReviewsRoute = CustomerReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerSavedTripsRoute = CustomerSavedTripsRouteImport.update({
+  id: '/saved-trips',
+  path: '/saved-trips',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const CustomerWishlistRoute = CustomerWishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => CustomerRoute,
+} as any)
+const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
+  id: '/industries/',
+  path: '/industries/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
+  id: '/industries/$slug',
+  path: '/industries/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliciesRefundCancellationRoute =
@@ -205,100 +450,95 @@ const PoliciesRefundCancellationRoute =
     path: '/policies/refund-cancellation',
     getParentRoute: () => rootRouteImport,
   } as any)
-const CustomerReviewsRoute = CustomerReviewsRouteImport.update({
-  id: '/reviews',
-  path: '/reviews',
-  getParentRoute: () => CustomerRoute,
+const ServiceCityCitySlugRoute = ServiceCityCitySlugRouteImport.update({
+  id: '/service-city/$citySlug',
+  path: '/service-city/$citySlug',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerQuotesRoute = CustomerQuotesRouteImport.update({
-  id: '/quotes',
-  path: '/quotes',
-  getParentRoute: () => CustomerRoute,
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerProfileRoute = CustomerProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => CustomerRoute,
+const ServicesServiceSlugRoute = ServicesServiceSlugRouteImport.update({
+  id: '/services/$serviceSlug',
+  path: '/services/$serviceSlug',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerLoginRoute = CustomerLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => CustomerRoute,
+const VendorAnalyticsRoute = VendorAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => VendorRoute,
 } as any)
-const CustomerDashboardRoute = CustomerDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => CustomerRoute,
-} as any)
-const CustomerBookingsRoute = CustomerBookingsRouteImport.update({
+const VendorBookingsRoute = VendorBookingsRouteImport.update({
   id: '/bookings',
   path: '/bookings',
-  getParentRoute: () => CustomerRoute,
+  getParentRoute: () => VendorRoute,
 } as any)
-const BusRentalCitySlugRoute = BusRentalCitySlugRouteImport.update({
-  id: '/$citySlug',
-  path: '/$citySlug',
-  getParentRoute: () => BusRentalRoute,
+const VendorCalendarRoute = VendorCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => VendorRoute,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+const VendorDashboardRoute = VendorDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminVendorsRoute = AdminVendorsRouteImport.update({
-  id: '/vendors',
-  path: '/vendors',
-  getParentRoute: () => AdminRoute,
+const VendorDocumentsRoute = VendorDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRoute,
+const VendorDriversRoute = VendorDriversRouteImport.update({
+  id: '/drivers',
+  path: '/drivers',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminQuotesRoute = AdminQuotesRouteImport.update({
-  id: '/quotes',
-  path: '/quotes',
-  getParentRoute: () => AdminRoute,
+const VendorEarningsRoute = VendorEarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => AdminRoute,
+const VendorFleetRoute = VendorFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+const VendorLeadsRoute = VendorLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => VendorRoute,
+} as any)
+const VendorLoginRoute = VendorLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => VendorRoute,
+} as any)
+const VendorNotificationsRoute = VendorNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AdminRoute,
+const VendorPaymentsRoute = VendorPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminDashboardRoute = AdminDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AdminRoute,
+const VendorProfileRoute = VendorProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminCustomersRoute = AdminCustomersRouteImport.update({
-  id: '/customers',
-  path: '/customers',
-  getParentRoute: () => AdminRoute,
+const VendorQuotesRoute = VendorQuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => VendorRoute,
 } as any)
-const AdminCmsRoute = AdminCmsRouteImport.update({
-  id: '/cms',
-  path: '/cms',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminBookingsRoute = AdminBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => AdminRoute,
-} as any)
-const SeoSlugBusTypeSlugRoute = SeoSlugBusTypeSlugRouteImport.update({
-  id: '/$busTypeSlug',
-  path: '/$busTypeSlug',
-  getParentRoute: () => SeoSlugRoute,
+const VendorRegisterRoute = VendorRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => VendorRoute,
 } as any)
 const SeoSlugRentalBusTypeSlugRoute =
   SeoSlugRentalBusTypeSlugRouteImport.update({
@@ -312,6 +552,7 @@ export interface FileRoutesByFullPath {
   '/$seoSlug': typeof SeoSlugRouteWithChildren
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
+  '/b2b': typeof B2bRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/book': typeof BookRoute
   '/bus-rental': typeof BusRentalRouteWithChildren
@@ -326,36 +567,75 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/blog-categories': typeof AdminBlogCategoriesRoute
+  '/admin/blog-tags': typeof AdminBlogTagsRoute
+  '/admin/blogs': typeof AdminBlogsRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/calendar': typeof AdminCalendarRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/drivers': typeof AdminDriversRoute
+  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/offers': typeof AdminOffersRoute
   '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/payouts': typeof AdminPayoutsRoute
   '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/seo': typeof AdminSeoRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicle-types': typeof AdminVehicleTypesRoute
   '/admin/vendors': typeof AdminVendorsRoute
+  '/b2b/bookings': typeof B2bBookingsRoute
+  '/b2b/contracts': typeof B2bContractsRoute
+  '/b2b/dashboard': typeof B2bDashboardRoute
+  '/b2b/employees': typeof B2bEmployeesRoute
+  '/b2b/favourites': typeof B2bFavouritesRoute
+  '/b2b/invoices': typeof B2bInvoicesRoute
+  '/b2b/payments': typeof B2bPaymentsRoute
+  '/b2b/register': typeof B2bRegisterRoute
+  '/b2b/trips': typeof B2bTripsRoute
+  '/b2b/wallet': typeof B2bWalletRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/bus-rental/$citySlug': typeof BusRentalCitySlugRoute
+  '/corporate/$slug': typeof CorporateSlugRoute
+  '/customer/b2b-register': typeof CustomerB2bRegisterRoute
   '/customer/bookings': typeof CustomerBookingsRoute
   '/customer/dashboard': typeof CustomerDashboardRoute
   '/customer/login': typeof CustomerLoginRoute
   '/customer/profile': typeof CustomerProfileRoute
   '/customer/quotes': typeof CustomerQuotesRoute
   '/customer/reviews': typeof CustomerReviewsRoute
+  '/customer/saved-trips': typeof CustomerSavedTripsRoute
+  '/customer/wishlist': typeof CustomerWishlistRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
   '/services/$serviceSlug': typeof ServicesServiceSlugRoute
+  '/vendor/analytics': typeof VendorAnalyticsRoute
   '/vendor/bookings': typeof VendorBookingsRoute
+  '/vendor/calendar': typeof VendorCalendarRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
+  '/vendor/documents': typeof VendorDocumentsRoute
+  '/vendor/drivers': typeof VendorDriversRoute
   '/vendor/earnings': typeof VendorEarningsRoute
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
+  '/vendor/notifications': typeof VendorNotificationsRoute
+  '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
   '/vendor/register': typeof VendorRegisterRoute
+  '/corporate/': typeof CorporateIndexRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/$seoSlug/rental/$busTypeSlug': typeof SeoSlugRentalBusTypeSlugRoute
 }
 export interface FileRoutesByTo {
@@ -363,6 +643,7 @@ export interface FileRoutesByTo {
   '/$seoSlug': typeof SeoSlugRouteWithChildren
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
+  '/b2b': typeof B2bRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/book': typeof BookRoute
   '/bus-rental': typeof BusRentalRouteWithChildren
@@ -377,36 +658,75 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/blog-categories': typeof AdminBlogCategoriesRoute
+  '/admin/blog-tags': typeof AdminBlogTagsRoute
+  '/admin/blogs': typeof AdminBlogsRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/calendar': typeof AdminCalendarRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/drivers': typeof AdminDriversRoute
+  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/offers': typeof AdminOffersRoute
   '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/payouts': typeof AdminPayoutsRoute
   '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/seo': typeof AdminSeoRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicle-types': typeof AdminVehicleTypesRoute
   '/admin/vendors': typeof AdminVendorsRoute
+  '/b2b/bookings': typeof B2bBookingsRoute
+  '/b2b/contracts': typeof B2bContractsRoute
+  '/b2b/dashboard': typeof B2bDashboardRoute
+  '/b2b/employees': typeof B2bEmployeesRoute
+  '/b2b/favourites': typeof B2bFavouritesRoute
+  '/b2b/invoices': typeof B2bInvoicesRoute
+  '/b2b/payments': typeof B2bPaymentsRoute
+  '/b2b/register': typeof B2bRegisterRoute
+  '/b2b/trips': typeof B2bTripsRoute
+  '/b2b/wallet': typeof B2bWalletRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/bus-rental/$citySlug': typeof BusRentalCitySlugRoute
+  '/corporate/$slug': typeof CorporateSlugRoute
+  '/customer/b2b-register': typeof CustomerB2bRegisterRoute
   '/customer/bookings': typeof CustomerBookingsRoute
   '/customer/dashboard': typeof CustomerDashboardRoute
   '/customer/login': typeof CustomerLoginRoute
   '/customer/profile': typeof CustomerProfileRoute
   '/customer/quotes': typeof CustomerQuotesRoute
   '/customer/reviews': typeof CustomerReviewsRoute
+  '/customer/saved-trips': typeof CustomerSavedTripsRoute
+  '/customer/wishlist': typeof CustomerWishlistRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
   '/services/$serviceSlug': typeof ServicesServiceSlugRoute
+  '/vendor/analytics': typeof VendorAnalyticsRoute
   '/vendor/bookings': typeof VendorBookingsRoute
+  '/vendor/calendar': typeof VendorCalendarRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
+  '/vendor/documents': typeof VendorDocumentsRoute
+  '/vendor/drivers': typeof VendorDriversRoute
   '/vendor/earnings': typeof VendorEarningsRoute
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
+  '/vendor/notifications': typeof VendorNotificationsRoute
+  '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
   '/vendor/register': typeof VendorRegisterRoute
+  '/corporate': typeof CorporateIndexRoute
+  '/industries': typeof IndustriesIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/$seoSlug/rental/$busTypeSlug': typeof SeoSlugRentalBusTypeSlugRoute
 }
 export interface FileRoutesById {
@@ -415,6 +735,7 @@ export interface FileRoutesById {
   '/$seoSlug': typeof SeoSlugRouteWithChildren
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
+  '/b2b': typeof B2bRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/book': typeof BookRoute
   '/bus-rental': typeof BusRentalRouteWithChildren
@@ -429,36 +750,75 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
+  '/admin/activity': typeof AdminActivityRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/blog-categories': typeof AdminBlogCategoriesRoute
+  '/admin/blog-tags': typeof AdminBlogTagsRoute
+  '/admin/blogs': typeof AdminBlogsRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/calendar': typeof AdminCalendarRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/companies': typeof AdminCompaniesRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/drivers': typeof AdminDriversRoute
+  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/offers': typeof AdminOffersRoute
   '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/payouts': typeof AdminPayoutsRoute
   '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/seo': typeof AdminSeoRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicle-types': typeof AdminVehicleTypesRoute
   '/admin/vendors': typeof AdminVendorsRoute
+  '/b2b/bookings': typeof B2bBookingsRoute
+  '/b2b/contracts': typeof B2bContractsRoute
+  '/b2b/dashboard': typeof B2bDashboardRoute
+  '/b2b/employees': typeof B2bEmployeesRoute
+  '/b2b/favourites': typeof B2bFavouritesRoute
+  '/b2b/invoices': typeof B2bInvoicesRoute
+  '/b2b/payments': typeof B2bPaymentsRoute
+  '/b2b/register': typeof B2bRegisterRoute
+  '/b2b/trips': typeof B2bTripsRoute
+  '/b2b/wallet': typeof B2bWalletRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/bus-rental/$citySlug': typeof BusRentalCitySlugRoute
+  '/corporate/$slug': typeof CorporateSlugRoute
+  '/customer/b2b-register': typeof CustomerB2bRegisterRoute
   '/customer/bookings': typeof CustomerBookingsRoute
   '/customer/dashboard': typeof CustomerDashboardRoute
   '/customer/login': typeof CustomerLoginRoute
   '/customer/profile': typeof CustomerProfileRoute
   '/customer/quotes': typeof CustomerQuotesRoute
   '/customer/reviews': typeof CustomerReviewsRoute
+  '/customer/saved-trips': typeof CustomerSavedTripsRoute
+  '/customer/wishlist': typeof CustomerWishlistRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/policies/refund-cancellation': typeof PoliciesRefundCancellationRoute
   '/service-city/$citySlug': typeof ServiceCityCitySlugRoute
   '/services/$serviceSlug': typeof ServicesServiceSlugRoute
+  '/vendor/analytics': typeof VendorAnalyticsRoute
   '/vendor/bookings': typeof VendorBookingsRoute
+  '/vendor/calendar': typeof VendorCalendarRoute
   '/vendor/dashboard': typeof VendorDashboardRoute
+  '/vendor/documents': typeof VendorDocumentsRoute
+  '/vendor/drivers': typeof VendorDriversRoute
   '/vendor/earnings': typeof VendorEarningsRoute
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
+  '/vendor/notifications': typeof VendorNotificationsRoute
+  '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
   '/vendor/register': typeof VendorRegisterRoute
+  '/corporate/': typeof CorporateIndexRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/$seoSlug/rental/$busTypeSlug': typeof SeoSlugRentalBusTypeSlugRoute
 }
 export interface FileRouteTypes {
@@ -468,6 +828,7 @@ export interface FileRouteTypes {
     | '/$seoSlug'
     | '/about'
     | '/admin'
+    | '/b2b'
     | '/blog'
     | '/book'
     | '/bus-rental'
@@ -482,36 +843,75 @@ export interface FileRouteTypes {
     | '/signup'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
+    | '/admin/activity'
+    | '/admin/analytics'
+    | '/admin/audit-logs'
+    | '/admin/blog-categories'
+    | '/admin/blog-tags'
+    | '/admin/blogs'
     | '/admin/bookings'
+    | '/admin/calendar'
     | '/admin/cms'
+    | '/admin/companies'
     | '/admin/customers'
     | '/admin/dashboard'
+    | '/admin/drivers'
+    | '/admin/faqs'
     | '/admin/login'
     | '/admin/notifications'
+    | '/admin/offers'
     | '/admin/payments'
+    | '/admin/payouts'
     | '/admin/quotes'
+    | '/admin/seo'
+    | '/admin/services'
     | '/admin/settings'
+    | '/admin/vehicle-types'
     | '/admin/vendors'
+    | '/b2b/bookings'
+    | '/b2b/contracts'
+    | '/b2b/dashboard'
+    | '/b2b/employees'
+    | '/b2b/favourites'
+    | '/b2b/invoices'
+    | '/b2b/payments'
+    | '/b2b/register'
+    | '/b2b/trips'
+    | '/b2b/wallet'
     | '/blog/$slug'
     | '/bus-rental/$citySlug'
+    | '/corporate/$slug'
+    | '/customer/b2b-register'
     | '/customer/bookings'
     | '/customer/dashboard'
     | '/customer/login'
     | '/customer/profile'
     | '/customer/quotes'
     | '/customer/reviews'
+    | '/customer/saved-trips'
+    | '/customer/wishlist'
+    | '/industries/$slug'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
     | '/services/$serviceSlug'
+    | '/vendor/analytics'
     | '/vendor/bookings'
+    | '/vendor/calendar'
     | '/vendor/dashboard'
+    | '/vendor/documents'
+    | '/vendor/drivers'
     | '/vendor/earnings'
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
+    | '/vendor/notifications'
+    | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
     | '/vendor/register'
+    | '/corporate/'
+    | '/industries/'
+    | '/services/'
     | '/$seoSlug/rental/$busTypeSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -519,6 +919,7 @@ export interface FileRouteTypes {
     | '/$seoSlug'
     | '/about'
     | '/admin'
+    | '/b2b'
     | '/blog'
     | '/book'
     | '/bus-rental'
@@ -533,36 +934,75 @@ export interface FileRouteTypes {
     | '/signup'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
+    | '/admin/activity'
+    | '/admin/analytics'
+    | '/admin/audit-logs'
+    | '/admin/blog-categories'
+    | '/admin/blog-tags'
+    | '/admin/blogs'
     | '/admin/bookings'
+    | '/admin/calendar'
     | '/admin/cms'
+    | '/admin/companies'
     | '/admin/customers'
     | '/admin/dashboard'
+    | '/admin/drivers'
+    | '/admin/faqs'
     | '/admin/login'
     | '/admin/notifications'
+    | '/admin/offers'
     | '/admin/payments'
+    | '/admin/payouts'
     | '/admin/quotes'
+    | '/admin/seo'
+    | '/admin/services'
     | '/admin/settings'
+    | '/admin/vehicle-types'
     | '/admin/vendors'
+    | '/b2b/bookings'
+    | '/b2b/contracts'
+    | '/b2b/dashboard'
+    | '/b2b/employees'
+    | '/b2b/favourites'
+    | '/b2b/invoices'
+    | '/b2b/payments'
+    | '/b2b/register'
+    | '/b2b/trips'
+    | '/b2b/wallet'
     | '/blog/$slug'
     | '/bus-rental/$citySlug'
+    | '/corporate/$slug'
+    | '/customer/b2b-register'
     | '/customer/bookings'
     | '/customer/dashboard'
     | '/customer/login'
     | '/customer/profile'
     | '/customer/quotes'
     | '/customer/reviews'
+    | '/customer/saved-trips'
+    | '/customer/wishlist'
+    | '/industries/$slug'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
     | '/services/$serviceSlug'
+    | '/vendor/analytics'
     | '/vendor/bookings'
+    | '/vendor/calendar'
     | '/vendor/dashboard'
+    | '/vendor/documents'
+    | '/vendor/drivers'
     | '/vendor/earnings'
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
+    | '/vendor/notifications'
+    | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
     | '/vendor/register'
+    | '/corporate'
+    | '/industries'
+    | '/services'
     | '/$seoSlug/rental/$busTypeSlug'
   id:
     | '__root__'
@@ -570,6 +1010,7 @@ export interface FileRouteTypes {
     | '/$seoSlug'
     | '/about'
     | '/admin'
+    | '/b2b'
     | '/blog'
     | '/book'
     | '/bus-rental'
@@ -584,36 +1025,75 @@ export interface FileRouteTypes {
     | '/signup'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
+    | '/admin/activity'
+    | '/admin/analytics'
+    | '/admin/audit-logs'
+    | '/admin/blog-categories'
+    | '/admin/blog-tags'
+    | '/admin/blogs'
     | '/admin/bookings'
+    | '/admin/calendar'
     | '/admin/cms'
+    | '/admin/companies'
     | '/admin/customers'
     | '/admin/dashboard'
+    | '/admin/drivers'
+    | '/admin/faqs'
     | '/admin/login'
     | '/admin/notifications'
+    | '/admin/offers'
     | '/admin/payments'
+    | '/admin/payouts'
     | '/admin/quotes'
+    | '/admin/seo'
+    | '/admin/services'
     | '/admin/settings'
+    | '/admin/vehicle-types'
     | '/admin/vendors'
+    | '/b2b/bookings'
+    | '/b2b/contracts'
+    | '/b2b/dashboard'
+    | '/b2b/employees'
+    | '/b2b/favourites'
+    | '/b2b/invoices'
+    | '/b2b/payments'
+    | '/b2b/register'
+    | '/b2b/trips'
+    | '/b2b/wallet'
     | '/blog/$slug'
     | '/bus-rental/$citySlug'
+    | '/corporate/$slug'
+    | '/customer/b2b-register'
     | '/customer/bookings'
     | '/customer/dashboard'
     | '/customer/login'
     | '/customer/profile'
     | '/customer/quotes'
     | '/customer/reviews'
+    | '/customer/saved-trips'
+    | '/customer/wishlist'
+    | '/industries/$slug'
     | '/policies/refund-cancellation'
     | '/service-city/$citySlug'
     | '/services/$serviceSlug'
+    | '/vendor/analytics'
     | '/vendor/bookings'
+    | '/vendor/calendar'
     | '/vendor/dashboard'
+    | '/vendor/documents'
+    | '/vendor/drivers'
     | '/vendor/earnings'
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
+    | '/vendor/notifications'
+    | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
     | '/vendor/register'
+    | '/corporate/'
+    | '/industries/'
+    | '/services/'
     | '/$seoSlug/rental/$busTypeSlug'
   fileRoutesById: FileRoutesById
 }
@@ -622,6 +1102,7 @@ export interface RootRouteChildren {
   SeoSlugRoute: typeof SeoSlugRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
+  B2bRoute: typeof B2bRouteWithChildren
   BlogRoute: typeof BlogRouteWithChildren
   BookRoute: typeof BookRoute
   BusRentalRoute: typeof BusRentalRouteWithChildren
@@ -635,116 +1116,23 @@ export interface RootRouteChildren {
   RoutesRoute: typeof RoutesRoute
   SignupRoute: typeof SignupRoute
   VendorRoute: typeof VendorRouteWithChildren
+  CorporateSlugRoute: typeof CorporateSlugRoute
+  IndustriesSlugRoute: typeof IndustriesSlugRoute
   PoliciesRefundCancellationRoute: typeof PoliciesRefundCancellationRoute
   ServiceCityCitySlugRoute: typeof ServiceCityCitySlugRoute
   ServicesServiceSlugRoute: typeof ServicesServiceSlugRoute
+  CorporateIndexRoute: typeof CorporateIndexRoute
+  IndustriesIndexRoute: typeof IndustriesIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vendor': {
-      id: '/vendor'
-      path: '/vendor'
-      fullPath: '/vendor'
-      preLoaderRoute: typeof VendorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/routes': {
-      id: '/routes'
-      path: '/routes'
-      fullPath: '/routes'
-      preLoaderRoute: typeof RoutesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/guides': {
-      id: '/guides'
-      path: '/guides'
-      fullPath: '/guides'
-      preLoaderRoute: typeof GuidesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customer': {
-      id: '/customer'
-      path: '/customer'
-      fullPath: '/customer'
-      preLoaderRoute: typeof CustomerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bus-types-for-hire': {
-      id: '/bus-types-for-hire'
-      path: '/bus-types-for-hire'
-      fullPath: '/bus-types-for-hire'
-      preLoaderRoute: typeof BusTypesForHireRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bus-types': {
-      id: '/bus-types'
-      path: '/bus-types'
-      fullPath: '/bus-types'
-      preLoaderRoute: typeof BusTypesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bus-rental-guides': {
-      id: '/bus-rental-guides'
-      path: '/bus-rental-guides'
-      fullPath: '/bus-rental-guides'
-      preLoaderRoute: typeof BusRentalGuidesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bus-rental': {
-      id: '/bus-rental'
-      path: '/bus-rental'
-      fullPath: '/bus-rental'
-      preLoaderRoute: typeof BusRentalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$seoSlug': {
@@ -754,214 +1142,165 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SeoSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vendor/register': {
-      id: '/vendor/register'
-      path: '/register'
-      fullPath: '/vendor/register'
-      preLoaderRoute: typeof VendorRegisterRouteImport
-      parentRoute: typeof VendorRoute
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/vendor/quotes': {
-      id: '/vendor/quotes'
-      path: '/quotes'
-      fullPath: '/vendor/quotes'
-      preLoaderRoute: typeof VendorQuotesRouteImport
-      parentRoute: typeof VendorRoute
+    '/b2b': {
+      id: '/b2b'
+      path: '/b2b'
+      fullPath: '/b2b'
+      preLoaderRoute: typeof B2bRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/vendor/profile': {
-      id: '/vendor/profile'
-      path: '/profile'
-      fullPath: '/vendor/profile'
-      preLoaderRoute: typeof VendorProfileRouteImport
-      parentRoute: typeof VendorRoute
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/vendor/login': {
-      id: '/vendor/login'
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bus-rental': {
+      id: '/bus-rental'
+      path: '/bus-rental'
+      fullPath: '/bus-rental'
+      preLoaderRoute: typeof BusRentalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bus-rental-guides': {
+      id: '/bus-rental-guides'
+      path: '/bus-rental-guides'
+      fullPath: '/bus-rental-guides'
+      preLoaderRoute: typeof BusRentalGuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bus-types': {
+      id: '/bus-types'
+      path: '/bus-types'
+      fullPath: '/bus-types'
+      preLoaderRoute: typeof BusTypesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bus-types-for-hire': {
+      id: '/bus-types-for-hire'
+      path: '/bus-types-for-hire'
+      fullPath: '/bus-types-for-hire'
+      preLoaderRoute: typeof BusTypesForHireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer': {
+      id: '/customer'
+      path: '/customer'
+      fullPath: '/customer'
+      preLoaderRoute: typeof CustomerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides': {
+      id: '/guides'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
       path: '/login'
-      fullPath: '/vendor/login'
-      preLoaderRoute: typeof VendorLoginRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/leads': {
-      id: '/vendor/leads'
-      path: '/leads'
-      fullPath: '/vendor/leads'
-      preLoaderRoute: typeof VendorLeadsRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/fleet': {
-      id: '/vendor/fleet'
-      path: '/fleet'
-      fullPath: '/vendor/fleet'
-      preLoaderRoute: typeof VendorFleetRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/earnings': {
-      id: '/vendor/earnings'
-      path: '/earnings'
-      fullPath: '/vendor/earnings'
-      preLoaderRoute: typeof VendorEarningsRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/dashboard': {
-      id: '/vendor/dashboard'
-      path: '/dashboard'
-      fullPath: '/vendor/dashboard'
-      preLoaderRoute: typeof VendorDashboardRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/bookings': {
-      id: '/vendor/bookings'
-      path: '/bookings'
-      fullPath: '/vendor/bookings'
-      preLoaderRoute: typeof VendorBookingsRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/services/$serviceSlug': {
-      id: '/services/$serviceSlug'
-      path: '/services/$serviceSlug'
-      fullPath: '/services/$serviceSlug'
-      preLoaderRoute: typeof ServicesServiceSlugRouteImport
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/service-city/$citySlug': {
-      id: '/service-city/$citySlug'
-      path: '/service-city/$citySlug'
-      fullPath: '/service-city/$citySlug'
-      preLoaderRoute: typeof ServiceCityCitySlugRouteImport
+    '/routes': {
+      id: '/routes'
+      path: '/routes'
+      fullPath: '/routes'
+      preLoaderRoute: typeof RoutesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/policies/refund-cancellation': {
-      id: '/policies/refund-cancellation'
-      path: '/policies/refund-cancellation'
-      fullPath: '/policies/refund-cancellation'
-      preLoaderRoute: typeof PoliciesRefundCancellationRouteImport
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/customer/reviews': {
-      id: '/customer/reviews'
-      path: '/reviews'
-      fullPath: '/customer/reviews'
-      preLoaderRoute: typeof CustomerReviewsRouteImport
-      parentRoute: typeof CustomerRoute
+    '/vendor': {
+      id: '/vendor'
+      path: '/vendor'
+      fullPath: '/vendor'
+      preLoaderRoute: typeof VendorRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/customer/quotes': {
-      id: '/customer/quotes'
-      path: '/quotes'
-      fullPath: '/customer/quotes'
-      preLoaderRoute: typeof CustomerQuotesRouteImport
-      parentRoute: typeof CustomerRoute
+    '/$seoSlug/$busTypeSlug': {
+      id: '/$seoSlug/$busTypeSlug'
+      path: '/$busTypeSlug'
+      fullPath: '/$seoSlug/$busTypeSlug'
+      preLoaderRoute: typeof SeoSlugBusTypeSlugRouteImport
+      parentRoute: typeof SeoSlugRoute
     }
-    '/customer/profile': {
-      id: '/customer/profile'
-      path: '/profile'
-      fullPath: '/customer/profile'
-      preLoaderRoute: typeof CustomerProfileRouteImport
-      parentRoute: typeof CustomerRoute
-    }
-    '/customer/login': {
-      id: '/customer/login'
-      path: '/login'
-      fullPath: '/customer/login'
-      preLoaderRoute: typeof CustomerLoginRouteImport
-      parentRoute: typeof CustomerRoute
-    }
-    '/customer/dashboard': {
-      id: '/customer/dashboard'
-      path: '/dashboard'
-      fullPath: '/customer/dashboard'
-      preLoaderRoute: typeof CustomerDashboardRouteImport
-      parentRoute: typeof CustomerRoute
-    }
-    '/customer/bookings': {
-      id: '/customer/bookings'
-      path: '/bookings'
-      fullPath: '/customer/bookings'
-      preLoaderRoute: typeof CustomerBookingsRouteImport
-      parentRoute: typeof CustomerRoute
-    }
-    '/bus-rental/$citySlug': {
-      id: '/bus-rental/$citySlug'
-      path: '/$citySlug'
-      fullPath: '/bus-rental/$citySlug'
-      preLoaderRoute: typeof BusRentalCitySlugRouteImport
-      parentRoute: typeof BusRentalRoute
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
-    }
-    '/admin/vendors': {
-      id: '/admin/vendors'
-      path: '/vendors'
-      fullPath: '/admin/vendors'
-      preLoaderRoute: typeof AdminVendorsRouteImport
+    '/admin/activity': {
+      id: '/admin/activity'
+      path: '/activity'
+      fullPath: '/admin/activity'
+      preLoaderRoute: typeof AdminActivityRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/quotes': {
-      id: '/admin/quotes'
-      path: '/quotes'
-      fullPath: '/admin/quotes'
-      preLoaderRoute: typeof AdminQuotesRouteImport
+    '/admin/audit-logs': {
+      id: '/admin/audit-logs'
+      path: '/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AdminAuditLogsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/payments': {
-      id: '/admin/payments'
-      path: '/payments'
-      fullPath: '/admin/payments'
-      preLoaderRoute: typeof AdminPaymentsRouteImport
+    '/admin/blog-categories': {
+      id: '/admin/blog-categories'
+      path: '/blog-categories'
+      fullPath: '/admin/blog-categories'
+      preLoaderRoute: typeof AdminBlogCategoriesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/notifications': {
-      id: '/admin/notifications'
-      path: '/notifications'
-      fullPath: '/admin/notifications'
-      preLoaderRoute: typeof AdminNotificationsRouteImport
+    '/admin/blog-tags': {
+      id: '/admin/blog-tags'
+      path: '/blog-tags'
+      fullPath: '/admin/blog-tags'
+      preLoaderRoute: typeof AdminBlogTagsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/dashboard': {
-      id: '/admin/dashboard'
-      path: '/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AdminDashboardRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/customers': {
-      id: '/admin/customers'
-      path: '/customers'
-      fullPath: '/admin/customers'
-      preLoaderRoute: typeof AdminCustomersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/cms': {
-      id: '/admin/cms'
-      path: '/cms'
-      fullPath: '/admin/cms'
-      preLoaderRoute: typeof AdminCmsRouteImport
+    '/admin/blogs': {
+      id: '/admin/blogs'
+      path: '/blogs'
+      fullPath: '/admin/blogs'
+      preLoaderRoute: typeof AdminBlogsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/bookings': {
@@ -971,12 +1310,439 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBookingsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/$seoSlug/$busTypeSlug': {
-      id: '/$seoSlug/$busTypeSlug'
-      path: '/$busTypeSlug'
-      fullPath: '/$seoSlug/$busTypeSlug'
-      preLoaderRoute: typeof SeoSlugBusTypeSlugRouteImport
-      parentRoute: typeof SeoSlugRoute
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/cms': {
+      id: '/admin/cms'
+      path: '/cms'
+      fullPath: '/admin/cms'
+      preLoaderRoute: typeof AdminCmsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/companies': {
+      id: '/admin/companies'
+      path: '/companies'
+      fullPath: '/admin/companies'
+      preLoaderRoute: typeof AdminCompaniesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/drivers': {
+      id: '/admin/drivers'
+      path: '/drivers'
+      fullPath: '/admin/drivers'
+      preLoaderRoute: typeof AdminDriversRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/faqs': {
+      id: '/admin/faqs'
+      path: '/faqs'
+      fullPath: '/admin/faqs'
+      preLoaderRoute: typeof AdminFaqsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/notifications': {
+      id: '/admin/notifications'
+      path: '/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminNotificationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/offers': {
+      id: '/admin/offers'
+      path: '/offers'
+      fullPath: '/admin/offers'
+      preLoaderRoute: typeof AdminOffersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payouts': {
+      id: '/admin/payouts'
+      path: '/payouts'
+      fullPath: '/admin/payouts'
+      preLoaderRoute: typeof AdminPayoutsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/quotes': {
+      id: '/admin/quotes'
+      path: '/quotes'
+      fullPath: '/admin/quotes'
+      preLoaderRoute: typeof AdminQuotesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/seo': {
+      id: '/admin/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminSeoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/vehicle-types': {
+      id: '/admin/vehicle-types'
+      path: '/vehicle-types'
+      fullPath: '/admin/vehicle-types'
+      preLoaderRoute: typeof AdminVehicleTypesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/vendors': {
+      id: '/admin/vendors'
+      path: '/vendors'
+      fullPath: '/admin/vendors'
+      preLoaderRoute: typeof AdminVendorsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/b2b/bookings': {
+      id: '/b2b/bookings'
+      path: '/bookings'
+      fullPath: '/b2b/bookings'
+      preLoaderRoute: typeof B2bBookingsRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/contracts': {
+      id: '/b2b/contracts'
+      path: '/contracts'
+      fullPath: '/b2b/contracts'
+      preLoaderRoute: typeof B2bContractsRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/dashboard': {
+      id: '/b2b/dashboard'
+      path: '/dashboard'
+      fullPath: '/b2b/dashboard'
+      preLoaderRoute: typeof B2bDashboardRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/employees': {
+      id: '/b2b/employees'
+      path: '/employees'
+      fullPath: '/b2b/employees'
+      preLoaderRoute: typeof B2bEmployeesRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/favourites': {
+      id: '/b2b/favourites'
+      path: '/favourites'
+      fullPath: '/b2b/favourites'
+      preLoaderRoute: typeof B2bFavouritesRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/invoices': {
+      id: '/b2b/invoices'
+      path: '/invoices'
+      fullPath: '/b2b/invoices'
+      preLoaderRoute: typeof B2bInvoicesRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/payments': {
+      id: '/b2b/payments'
+      path: '/payments'
+      fullPath: '/b2b/payments'
+      preLoaderRoute: typeof B2bPaymentsRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/register': {
+      id: '/b2b/register'
+      path: '/register'
+      fullPath: '/b2b/register'
+      preLoaderRoute: typeof B2bRegisterRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/trips': {
+      id: '/b2b/trips'
+      path: '/trips'
+      fullPath: '/b2b/trips'
+      preLoaderRoute: typeof B2bTripsRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/b2b/wallet': {
+      id: '/b2b/wallet'
+      path: '/wallet'
+      fullPath: '/b2b/wallet'
+      preLoaderRoute: typeof B2bWalletRouteImport
+      parentRoute: typeof B2bRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/bus-rental/$citySlug': {
+      id: '/bus-rental/$citySlug'
+      path: '/$citySlug'
+      fullPath: '/bus-rental/$citySlug'
+      preLoaderRoute: typeof BusRentalCitySlugRouteImport
+      parentRoute: typeof BusRentalRoute
+    }
+    '/corporate/': {
+      id: '/corporate/'
+      path: '/corporate'
+      fullPath: '/corporate/'
+      preLoaderRoute: typeof CorporateIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/corporate/$slug': {
+      id: '/corporate/$slug'
+      path: '/corporate/$slug'
+      fullPath: '/corporate/$slug'
+      preLoaderRoute: typeof CorporateSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/b2b-register': {
+      id: '/customer/b2b-register'
+      path: '/b2b-register'
+      fullPath: '/customer/b2b-register'
+      preLoaderRoute: typeof CustomerB2bRegisterRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/bookings': {
+      id: '/customer/bookings'
+      path: '/bookings'
+      fullPath: '/customer/bookings'
+      preLoaderRoute: typeof CustomerBookingsRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/dashboard': {
+      id: '/customer/dashboard'
+      path: '/dashboard'
+      fullPath: '/customer/dashboard'
+      preLoaderRoute: typeof CustomerDashboardRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/login': {
+      id: '/customer/login'
+      path: '/login'
+      fullPath: '/customer/login'
+      preLoaderRoute: typeof CustomerLoginRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/profile': {
+      id: '/customer/profile'
+      path: '/profile'
+      fullPath: '/customer/profile'
+      preLoaderRoute: typeof CustomerProfileRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/quotes': {
+      id: '/customer/quotes'
+      path: '/quotes'
+      fullPath: '/customer/quotes'
+      preLoaderRoute: typeof CustomerQuotesRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/reviews': {
+      id: '/customer/reviews'
+      path: '/reviews'
+      fullPath: '/customer/reviews'
+      preLoaderRoute: typeof CustomerReviewsRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/saved-trips': {
+      id: '/customer/saved-trips'
+      path: '/saved-trips'
+      fullPath: '/customer/saved-trips'
+      preLoaderRoute: typeof CustomerSavedTripsRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/customer/wishlist': {
+      id: '/customer/wishlist'
+      path: '/wishlist'
+      fullPath: '/customer/wishlist'
+      preLoaderRoute: typeof CustomerWishlistRouteImport
+      parentRoute: typeof CustomerRoute
+    }
+    '/industries/': {
+      id: '/industries/'
+      path: '/industries'
+      fullPath: '/industries/'
+      preLoaderRoute: typeof IndustriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries/$slug': {
+      id: '/industries/$slug'
+      path: '/industries/$slug'
+      fullPath: '/industries/$slug'
+      preLoaderRoute: typeof IndustriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/refund-cancellation': {
+      id: '/policies/refund-cancellation'
+      path: '/policies/refund-cancellation'
+      fullPath: '/policies/refund-cancellation'
+      preLoaderRoute: typeof PoliciesRefundCancellationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service-city/$citySlug': {
+      id: '/service-city/$citySlug'
+      path: '/service-city/$citySlug'
+      fullPath: '/service-city/$citySlug'
+      preLoaderRoute: typeof ServiceCityCitySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$serviceSlug': {
+      id: '/services/$serviceSlug'
+      path: '/services/$serviceSlug'
+      fullPath: '/services/$serviceSlug'
+      preLoaderRoute: typeof ServicesServiceSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vendor/analytics': {
+      id: '/vendor/analytics'
+      path: '/analytics'
+      fullPath: '/vendor/analytics'
+      preLoaderRoute: typeof VendorAnalyticsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/bookings': {
+      id: '/vendor/bookings'
+      path: '/bookings'
+      fullPath: '/vendor/bookings'
+      preLoaderRoute: typeof VendorBookingsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/calendar': {
+      id: '/vendor/calendar'
+      path: '/calendar'
+      fullPath: '/vendor/calendar'
+      preLoaderRoute: typeof VendorCalendarRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/dashboard': {
+      id: '/vendor/dashboard'
+      path: '/dashboard'
+      fullPath: '/vendor/dashboard'
+      preLoaderRoute: typeof VendorDashboardRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/documents': {
+      id: '/vendor/documents'
+      path: '/documents'
+      fullPath: '/vendor/documents'
+      preLoaderRoute: typeof VendorDocumentsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/drivers': {
+      id: '/vendor/drivers'
+      path: '/drivers'
+      fullPath: '/vendor/drivers'
+      preLoaderRoute: typeof VendorDriversRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/earnings': {
+      id: '/vendor/earnings'
+      path: '/earnings'
+      fullPath: '/vendor/earnings'
+      preLoaderRoute: typeof VendorEarningsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/fleet': {
+      id: '/vendor/fleet'
+      path: '/fleet'
+      fullPath: '/vendor/fleet'
+      preLoaderRoute: typeof VendorFleetRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/leads': {
+      id: '/vendor/leads'
+      path: '/leads'
+      fullPath: '/vendor/leads'
+      preLoaderRoute: typeof VendorLeadsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/login': {
+      id: '/vendor/login'
+      path: '/login'
+      fullPath: '/vendor/login'
+      preLoaderRoute: typeof VendorLoginRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/notifications': {
+      id: '/vendor/notifications'
+      path: '/notifications'
+      fullPath: '/vendor/notifications'
+      preLoaderRoute: typeof VendorNotificationsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/payments': {
+      id: '/vendor/payments'
+      path: '/payments'
+      fullPath: '/vendor/payments'
+      preLoaderRoute: typeof VendorPaymentsRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/profile': {
+      id: '/vendor/profile'
+      path: '/profile'
+      fullPath: '/vendor/profile'
+      preLoaderRoute: typeof VendorProfileRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/quotes': {
+      id: '/vendor/quotes'
+      path: '/quotes'
+      fullPath: '/vendor/quotes'
+      preLoaderRoute: typeof VendorQuotesRouteImport
+      parentRoute: typeof VendorRoute
+    }
+    '/vendor/register': {
+      id: '/vendor/register'
+      path: '/register'
+      fullPath: '/vendor/register'
+      preLoaderRoute: typeof VendorRegisterRouteImport
+      parentRoute: typeof VendorRoute
     }
     '/$seoSlug/rental/$busTypeSlug': {
       id: '/$seoSlug/rental/$busTypeSlug'
@@ -1002,32 +1768,90 @@ const SeoSlugRouteWithChildren =
   SeoSlugRoute._addFileChildren(SeoSlugRouteChildren)
 
 interface AdminRouteChildren {
+  AdminActivityRoute: typeof AdminActivityRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminAuditLogsRoute: typeof AdminAuditLogsRoute
+  AdminBlogCategoriesRoute: typeof AdminBlogCategoriesRoute
+  AdminBlogTagsRoute: typeof AdminBlogTagsRoute
+  AdminBlogsRoute: typeof AdminBlogsRoute
   AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
   AdminCmsRoute: typeof AdminCmsRoute
+  AdminCompaniesRoute: typeof AdminCompaniesRoute
   AdminCustomersRoute: typeof AdminCustomersRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminDriversRoute: typeof AdminDriversRoute
+  AdminFaqsRoute: typeof AdminFaqsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminNotificationsRoute: typeof AdminNotificationsRoute
+  AdminOffersRoute: typeof AdminOffersRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminPayoutsRoute: typeof AdminPayoutsRoute
   AdminQuotesRoute: typeof AdminQuotesRoute
+  AdminSeoRoute: typeof AdminSeoRoute
+  AdminServicesRoute: typeof AdminServicesRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminVehicleTypesRoute: typeof AdminVehicleTypesRoute
   AdminVendorsRoute: typeof AdminVendorsRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminActivityRoute: AdminActivityRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminAuditLogsRoute: AdminAuditLogsRoute,
+  AdminBlogCategoriesRoute: AdminBlogCategoriesRoute,
+  AdminBlogTagsRoute: AdminBlogTagsRoute,
+  AdminBlogsRoute: AdminBlogsRoute,
   AdminBookingsRoute: AdminBookingsRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
   AdminCmsRoute: AdminCmsRoute,
+  AdminCompaniesRoute: AdminCompaniesRoute,
   AdminCustomersRoute: AdminCustomersRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminDriversRoute: AdminDriversRoute,
+  AdminFaqsRoute: AdminFaqsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminNotificationsRoute: AdminNotificationsRoute,
+  AdminOffersRoute: AdminOffersRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminPayoutsRoute: AdminPayoutsRoute,
   AdminQuotesRoute: AdminQuotesRoute,
+  AdminSeoRoute: AdminSeoRoute,
+  AdminServicesRoute: AdminServicesRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminVehicleTypesRoute: AdminVehicleTypesRoute,
   AdminVendorsRoute: AdminVendorsRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface B2bRouteChildren {
+  B2bBookingsRoute: typeof B2bBookingsRoute
+  B2bContractsRoute: typeof B2bContractsRoute
+  B2bDashboardRoute: typeof B2bDashboardRoute
+  B2bEmployeesRoute: typeof B2bEmployeesRoute
+  B2bFavouritesRoute: typeof B2bFavouritesRoute
+  B2bInvoicesRoute: typeof B2bInvoicesRoute
+  B2bPaymentsRoute: typeof B2bPaymentsRoute
+  B2bRegisterRoute: typeof B2bRegisterRoute
+  B2bTripsRoute: typeof B2bTripsRoute
+  B2bWalletRoute: typeof B2bWalletRoute
+}
+
+const B2bRouteChildren: B2bRouteChildren = {
+  B2bBookingsRoute: B2bBookingsRoute,
+  B2bContractsRoute: B2bContractsRoute,
+  B2bDashboardRoute: B2bDashboardRoute,
+  B2bEmployeesRoute: B2bEmployeesRoute,
+  B2bFavouritesRoute: B2bFavouritesRoute,
+  B2bInvoicesRoute: B2bInvoicesRoute,
+  B2bPaymentsRoute: B2bPaymentsRoute,
+  B2bRegisterRoute: B2bRegisterRoute,
+  B2bTripsRoute: B2bTripsRoute,
+  B2bWalletRoute: B2bWalletRoute,
+}
+
+const B2bRouteWithChildren = B2bRoute._addFileChildren(B2bRouteChildren)
 
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
@@ -1052,21 +1876,27 @@ const BusRentalRouteWithChildren = BusRentalRoute._addFileChildren(
 )
 
 interface CustomerRouteChildren {
+  CustomerB2bRegisterRoute: typeof CustomerB2bRegisterRoute
   CustomerBookingsRoute: typeof CustomerBookingsRoute
   CustomerDashboardRoute: typeof CustomerDashboardRoute
   CustomerLoginRoute: typeof CustomerLoginRoute
   CustomerProfileRoute: typeof CustomerProfileRoute
   CustomerQuotesRoute: typeof CustomerQuotesRoute
   CustomerReviewsRoute: typeof CustomerReviewsRoute
+  CustomerSavedTripsRoute: typeof CustomerSavedTripsRoute
+  CustomerWishlistRoute: typeof CustomerWishlistRoute
 }
 
 const CustomerRouteChildren: CustomerRouteChildren = {
+  CustomerB2bRegisterRoute: CustomerB2bRegisterRoute,
   CustomerBookingsRoute: CustomerBookingsRoute,
   CustomerDashboardRoute: CustomerDashboardRoute,
   CustomerLoginRoute: CustomerLoginRoute,
   CustomerProfileRoute: CustomerProfileRoute,
   CustomerQuotesRoute: CustomerQuotesRoute,
   CustomerReviewsRoute: CustomerReviewsRoute,
+  CustomerSavedTripsRoute: CustomerSavedTripsRoute,
+  CustomerWishlistRoute: CustomerWishlistRoute,
 }
 
 const CustomerRouteWithChildren = CustomerRoute._addFileChildren(
@@ -1074,24 +1904,36 @@ const CustomerRouteWithChildren = CustomerRoute._addFileChildren(
 )
 
 interface VendorRouteChildren {
+  VendorAnalyticsRoute: typeof VendorAnalyticsRoute
   VendorBookingsRoute: typeof VendorBookingsRoute
+  VendorCalendarRoute: typeof VendorCalendarRoute
   VendorDashboardRoute: typeof VendorDashboardRoute
+  VendorDocumentsRoute: typeof VendorDocumentsRoute
+  VendorDriversRoute: typeof VendorDriversRoute
   VendorEarningsRoute: typeof VendorEarningsRoute
   VendorFleetRoute: typeof VendorFleetRoute
   VendorLeadsRoute: typeof VendorLeadsRoute
   VendorLoginRoute: typeof VendorLoginRoute
+  VendorNotificationsRoute: typeof VendorNotificationsRoute
+  VendorPaymentsRoute: typeof VendorPaymentsRoute
   VendorProfileRoute: typeof VendorProfileRoute
   VendorQuotesRoute: typeof VendorQuotesRoute
   VendorRegisterRoute: typeof VendorRegisterRoute
 }
 
 const VendorRouteChildren: VendorRouteChildren = {
+  VendorAnalyticsRoute: VendorAnalyticsRoute,
   VendorBookingsRoute: VendorBookingsRoute,
+  VendorCalendarRoute: VendorCalendarRoute,
   VendorDashboardRoute: VendorDashboardRoute,
+  VendorDocumentsRoute: VendorDocumentsRoute,
+  VendorDriversRoute: VendorDriversRoute,
   VendorEarningsRoute: VendorEarningsRoute,
   VendorFleetRoute: VendorFleetRoute,
   VendorLeadsRoute: VendorLeadsRoute,
   VendorLoginRoute: VendorLoginRoute,
+  VendorNotificationsRoute: VendorNotificationsRoute,
+  VendorPaymentsRoute: VendorPaymentsRoute,
   VendorProfileRoute: VendorProfileRoute,
   VendorQuotesRoute: VendorQuotesRoute,
   VendorRegisterRoute: VendorRegisterRoute,
@@ -1105,6 +1947,7 @@ const rootRouteChildren: RootRouteChildren = {
   SeoSlugRoute: SeoSlugRouteWithChildren,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
+  B2bRoute: B2bRouteWithChildren,
   BlogRoute: BlogRouteWithChildren,
   BookRoute: BookRoute,
   BusRentalRoute: BusRentalRouteWithChildren,
@@ -1118,19 +1961,15 @@ const rootRouteChildren: RootRouteChildren = {
   RoutesRoute: RoutesRoute,
   SignupRoute: SignupRoute,
   VendorRoute: VendorRouteWithChildren,
+  CorporateSlugRoute: CorporateSlugRoute,
+  IndustriesSlugRoute: IndustriesSlugRoute,
   PoliciesRefundCancellationRoute: PoliciesRefundCancellationRoute,
   ServiceCityCitySlugRoute: ServiceCityCitySlugRoute,
   ServicesServiceSlugRoute: ServicesServiceSlugRoute,
+  CorporateIndexRoute: CorporateIndexRoute,
+  IndustriesIndexRoute: IndustriesIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

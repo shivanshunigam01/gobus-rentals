@@ -50,7 +50,7 @@ function AdminNotifications() {
     <div className={panelPage.md}>
       <h1 className="font-display text-2xl font-bold text-foreground mb-1">Notifications</h1>
       <p className="text-muted-foreground text-sm mb-6">
-        Queue broadcast messages via your API (Twilio/SendGrid in production). With the in-browser local API, quote and booking emails are logged here automatically under History for QA.
+        Broadcast emails via SMTP. Recipients also get an in-app notification when they have an account. History logs every send for audit.
       </p>
 
       <Tabs defaultValue="send">
@@ -70,13 +70,10 @@ function AdminNotifications() {
             >
               <div className="space-y-2">
                 <Label>Channel</Label>
-                <Select value={channel} onValueChange={setChannel}>
+                <Select value={channel} onValueChange={setChannel} disabled>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="sms">SMS</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="push">Push</SelectItem>
-                    <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                    <SelectItem value="email">Email (SMTP)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

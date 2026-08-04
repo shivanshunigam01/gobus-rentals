@@ -95,9 +95,52 @@
   --font-body: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 
+.dark {
+  --background: oklch(0.16 0.02 250);
+  --foreground: oklch(0.96 0.01 240);
+  --card: oklch(0.2 0.02 250);
+  --card-foreground: oklch(0.96 0.01 240);
+  --popover: oklch(0.2 0.02 250);
+  --popover-foreground: oklch(0.96 0.01 240);
+  --primary: oklch(0.68 0.16 250);
+  --primary-foreground: oklch(0.16 0.02 250);
+  --secondary: oklch(0.26 0.03 250);
+  --secondary-foreground: oklch(0.94 0.01 240);
+  --muted: oklch(0.24 0.02 250);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.58 0.18 230);
+  --accent-foreground: oklch(0.98 0.01 240);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.3 0.02 250);
+  --input: oklch(0.3 0.02 250);
+  --ring: oklch(0.68 0.16 250);
+  --chart-1: oklch(0.68 0.16 250);
+  --chart-2: oklch(0.7 0.14 200);
+  --chart-3: oklch(0.65 0.12 280);
+  --chart-4: oklch(0.72 0.14 180);
+  --chart-5: oklch(0.7 0.16 40);
+  --sidebar: oklch(0.18 0.02 250);
+  --sidebar-foreground: oklch(0.96 0.01 240);
+  --sidebar-primary: oklch(0.68 0.16 250);
+  --sidebar-primary-foreground: oklch(0.16 0.02 250);
+  --sidebar-accent: oklch(0.26 0.03 250);
+  --sidebar-accent-foreground: oklch(0.96 0.01 240);
+  --sidebar-border: oklch(0.3 0.02 250);
+  --sidebar-ring: oklch(0.68 0.16 250);
+  --hero-gradient-start: oklch(0.28 0.1 250);
+  --hero-gradient-end: oklch(0.35 0.12 230);
+  --surface: oklch(0.14 0.02 250);
+  --surface-foreground: oklch(0.9 0.01 240);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -114,4 +157,23 @@
     cursor: pointer;
   }
 
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
 }

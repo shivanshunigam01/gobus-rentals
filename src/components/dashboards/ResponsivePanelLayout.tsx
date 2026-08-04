@@ -7,6 +7,9 @@ import { COMPANY } from "@/lib/company";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { PanelNavLink } from "./panel-links";
+import { ThemeToggle } from "@/components/enterprise/ThemeToggle";
+import { GlobalSearch } from "@/components/enterprise/GlobalSearch";
+import { NotificationBell } from "@/components/enterprise/NotificationBell";
 
 type Props = {
   links: PanelNavLink[];
@@ -17,6 +20,8 @@ type Props = {
   logoutTo: string;
   /** e.g. Login button when browsing the customer shell without a session */
   mobileHeaderEnd?: ReactNode;
+  showAdminTools?: boolean;
+  notificationBasePath?: string;
   children: ReactNode;
 };
 
@@ -75,6 +80,8 @@ export function ResponsivePanelLayout({
   panelLabelClassName,
   logoutTo,
   mobileHeaderEnd,
+  showAdminTools = false,
+  notificationBasePath = "/api/enterprise",
   children,
 }: Props) {
   const location = useLocation();
@@ -82,6 +89,13 @@ export function ResponsivePanelLayout({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMobile = () => setMobileOpen(false);
+  const tools = (
+    <div className="flex items-center gap-2">
+      {showAdminTools ? <GlobalSearch /> : null}
+      <NotificationBell basePath={notificationBasePath} />
+      <ThemeToggle />
+    </div>
+  );
 
   return (
     <div className="min-h-dvh bg-surface flex flex-col lg:flex-row">
@@ -127,14 +141,18 @@ export function ResponsivePanelLayout({
             {panelLabel}
           </span>
         </Link>
-        {mobileHeaderEnd ? <div className="shrink-0">{mobileHeaderEnd}</div> : null}
+        <div className="shrink-0 flex items-center gap-2">
+          {tools}
+          {mobileHeaderEnd}
+        </div>
       </header>
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 bg-card border-r border-border min-h-0 lg:min-h-screen flex-col shrink-0">
         <SidebarHeader panelLabel={panelLabel} panelLabelClassName={panelLabelClassName} />
         <NavList links={links} pathname={pathname} />
-        <div className="p-3 border-t border-border mt-auto">
+        <div className="p-3 border-t border-border mt-auto space-y-2">
+          <div className="flex items-center justify-between gap-2 px-1">{tools}</div>
           <Link
             to={logoutTo}
             onClick={() => clearAuth()}
@@ -146,7 +164,9 @@ export function ResponsivePanelLayout({
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0 min-h-0 overflow-x-hidden pb-[env(safe-area-inset-bottom)]">{children}</main>
+      <main id="panel-main" className="flex-1 min-w-0 min-h-0 overflow-x-hidden pb-[env(safe-area-inset-bottom)]" tabIndex={-1}>
+        {children}
+      </main>
     </div>
   );
 }

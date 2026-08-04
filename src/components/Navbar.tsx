@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, LogIn, ChevronDown } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/enterprise/ThemeToggle";
 import { NAVBAR_CITY_WISE_LINKS } from "@/data/navbar-city-wise-links";
 import { NAVBAR_BUS_TYPE_LINKS } from "@/data/navbar-bus-type-links";
 import { NAVBAR_SERVICE_TYPE_LINKS, NavbarServiceTypeLink } from "@/data/service-links";
@@ -281,6 +282,12 @@ export function Navbar() {
           <Link to="/blog" className={navCenterLinkClass}>
             Blog
           </Link>
+          <Link to="/corporate" className={navCenterLinkClass}>
+            Corporate
+          </Link>
+          <Link to="/industries" className={navCenterLinkClass}>
+            Industries
+          </Link>
           <CityWiseDesktopMenu />
           <BusTypesDesktopMenu />
           <ServicesDesktopMenu />
@@ -293,6 +300,7 @@ export function Navbar() {
         </div>
 
         <div className="hidden shrink-0 items-center gap-3 md:flex lg:gap-4 xl:gap-5">
+          <ThemeToggle />
           <Link to="/book" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
             Book
           </Link>
@@ -317,6 +325,9 @@ export function Navbar() {
           <Link to="/" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Home</Link>
           <Link to="/about" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>About</Link>
           <Link to="/blog" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Blog</Link>
+          <Link to="/corporate" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Corporate</Link>
+          <Link to="/industries" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Industries</Link>
+          <Link to="/services" className="block py-2 text-sm font-medium text-foreground" onClick={() => setMobileOpen(false)}>Services</Link>
           <details className="group rounded-lg border border-border bg-muted/20">
             <summary className="cursor-pointer list-none px-3 py-2.5 text-sm font-medium text-foreground [&::-webkit-details-marker]:hidden flex items-center justify-between">
               City Wise +

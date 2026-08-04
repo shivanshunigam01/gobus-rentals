@@ -9,6 +9,8 @@
  */
 import http from "node:http";
 import { createHmac, randomUUID } from "node:crypto";
+import { handleContentApi } from "./content-store.mjs";
+import { handleB2bApi, getB2bLoginUser, mockTokenForB2b } from "./b2b-store.mjs";
 
 const PORT = parseInt(String(process.env.MOCK_API_PORT || process.env.PORT || 3001), 10);
 
@@ -304,6 +306,75 @@ async function handle(req, res) {
   const method = req.method || "GET";
 
   try {
+    const isB2bPath =
+      path === "/api/auth/b2b/register" ||
+      path.startsWith("/api/b2b/") ||
+      path.startsWith("/api/admin/b2b/") ||
+      path.startsWith("/api/admin/offers") ||
+      path.startsWith("/api/admin/payouts") ||
+      path === "/api/public/offers" ||
+      path === "/api/public/offers/validate-coupon" ||
+      path === "/api/vendor/payouts" ||
+      (path.startsWith("/api/admin/bookings/") && path !== "/api/admin/bookings");
+    if (isB2bPath) {
+      const body = method === "GET" || method === "DELETE" ? {} : await readBody(req);
+      const b2bHandled = handleB2bApi(
+        method,
+        path,
+        url,
+        body,
+        (status, data) => json(res, status, data),
+        users,
+      );
+      if (b2bHandled === "csv") {
+        res.writeHead(200, {
+          "Content-Type": "text/csv",
+          "Access-Control-Allow-Origin": "*",
+          "Content-Disposition": 'attachment; filename="payouts.csv"',
+        });
+        return res.end("id,vendor,status\n");
+      }
+      if (b2bHandled) return;
+    }
+
+    const isContentPath =
+      path.startsWith("/api/public/") ||
+      path.startsWith("/api/admin/vehicle-types") ||
+      path.startsWith("/api/admin/services") ||
+      path.startsWith("/api/admin/blogs") ||
+      path.startsWith("/api/admin/blog-categories") ||
+      path.startsWith("/api/admin/blog-tags") ||
+      path.startsWith("/api/admin/faqs");
+    if (isContentPath) {
+      const body = method === "GET" || method === "DELETE" ? {} : await readBody(req);
+      const handled = handleContentApi(
+        method,
+        path,
+        url,
+        body,
+        (status, data) => json(res, status, data),
+      );
+      if (handled !== null) return handled;
+    }
+
+    /* ---------- OTP (dev) ---------- */
+    if (method === "POST" && path === "/api/auth/otp/send") {
+      const b = await readBody(req);
+      const code = "123456";
+      globalThis.__mockOtps = globalThis.__mockOtps || new Map();
+      globalThis.__mockOtps.set(`${b.channel}:${b.target}`, code);
+      return json(res, 200, { ok: true, channel: b.channel, devCode: code, expiresInSeconds: 600 });
+    }
+    if (method === "POST" && path === "/api/auth/otp/verify") {
+      const b = await readBody(req);
+      const key = `${b.channel}:${b.target}`;
+      const expected = (globalThis.__mockOtps && globalThis.__mockOtps.get(key)) || "123456";
+      if (String(b.code) !== String(expected)) return json(res, 400, { error: "Invalid OTP" });
+      globalThis.__mockOtpVerified = globalThis.__mockOtpVerified || new Set();
+      globalThis.__mockOtpVerified.add(key);
+      return json(res, 200, { ok: true, verified: true });
+    }
+
     /* ---------- Auth ---------- */
     if (method === "POST" && path === "/api/auth/register") {
       const b = await readBody(req);
@@ -372,6 +443,19 @@ async function handle(req, res) {
 
     if (method === "POST" && path === "/api/auth/login") {
       const b = await readBody(req);
+      const b2bUser = getB2bLoginUser(b.email, b.password);
+      if (b2bUser) {
+        return json(res, 200, {
+          token: mockTokenForB2b(b2bUser),
+          user: {
+            id: b2bUser.id,
+            email: b2bUser.email,
+            name: b2bUser.name,
+            role: "b2b",
+            companyId: b2bUser.companyId,
+          },
+        });
+      }
       const u = [...users.values()].find((x) => x.email === b.email);
       if (!u || u.password !== b.password) {
         return json(res, 401, { error: "Invalid email or password" });

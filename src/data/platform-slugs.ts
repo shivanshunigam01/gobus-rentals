@@ -1,0 +1,65 @@
+/** Fallback slugs for sitemap when API is unavailable at build time. */
+export const CORPORATE_SLUGS = [
+  "corporate-bus-rental",
+  "corporate-bus-rental-india",
+  "employee-transportation-services",
+  "employee-transport-solutions",
+  "staff-transportation-company",
+  "corporate-shuttle-services",
+  "corporate-fleet-services",
+  "corporate-mobility-solutions",
+  "monthly-bus-contract-services",
+  "long-term-corporate-contracts",
+  "long-term-bus-rental",
+  "bus-rental-for-companies",
+  "daily-staff-pick-drop",
+  "office-staff-pickup-drop",
+  "employee-shuttle-service",
+  "intercity-corporate-travel",
+  "shuttle-services",
+  "executive-transportation",
+] as const;
+
+export const INDUSTRY_SLUGS = [
+  "mnc-transportation",
+  "it-company-transportation",
+  "bpo-transportation",
+  "government-transportation",
+  "factory-transportation",
+  "industrial-transportation",
+  "airport-transportation",
+  "airline-crew-transportation",
+  "healthcare-transportation",
+  "hospital-transportation",
+  "school-bus-rental",
+  "college-transportation",
+  "university-transportation",
+  "mining-transportation",
+  "oil-gas-transportation",
+  "refinery-transportation",
+  "port-transportation",
+  "warehouse-transportation",
+  "logistics-transportation",
+  "hotel-transportation",
+  "tourist-transportation",
+  "vip-transportation",
+  "foreign-delegate-transportation",
+] as const;
+
+export const SERVICE_SLUGS = [
+  "corporate-transportation-platform",
+  "urbania-rental-for-corporates",
+  "cab-and-car-rental-for-business",
+  "airport-shuttle-services",
+] as const;
+
+export const BLOG_SEED_SLUGS = [
+  "corporate-bus-rental-india-2026-guide",
+  "employee-transportation-best-practices-it-bpo",
+  "force-urbania-vs-tempo-traveller-corporate",
+  "monthly-bus-contract-cost-india",
+  "airport-shuttle-planning-corporate-campuses",
+  "school-college-bus-rental-compliance",
+  "why-gps-tracking-matters-corporate-mobility",
+  "sedan-suv-innova-crysta-executive-travel",
+] as const;

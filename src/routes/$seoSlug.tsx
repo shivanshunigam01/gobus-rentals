@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound, Outlet, redirect, useChildMatches } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
@@ -17,6 +17,9 @@ import { fleetImages } from "@/lib/media";
 import { CheckCircle2, Users, MapPin, Star, Bus, ArrowRight, Phone, MessageCircle } from "lucide-react";
 import { BUS_TYPE_ROUTES } from "@/data/city-bus-type-routes";
 import { CapacityGuideSection } from "@/components/CapacityGuideSection";
+import { CitySeoLandingView } from "@/components/landing/CitySeoLandingView";
+import { InternalLinkBlocks } from "@/components/seo/InternalLinkBlocks";
+import { fetchCitySeo, fetchProgrammaticSeo, type CitySeoResponse } from "@/lib/api/seo";
 
 const CITY_SUFFIX = "-bus-rental";
 const SERVICE_CITY_SUFFIX = "-bus-rental-guide";
@@ -86,12 +89,15 @@ export const Route = createFileRoute("/$seoSlug")({
       });
     }
     const citySlug = extractCitySlug(params.seoSlug);
-    if (citySlug && getCityBySlug(citySlug)) return;
+    // Allow API-backed city hubs even if not in the static city list
+    if (citySlug) return;
     if (getBusTypePageBySlug(params.seoSlug)) return;
     const scSlug = extractServiceCitySlug(params.seoSlug);
     if (scSlug && getServiceCityPage(scSlug)) return;
     // Plain city slug (no suffix) — powers the /:citySlug bus-type picker page
     if (getCityBySlug(params.seoSlug)) return;
+    // Programmatic intent×city pages (e.g. corporate-bus-rental-delhi) resolved in component via API
+    if (params.seoSlug.includes("-") && params.seoSlug.length > 8) return;
     throw notFound();
   },
   head: ({ params }) => {
@@ -104,6 +110,10 @@ export const Route = createFileRoute("/$seoSlug")({
     const city = citySlug ? getCityBySlug(citySlug) : null;
     if (citySlug && city) {
       return headForCityBusRentalPage(city);
+    }
+    if (citySlug) {
+      const name = citySlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      return headForCityBusRentalPage({ slug: citySlug, name, state: "India" });
     }
 
     const busTypePage = getBusTypePageBySlug(params.seoSlug);
@@ -265,7 +275,7 @@ function SeoSlugPage() {
   const { seoSlug } = Route.useParams();
   if (childMatches.length > 0) return <Outlet />;
   const citySlug = extractCitySlug(seoSlug);
-  if (citySlug && getCityBySlug(citySlug)) return <CityBusRentalPage citySlug={citySlug} />;
+  if (citySlug) return <CityBusRentalPage citySlug={citySlug} />;
   const busTypePage = getBusTypePageBySlug(seoSlug);
   if (busTypePage) return <BusTypeRentalPage page={busTypePage} />;
   const scSlug = extractServiceCitySlug(seoSlug);
@@ -273,7 +283,70 @@ function SeoSlugPage() {
   // Plain city slug → bus-type picker page
   const plainCity = getCityBySlug(seoSlug);
   if (plainCity) return <CityBusTypesPickerPage city={plainCity} />;
-  throw notFound();
+  return <ProgrammaticSeoPageView slug={seoSlug} />;
+}
+
+function ProgrammaticSeoPageView({ slug }: { slug: string }) {
+  const [data, setData] = useState<{
+    page: Record<string, unknown>;
+    internalLinks: Record<string, unknown>;
+  } | null>(null);
+  const [missing, setMissing] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    fetchProgrammaticSeo(slug)
+      .then((res) => {
+        if (alive) setData({ page: res.page, internalLinks: res.internalLinks });
+      })
+      .catch(() => {
+        if (alive) setMissing(true);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [slug]);
+
+  if (missing) throw notFound();
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="pt-28 max-w-3xl mx-auto px-4 text-muted-foreground">Loading…</main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const page = data.page;
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main className="pt-20 pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: String(page.h1 || page.title || slug) }]} />
+          <h1 className="font-display text-3xl sm:text-4xl font-bold mb-4">{String(page.h1 || page.title)}</h1>
+          <p className="text-muted-foreground whitespace-pre-line mb-8">{String(page.body || page.metaDescription || "")}</p>
+          <Button asChild size="lg" className="mb-10">
+            <a href="/book">Get a Free Quote</a>
+          </Button>
+          {Array.isArray(page.faqs) && (page.faqs as { question: string; answer: string }[]).length > 0 && (
+            <section className="mb-10">
+              <h2 className="font-display text-2xl font-semibold mb-3">FAQs</h2>
+              {(page.faqs as { question: string; answer: string }[]).map((f) => (
+                <details key={f.question} className="border rounded-lg p-4 mb-2">
+                  <summary className="font-medium cursor-pointer">{f.question}</summary>
+                  <p className="mt-2 text-sm text-muted-foreground">{f.answer}</p>
+                </details>
+              ))}
+            </section>
+          )}
+          <InternalLinkBlocks links={data.internalLinks as never} />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 // ─── City bus-type picker page (/citySlug) ────────────────────────────────────
@@ -392,7 +465,38 @@ function CityBusTypesPickerPage({ city }: Readonly<{ city: CityRecord }>) {
 // ─── City landing page ────────────────────────────────────────────────────────
 
 function CityBusRentalPage({ citySlug }: Readonly<{ citySlug: string }>) {
-  const city = getCityBySlug(citySlug)!;
+  const staticCity = getCityBySlug(citySlug);
+  const [apiData, setApiData] = useState<CitySeoResponse | null>(null);
+  const [apiTried, setApiTried] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    fetchCitySeo(citySlug)
+      .then((res) => {
+        if (alive) setApiData(res);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (alive) setApiTried(true);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [citySlug]);
+
+  if (apiData) return <CitySeoLandingView data={apiData} />;
+  if (!staticCity && apiTried) throw notFound();
+  if (!staticCity) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="pt-28 max-w-3xl mx-auto px-4 text-muted-foreground">Loading city page…</main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const city = staticCity;
   const related = getRelatedCities(city, 10);
   const mapQuery = encodeURIComponent(`${city.name} ${city.state} India bus stand`);
 

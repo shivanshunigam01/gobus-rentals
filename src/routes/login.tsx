@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck, Eye, EyeOff, Briefcase } from "lucide-react";
 import { api } from "@/lib/api";
 import { setAuth, type StoredUser } from "@/lib/auth-storage";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
@@ -16,7 +16,10 @@ import { buildPageMeta } from "@/lib/seo/buildMeta";
 export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>) => ({
     role:
-      search.role === "vendor" || search.role === "admin" || search.role === "customer"
+      search.role === "vendor" ||
+      search.role === "admin" ||
+      search.role === "customer" ||
+      search.role === "b2b"
         ? search.role
         : undefined,
   }),
@@ -24,14 +27,14 @@ export const Route = createFileRoute("/login")({
   head: () =>
     buildPageMeta({
       title: "Login",
-      description: "Customer, vendor, and admin sign-in for Luxury Bus Rental.",
+      description: "Customer, vendor, B2B, and admin sign-in for Luxury Bus Rental.",
       path: "/login",
       noindex: true,
     }),
 });
 
 type LoginRes = { token: string; user: StoredUser };
-type AccountRole = "customer" | "vendor" | "admin";
+type AccountRole = "customer" | "vendor" | "admin" | "b2b";
 const GOOGLE_IDENTITY_SCRIPT = "https://accounts.google.com/gsi/client";
 let googleScriptPromise: Promise<void> | null = null;
 let googleInitializedClientId: string | null = null;
@@ -68,6 +71,7 @@ function ensureGoogleScript() {
 const roleLabels: Record<AccountRole, { title: string; description: string }> = {
   customer: { title: "Customer", description: "Book buses, quotes & trips" },
   vendor: { title: "Vendor", description: "Operators & fleet dashboard" },
+  b2b: { title: "B2B", description: "Corporate travel portal" },
   admin: { title: "Admin", description: "Platform staff only" },
 };
 
@@ -97,7 +101,12 @@ function LoginPage() {
   }, []);
 
   useEffect(() => {
-    if (roleFromUrl === "vendor" || roleFromUrl === "admin" || roleFromUrl === "customer") {
+    if (
+      roleFromUrl === "vendor" ||
+      roleFromUrl === "admin" ||
+      roleFromUrl === "customer" ||
+      roleFromUrl === "b2b"
+    ) {
       setAccountRole(roleFromUrl);
     } else {
       setAccountRole("customer");
@@ -107,7 +116,7 @@ function LoginPage() {
   const setRoleInUrl = (role: AccountRole) => {
     navigate({
       to: "/login",
-      search: role === "customer" ? { role: "customer" } : { role },
+      search: { role },
       replace: true,
     });
   };
@@ -138,6 +147,16 @@ function LoginPage() {
         setAuth(data.token, data.user);
         toast.success("Vendor session started");
         navigate({ to: "/vendor/dashboard" });
+        return;
+      }
+      if (accountRole === "b2b") {
+        if (role !== "b2b") {
+          toast.error("This account is not a B2B corporate account.");
+          return;
+        }
+        setAuth(data.token, data.user);
+        toast.success("Corporate session started");
+        navigate({ to: "/b2b/dashboard" });
         return;
       }
       if (accountRole === "admin") {
@@ -312,7 +331,9 @@ function LoginPage() {
       ? "Sign in to manage bookings and quotes"
       : accountRole === "vendor"
         ? "Sign in to your operator dashboard"
-        : "Sign in to the admin console";
+        : accountRole === "b2b"
+          ? "Sign in to your corporate travel portal"
+          : "Sign in to the admin console";
 
   return (
     <div className="min-h-screen bg-background">
@@ -343,7 +364,7 @@ function LoginPage() {
                     setRoleInUrl(r);
                   }}
                 >
-                  <TabsList className="mb-6 grid h-auto w-full grid-cols-3 gap-1 p-1">
+                  <TabsList className="mb-6 grid h-auto w-full grid-cols-2 gap-1 p-1 sm:grid-cols-4">
                     <TabsTrigger value="customer" className="flex flex-col gap-1 py-3 text-xs sm:text-sm">
                       <User className="mx-auto h-4 w-4 shrink-0" />
                       Customer
@@ -351,6 +372,10 @@ function LoginPage() {
                     <TabsTrigger value="vendor" className="flex flex-col gap-1 py-3 text-xs sm:text-sm">
                       <Bus className="mx-auto h-4 w-4 shrink-0" />
                       Vendor
+                    </TabsTrigger>
+                    <TabsTrigger value="b2b" className="flex flex-col gap-1 py-3 text-xs sm:text-sm">
+                      <Briefcase className="mx-auto h-4 w-4 shrink-0" />
+                      B2B
                     </TabsTrigger>
                     <TabsTrigger value="admin" className="flex flex-col gap-1 py-3 text-xs sm:text-sm">
                       <ShieldCheck className="mx-auto h-4 w-4 shrink-0" />
@@ -499,6 +524,13 @@ function LoginPage() {
                     New operator?{" "}
                     <Link to="/vendor/register" className="font-medium text-primary hover:underline">
                       Register as vendor
+                    </Link>
+                  </p>
+                ) : accountRole === "b2b" ? (
+                  <p className="mt-6 text-center text-sm text-muted-foreground">
+                    New company?{" "}
+                    <Link to="/b2b/register" className="font-medium text-primary hover:underline">
+                      Register for B2B
                     </Link>
                   </p>
                 ) : (

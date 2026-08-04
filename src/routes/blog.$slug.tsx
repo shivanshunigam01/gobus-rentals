@@ -1,33 +1,56 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import type { ReactNode } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
-import { getBlogPost } from "@/data/blog-posts";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
-import { articleSchema, faqPageSchema } from "@/lib/seo/schemas";
-import { COMPANY } from "@/lib/company";
-import { fleetImages, heroBackgroundVideos } from "@/lib/media";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo/schemas";
+import { fetchBlogBySlug, type BlogPost } from "@/lib/api/content";
+import { cloudinaryUrl } from "@/lib/cloudinary";
+import { SITE_URL } from "@/lib/site";
+import { Button } from "@/components/ui/button";
+import { Clock3, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/blog/$slug")({
-  beforeLoad: ({ params }) => {
-    if (!getBlogPost(params.slug)) throw notFound();
+  loader: async ({ params }) => {
+    try {
+      return await fetchBlogBySlug(params.slug);
+    } catch {
+      throw notFound();
+    }
   },
-  head: ({ params }) => {
-    const post = getBlogPost(params.slug)!;
-    const path = `/blog/${post.slug}`;
+  head: ({ loaderData }) => {
+    const post = loaderData as BlogPost | undefined;
+    if (!post) return {};
+    const path = post.canonicalPath || `/blog/${post.slug}`;
+    const description = post.metaDescription || post.excerpt || post.title;
     const { meta, links } = buildPageMeta({
-      title: post.title,
-      description: post.description,
+      title: post.metaTitle || post.title,
+      description,
       path,
-      keywords: post.keywords,
+      keywords: (post.keywords || []).join(", "),
+      ogImage: post.ogImage || post.featuredImage?.url,
       ogType: "article",
+      noindex: post.robots?.includes("noindex"),
     });
     return {
       meta: [
         ...meta,
-        { "script:ld+json": articleSchema({ title: post.title, description: post.description, path, datePublished: post.datePublished }) },
-        { "script:ld+json": faqPageSchema(post.faqs.map((f) => ({ question: f.question, answer: f.answer }))) },
+        {
+          "script:ld+json": articleSchema({
+            title: post.title,
+            description,
+            path,
+            datePublished: post.publishedAt || new Date().toISOString(),
+            image: post.featuredImage?.url,
+          }),
+        },
+        {
+          "script:ld+json": breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path },
+          ]),
+        },
       ],
       links,
     };
@@ -35,53 +58,15 @@ export const Route = createFileRoute("/blog/$slug")({
   component: BlogArticle,
 });
 
-function BoldInline({ text }: Readonly<{ text: string }>) {
-  const out: ReactNode[] = [];
-  const regex = /\*\*(.+?)\*\*/g;
-  let lastIndex = 0;
-
-  for (const match of text.matchAll(regex)) {
-    const full = match[0];
-    const bold = match[1];
-    const start = match.index ?? 0;
-
-    if (start > lastIndex) out.push(text.slice(lastIndex, start));
-    out.push(
-      <strong key={`bold-${start}-${bold}`} className="text-foreground">
-        {bold}
-      </strong>,
-    );
-    lastIndex = start + full.length;
-  }
-
-  if (lastIndex < text.length) out.push(text.slice(lastIndex));
-  return <>{out}</>;
-}
-
-const BLOG_MEDIA: Record<string, { image: string; imageAlt: string; video?: string }> = {
-  "bus-rental-price-delhi-2026-guide": {
-    image: fleetImages.coachDepotLine,
-    imageAlt: "Luxury bus lineup for Delhi rental planning guide",
-    video: heroBackgroundVideos[0],
-  },
-  "how-to-book-bus-for-wedding-india": {
-    image: fleetImages.coachGoldenHour,
-    imageAlt: "Wedding-ready luxury coach at golden hour",
-    video: heroBackgroundVideos[1],
-  },
-  "volvo-bus-vs-sleeper-bus-india": {
-    image: fleetImages.coachInteriorSemiSleeper,
-    imageAlt: "Luxury bus interior for Volvo versus sleeper comparison",
-    video: heroBackgroundVideos[2],
-  },
-};
-
 function BlogArticle() {
-  const { slug } = Route.useParams();
-  const post = getBlogPost(slug)!;
-  const media = BLOG_MEDIA[slug] ?? {
-    image: fleetImages.coachFrontMountain,
-    imageAlt: "Premium coach for bus rental blog",
+  const post = Route.useLoaderData();
+  const shareUrl = `${SITE_URL}/blog/${post.slug}`;
+  const share = async () => {
+    if (navigator.share) {
+      await navigator.share({ title: post.title, url: shareUrl }).catch(() => null);
+      return;
+    }
+    await navigator.clipboard.writeText(shareUrl);
   };
 
   return (
@@ -90,75 +75,82 @@ function BlogArticle() {
       <main className="pt-20 pb-16">
         <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Blog", to: "/blog" }, { label: post.title }]} />
-          <header className="mb-10">
-            <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">{post.title}</h1>
-            <p className="text-muted-foreground text-lg">{post.description}</p>
-            <p className="text-xs text-muted-foreground mt-3">
-              Published {post.datePublished} · {post.readTime} read · {COMPANY.legalName}
-            </p>
-          </header>
+          <h1 className="font-display text-3xl sm:text-4xl font-bold mb-3">{post.title}</h1>
+          <div className="flex flex-wrap gap-3 text-sm text-muted-foreground mb-6">
+            <span>{post.author?.name || "Kartar Travels"}</span>
+            <span className="inline-flex items-center gap-1">
+              <Clock3 className="w-3.5 h-3.5" /> {post.readTimeMinutes || 5} min read
+            </span>
+            {post.publishedAt ? <span>{new Date(post.publishedAt).toLocaleDateString("en-IN")}</span> : null}
+          </div>
+          {post.featuredImage?.url ? (
+            <img
+              src={cloudinaryUrl(post.featuredImage.url, { width: 1200 })}
+              alt={post.featuredImage.alt || post.title}
+              width={1200}
+              height={630}
+              className="w-full rounded-xl mb-8 aspect-video object-cover bg-muted"
+              loading="eager"
+            />
+          ) : null}
+          <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line mb-10">
+            {post.content}
+          </div>
 
-          <section className="mb-10 grid gap-4 lg:grid-cols-2">
-            <div className="overflow-hidden rounded-xl border border-border bg-card">
-              <img
-                src={media.image}
-                alt={media.imageAlt}
-                className="h-full w-full min-h-[220px] object-contain bg-muted/30"
-                width={1200}
-                height={800}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            {media.video ? (
-              <div className="overflow-hidden rounded-xl border border-border bg-card">
-                <video
-                  className="h-full w-full min-h-[220px] object-cover bg-muted/30"
-                  src={media.video}
-                  controls
-                  muted
-                  playsInline
-                  preload="metadata"
+          {(post.gallery || []).length > 0 && (
+            <div className="grid sm:grid-cols-2 gap-3 mb-10">
+              {post.gallery!.map((g, i) => (
+                <img
+                  key={i}
+                  src={cloudinaryUrl(g.url, { width: 800 })}
+                  alt={g.alt || ""}
+                  loading="lazy"
+                  className="rounded-lg aspect-video object-cover bg-muted"
                 />
-              </div>
-            ) : null}
-          </section>
+              ))}
+            </div>
+          )}
 
-          <div className="prose prose-neutral dark:prose-invert max-w-none">
-            {post.sections.map((sec) => (
-              <section key={sec.h2} className="mb-10">
-                <h2 className="font-display text-2xl font-semibold text-foreground mb-4 not-prose">{sec.h2}</h2>
-                {sec.paragraphs.map((para) => (
-                  <p key={para.slice(0, 60)} className="text-muted-foreground leading-relaxed mb-4">
-                    <BoldInline text={para} />
-                  </p>
-                ))}
-              </section>
+          <div className="flex flex-wrap gap-2 mb-8">
+            {(post.categoryIds || []).map((c) => (
+              <Link
+                key={c.slug}
+                to="/blog"
+                search={{ category: c.slug } as never}
+                className="text-xs border rounded-full px-2 py-1"
+              >
+                {c.name}
+              </Link>
+            ))}
+            {(post.tagIds || []).map((t) => (
+              <span key={t.slug} className="text-xs text-muted-foreground">
+                #{t.name}
+              </span>
             ))}
           </div>
 
-          <section className="mt-12 border-t border-border pt-10">
-            <h2 className="font-display text-xl font-semibold text-foreground mb-4">FAQ</h2>
-            <dl className="space-y-4">
-              {post.faqs.map((f) => (
-                <div key={f.question}>
-                  <dt className="font-medium text-foreground">{f.question}</dt>
-                  <dd className="text-sm text-muted-foreground mt-1">{f.answer}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
+          <Button type="button" variant="outline" className="gap-2 mb-12" onClick={() => void share()}>
+            <Share2 className="w-4 h-4" /> Share
+          </Button>
 
-          <div className="mt-12 flex flex-wrap gap-3">
-            <Link to="/book">
-              <span className="inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-                Get bus quotes
-              </span>
-            </Link>
-            <Link to="/blog" className="text-sm text-primary hover:underline self-center">
-              ← All guides
-            </Link>
-          </div>
+          {(post.related || []).length > 0 && (
+            <section>
+              <h2 className="font-display text-2xl font-semibold mb-4">Related blogs</h2>
+              <div className="space-y-3">
+                {post.related!.map((r) => (
+                  <Link
+                    key={r.slug}
+                    to="/blog/$slug"
+                    params={{ slug: r.slug }}
+                    className="block border rounded-lg p-4 hover:border-primary"
+                  >
+                    <p className="font-medium">{r.title}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{r.excerpt}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </article>
       </main>
       <Footer />

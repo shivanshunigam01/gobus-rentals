@@ -34,9 +34,16 @@ function VendorDashboard() {
     queryKey: ["vendor-dashboard-stats"],
     queryFn: () => api<DashRes>("/api/vendor/dashboard-stats"),
   });
+  const profileQ = useQuery({
+    queryKey: ["vendor-portal-profile"],
+    queryFn: () => api<any>("/api/vendor/profile"),
+  });
 
   if (isLoading) return <div className={`${panelStatePadding} text-sm text-muted-foreground`}>Loading dashboard…</div>;
   if (error) return <div className={`${panelStatePadding} text-sm text-destructive`}>{(error as Error).message}</div>;
+
+  const profile = profileQ.data;
+  const needsOnboarding = profile && (profile.registrationStep < 4 || profile.status === "pending");
 
   const stats = [
     { label: "Total Buses", value: data?.totalBuses ?? "0", icon: Bus, color: "text-primary" },
@@ -54,6 +61,19 @@ function VendorDashboard() {
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold text-foreground">Vendor Dashboard</h1>
         <p className="text-muted-foreground text-sm mt-1">Overview of your bus rental business</p>
+        {needsOnboarding && (
+          <div className="mt-4 rounded-xl border border-amber-300/40 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm">
+            <p className="font-medium text-foreground">Complete verification to receive leads</p>
+            <p className="text-muted-foreground mt-1">
+              Account status: <strong>{profile.status}</strong> · Docs: {profile.documentsStatus} · Step {profile.registrationStep}/4
+            </p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              <Button asChild size="sm" variant="outline"><Link to="/vendor/documents">Upload documents</Link></Button>
+              <Button asChild size="sm" variant="outline"><Link to="/vendor/fleet">Add fleet</Link></Button>
+              <Button asChild size="sm" variant="outline"><Link to="/vendor/profile">Update profile</Link></Button>
+            </div>
+          </div>
+        )}
         <div className="mt-4 rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground break-words">
           <p className="font-medium text-foreground">Commission &amp; payouts</p>
           <p className="mt-1">

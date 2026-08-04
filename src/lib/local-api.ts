@@ -2,7 +2,7 @@ import { COMPANY, computeGstBreakdown, formatInr, vendorCommissionAmount, vendor
 
 const DB_KEY = "lbr_local_db_v1";
 
-type Role = "customer" | "vendor" | "admin";
+type Role = "customer" | "vendor" | "admin" | "b2b";
 
 type UserRow = {
   id: string;
@@ -12,6 +12,7 @@ type UserRow = {
   phone: string;
   role: Role;
   vendorId?: string;
+  companyId?: string;
   blocked?: boolean;
   /** ISO timestamp — used for admin “Joined” column */
   createdAt?: string;
@@ -345,6 +346,13 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
   const headers = new Headers(init.headers);
 
   try {
+    const { handleLocalContentApi } = await import("./local-content-api");
+    const qIndex = path.indexOf("?");
+    const pathname = qIndex >= 0 ? path.slice(0, qIndex) : path;
+    const search = qIndex >= 0 ? path.slice(qIndex + 1) : "";
+    const contentResult = handleLocalContentApi(pathname, method, new URLSearchParams(search));
+    if (contentResult !== null) return contentResult;
+
     if (path === "/api/payments/razorpay/order" || path === "/api/payments/razorpay/verify") {
       throw new LocalApiError(
         503,
@@ -414,10 +422,48 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
     if (method === "POST" && path === "/api/auth/login") {
       const email = String(body.email || "").toLowerCase();
       const password = String(body.password || "");
+      if (!db.users.some((u) => u.email === "active.corp@demo.local")) {
+        const companyId = "b2b-active-1";
+        if (!(db as any).companies?.length) {
+          (db as any).companies = [
+            {
+              id: companyId,
+              companyName: "Active Corp Travels",
+              email: "active.corp@demo.local",
+              phone: "9800000002",
+              gstin: "27AABCT1332L001",
+              status: "active",
+              creditLimit: 500000,
+              walletBalance: 25000,
+            },
+          ];
+        }
+        db.users.push({
+          id: uid(),
+          email: "active.corp@demo.local",
+          password: "B2Bdemo@123",
+          name: "Active Admin",
+          phone: "9800000002",
+          role: "b2b",
+          companyId,
+          createdAt: new Date().toISOString(),
+        });
+        saveDb(db);
+      }
       const user = db.users.find((u) => u.email === email && u.password === password);
       if (!user) throw new LocalApiError(401, "Invalid email or password");
       saveDb(db);
-      return { token: tokenFor(user), user: { id: user.id, email: user.email, name: user.name, role: user.role, vendorId: user.vendorId } };
+      return {
+        token: tokenFor(user),
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          vendorId: user.vendorId,
+          companyId: user.companyId,
+        },
+      };
     }
 
     if (method === "GET" && path === "/api/auth/me") {
@@ -1206,6 +1252,222 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
         };
       });
       return { quotes };
+    }
+
+    /* ---------- B2B + offers + payouts (local parity) ---------- */
+    const localOffers = (db as any).offers || [
+      {
+        id: "offer-local-1",
+        title: "Welcome B2B Offer",
+        slug: "welcome-b2b",
+        type: "banner",
+        code: "",
+        status: "active",
+        target: "all",
+        priority: 10,
+        href: "/b2b/register",
+        description: "Corporate savings",
+        banner: { url: "" },
+      },
+      {
+        id: "offer-local-2",
+        title: "CORP10",
+        slug: "corp10",
+        type: "coupon",
+        code: "CORP10",
+        discountType: "percent",
+        discountValue: 10,
+        status: "active",
+        target: "all",
+        priority: 20,
+        href: "/book",
+        description: "10% off",
+        banner: { url: "" },
+      },
+    ];
+    (db as any).offers = localOffers;
+    if (!(db as any).companies) {
+      (db as any).companies = [
+        {
+          id: "b2b-active-1",
+          companyName: "Active Corp Travels",
+          email: "active.corp@demo.local",
+          phone: "9800000002",
+          gstin: "27AABCT1332L001",
+          status: "active",
+          creditLimit: 500000,
+          walletBalance: 25000,
+          defaultDiscountPercent: 8,
+        },
+      ];
+    }
+    if (!(db as any).payouts) (db as any).payouts = [];
+
+    if (method === "POST" && path === "/api/auth/b2b/register") {
+      if (db.users.some((u) => u.email === String(body.email || "").toLowerCase())) {
+        throw new LocalApiError(409, "Email already registered");
+      }
+      const companyId = uid();
+      (db as any).companies.push({
+        id: companyId,
+        companyName: body.companyName,
+        email: body.companyEmail || body.email,
+        phone: body.phone,
+        gstin: body.gstin || "",
+        status: "pending",
+        creditLimit: 0,
+        walletBalance: 0,
+      });
+      const user: UserRow = {
+        id: uid(),
+        email: String(body.email).toLowerCase(),
+        password: body.password,
+        name: body.contactName || body.name,
+        phone: body.phone || "",
+        role: "b2b",
+        companyId,
+        createdAt: new Date().toISOString(),
+      };
+      db.users.push(user);
+      saveDb(db);
+      return {
+        token: tokenFor(user),
+        user: { id: user.id, email: user.email, name: user.name, role: "b2b", companyId },
+        company: { id: companyId, companyName: body.companyName, status: "pending" },
+      };
+    }
+
+    if (method === "GET" && path === "/api/public/offers") {
+      return { offers: localOffers.filter((o: any) => o.status === "active") };
+    }
+    if (method === "POST" && path === "/api/public/offers/validate-coupon") {
+      const offer = localOffers.find((o: any) => o.type === "coupon" && o.code === String(body.code || "").toUpperCase());
+      if (!offer) throw new LocalApiError(404, "Invalid coupon");
+      const amount = Number(body.amount || 0);
+      const discountAmount =
+        offer.discountType === "percent"
+          ? Math.round((amount * Number(offer.discountValue)) / 100)
+          : Math.min(amount, Number(offer.discountValue || 0));
+      return { ok: true, code: offer.code, discountAmount, discountType: offer.discountType, discountValue: offer.discountValue };
+    }
+
+    if (path.startsWith("/api/b2b/")) {
+      ensureAuth(db, headers.get("Authorization"));
+      const company = (db as any).companies[0];
+      if (path === "/api/b2b/dashboard") {
+        return {
+          company,
+          stats: {
+            totalBookings: 0,
+            activeBookings: 0,
+            completedTrips: 0,
+            totalSpendDisplay: "₹0",
+            openInvoices: 0,
+            employees: 1,
+          },
+        };
+      }
+      if (path === "/api/b2b/bookings" || path === "/api/b2b/trips") return { bookings: [] };
+      if (path === "/api/b2b/employees") return { employees: [] };
+      if (path === "/api/b2b/favourites") return { favourites: [] };
+      if (path === "/api/b2b/wallet" || path === "/api/b2b/payments") {
+        return { walletBalance: company?.walletBalance || 0, creditLimit: company?.creditLimit || 0, history: [] };
+      }
+      if (path === "/api/b2b/contracts") return { contracts: [] };
+      if (path === "/api/b2b/invoices") return { invoices: [] };
+      if (path === "/api/b2b/company") return { company };
+      if (method === "POST" && path === "/api/b2b/employees") return { ok: true, employeeId: uid() };
+      if (method === "POST" && path === "/api/b2b/favourites") return { ok: true, id: uid() };
+    }
+
+    if (method === "GET" && path === "/api/admin/b2b/companies") {
+      ensureAuth(db, headers.get("Authorization"));
+      return { companies: (db as any).companies };
+    }
+    if (method === "GET" && path.startsWith("/api/admin/b2b/companies/")) {
+      ensureAuth(db, headers.get("Authorization"));
+      const id = path.split("/").pop();
+      const company = (db as any).companies.find((c: any) => c.id === id);
+      if (!company) throw new LocalApiError(404, "Not found");
+      return { company, contracts: [], employees: [], bookings: [], invoices: [] };
+    }
+    if (method === "PATCH" && path.startsWith("/api/admin/b2b/companies/")) {
+      ensureAuth(db, headers.get("Authorization"));
+      const id = path.split("/").pop();
+      const company = (db as any).companies.find((c: any) => c.id === id);
+      if (!company) throw new LocalApiError(404, "Not found");
+      Object.assign(company, body);
+      saveDb(db);
+      return { ok: true, status: company.status };
+    }
+    if (method === "GET" && path === "/api/admin/offers") {
+      ensureAuth(db, headers.get("Authorization"));
+      return { offers: localOffers };
+    }
+    if (method === "POST" && path === "/api/admin/offers") {
+      ensureAuth(db, headers.get("Authorization"));
+      const o = { id: uid(), ...body, status: body.status || "active", banner: { url: "" } };
+      localOffers.push(o);
+      (db as any).offers = localOffers;
+      saveDb(db);
+      return { ok: true, id: o.id };
+    }
+    if (method === "DELETE" && path.startsWith("/api/admin/offers/")) {
+      ensureAuth(db, headers.get("Authorization"));
+      const id = path.split("/").pop();
+      (db as any).offers = localOffers.filter((o: any) => o.id !== id);
+      saveDb(db);
+      return { ok: true };
+    }
+    if (method === "GET" && path === "/api/admin/payouts") {
+      ensureAuth(db, headers.get("Authorization"));
+      return { payouts: (db as any).payouts };
+    }
+    if (method === "POST" && path.startsWith("/api/admin/payouts/") && path.endsWith("/process")) {
+      ensureAuth(db, headers.get("Authorization"));
+      const id = path.split("/")[4];
+      const p = (db as any).payouts.find((x: any) => x.id === id);
+      if (!p) throw new LocalApiError(404, "Not found");
+      p.status = body.action === "reject" ? "rejected" : body.action === "paid" ? "paid" : body.action === "partial" ? "partial" : "approved";
+      if (body.transactionId) p.transactionId = body.transactionId;
+      saveDb(db);
+      return { ok: true, status: p.status };
+    }
+    if (method === "GET" && path === "/api/vendor/payouts") {
+      ensureAuth(db, headers.get("Authorization"));
+      return { payouts: (db as any).payouts };
+    }
+    if (method === "POST" && path === "/api/vendor/payouts") {
+      ensureAuth(db, headers.get("Authorization"));
+      const p = {
+        id: uid(),
+        vendor: "Vendor",
+        amountRequested: 5000,
+        amountApproved: 0,
+        amountRequestedDisplay: "₹5,000",
+        amountApprovedDisplay: "₹0",
+        status: "pending",
+        transactionId: "",
+      };
+      (db as any).payouts.push(p);
+      saveDb(db);
+      return { ok: true, id: p.id };
+    }
+    if (method === "GET" && path.startsWith("/api/admin/bookings/") && path !== "/api/admin/bookings") {
+      ensureAuth(db, headers.get("Authorization"));
+      const id = path.split("/").pop()!;
+      return {
+        booking: { id, rawStatus: "confirmed", displayStatus: "Confirmed", paymentStatus: "Partial", driver: {} },
+        lead: { pickup: "Delhi", drop: "Jaipur", journeyDate: "2026-08-10", journeyTime: "09:00" },
+        customer: { name: "Demo", email: "demo@local", phone: "9999999999" },
+        vendor: { companyName: "Demo Vendor" },
+        company: null,
+        bus: null,
+        payments: [],
+        events: [{ id: "ev1", type: "status", message: "Booking created", createdAt: new Date().toISOString() }],
+        payouts: [],
+        invoice: null,
+      };
     }
 
     throw new LocalApiError(404, `Route not found: ${method} ${path}`);

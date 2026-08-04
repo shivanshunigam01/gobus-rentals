@@ -13,6 +13,7 @@ function AdminLayout() {
       panelLabel="Admin Panel"
       panelLabelClassName="text-destructive font-semibold"
       logoutTo="/admin/login"
+      showAdminTools
     >
       <Outlet />
     </ResponsivePanelLayout>

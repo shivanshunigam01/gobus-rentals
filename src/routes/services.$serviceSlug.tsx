@@ -1,62 +1,43 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { getServiceTypePageBySlug } from "@/data/service-type-pages";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import HeroSection from "@/components/service/HeroSection";
-import OverviewSection from "@/components/service/OverviewSection";
-import ServicesSection from "@/components/service/ServicesSection";
-import BenefitsSection from "@/components/service/BenefitsSection";
-import KeywordsSection from "@/components/service/KeywordsSection";
-import FAQSection from "@/components/service/FAQSection";
-import CTASection from "@/components/service/CTASection";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { ServiceLandingView } from "@/components/landing/ServiceLandingView";
+import { fetchServiceBySlug, type ServicePage } from "@/lib/api/content";
+import { landingHead } from "@/lib/landingHead";
+import { LEGACY_SERVICE_REDIRECTS } from "@/data/legacy-service-redirects";
 
 export const Route = createFileRoute("/services/$serviceSlug")({
-  loader: ({ params }) => {
-    const page = getServiceTypePageBySlug(params.serviceSlug);
-
-    if (!page) throw notFound();
-
-    return page;
+  loader: async ({ params }) => {
+    const legacy = LEGACY_SERVICE_REDIRECTS[params.serviceSlug];
+    if (legacy) {
+      if (legacy === "/industries") throw redirect({ to: "/industries" });
+      if (legacy.startsWith("/corporate/")) {
+        throw redirect({ to: "/corporate/$slug", params: { slug: legacy.replace("/corporate/", "") } });
+      }
+      if (legacy.startsWith("/industries/")) {
+        throw redirect({ to: "/industries/$slug", params: { slug: legacy.replace("/industries/", "") } });
+      }
+    }
+    try {
+      const page = await fetchServiceBySlug(params.serviceSlug);
+      if (page.category === "corporate") {
+        throw redirect({ to: "/corporate/$slug", params: { slug: page.slug } });
+      }
+      if (page.category === "industry") {
+        throw redirect({ to: "/industries/$slug", params: { slug: page.slug } });
+      }
+      return page;
+    } catch (e) {
+      if (e && typeof e === "object" && ("to" in e || "status" in e || "isRedirect" in e)) throw e;
+      throw notFound();
+    }
   },
-
-  component: ServicePage,
+  head: ({ loaderData }) => {
+    if (!loaderData) return {};
+    return landingHead(loaderData as ServicePage, "Services", "/services");
+  },
+  component: ServicePageRoute,
 });
 
-function ServicePage() {
+function ServicePageRoute() {
   const page = Route.useLoaderData();
-
-  return (
-    <>
-      <Navbar />
-      <div className="max-w-4xl mx-auto px-4 pt-20 pb-5 sm:px-6 lg:px-8">
-        <HeroSection
-          title={page.title}
-          description={page.description}
-        />
-
-        <OverviewSection
-          overview={page.overview}
-        />
-
-        <ServicesSection
-          services={page.services}
-        />
-
-        <BenefitsSection
-          benefits={page.benefits}
-        />
-
-        <KeywordsSection
-          keywords={page.keywords}
-        />
-
-        <FAQSection
-          faqs={page.faqs}
-        />
-
-        <CTASection />
-      </div>
-      <Footer />
-    </>
-  );
+  return <ServiceLandingView page={page} hubLabel="Services" hubPath="/services" />;
 }

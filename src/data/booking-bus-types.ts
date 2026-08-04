@@ -1,18 +1,5 @@
 /**
- * Bus category options shown in the booking flow, navbar "Bus types +" menu, and API payloads.
- * Labels use normal spacing (no stray spaces before hyphens).
+ * Bus category options shown in the booking flow.
+ * Prefer live catalog via fetchVehicleTypes(); this list is the offline fallback.
  */
-export const BOOKING_BUS_TYPES: readonly string[] = [
-  "Mini bus",
-  "Tempo Traveller",
-  "Luxury bus",
-  "Large coach",
-  "Volvo buses",
-  "Mercedes coach",
-  "Bharatbenz bus",
-  "Bus with washroom",
-  "Toyota minibus",
-  "Isuzu bus",
-  "Mitsubishi bus",
-  "Motorhome",
-];
+export { BOOKING_BUS_TYPES, VEHICLE_TYPE_FALLBACK } from "@/data/vehicle-types";

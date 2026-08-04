@@ -6,6 +6,7 @@ import appCss from "../styles.css?url";
 import { queryClient } from "@/lib/query-client";
 import { Toaster } from "@/components/ui/sonner";
 import { StickyLeadBar } from "@/components/seo/StickyLeadBar";
+import { ThemeProvider } from "@/lib/theme";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TWITTER_HANDLE, absoluteUrl } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schemas";
 
@@ -95,6 +96,9 @@ function RootShell({ children }: Readonly<{ children: React.ReactNode }>) {
         <HeadContent />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         {children}
         <Scripts />
       </body>
@@ -108,18 +112,21 @@ function RootComponent() {
     /^\/admin(\/|$)/.test(pathname) ||
     /^\/vendor(\/|$)/.test(pathname) ||
     /^\/customer(\/|$)/.test(pathname) ||
+    /^\/b2b(\/|$)/.test(pathname) ||
     pathname === "/" ||
     pathname === "/login" ||
     pathname === "/signup";
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className={hideSticky ? "" : "pb-16 md:pb-0 min-h-screen"}>
-        <Outlet />
-      </div>
-      {!hideSticky ? <StickyLeadBar /> : null}
-      <Toaster richColors position="top-center" />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <div id="main-content" className={hideSticky ? "" : "pb-16 md:pb-0 min-h-screen"}>
+          <Outlet />
+        </div>
+        {!hideSticky ? <StickyLeadBar /> : null}
+        <Toaster richColors position="top-center" />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

@@ -5,8 +5,9 @@ export type StoredUser = {
   id: string;
   email: string;
   name: string;
-  role: "customer" | "vendor" | "admin";
+  role: "customer" | "vendor" | "admin" | "b2b";
   vendorId?: string;
+  companyId?: string;
 };
 
 export function getToken(): string | null {
