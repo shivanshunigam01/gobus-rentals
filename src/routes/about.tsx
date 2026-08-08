@@ -84,13 +84,13 @@ function AboutPage() {
               <img
                 src={fleetImages.coachGoldenHour}
                 alt="Luxury coach fleet by Kartar Travels"
-                className="w-full h-[260px] sm:h-[320px] object-contain bg-muted/30"
+                className="w-full h-[260px] sm:h-[320px] object-cover bg-muted/30"
                 width={1200}
                 height={800}
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/85 to-transparent p-4 sm:p-5">
                 <img
-                  src="/images/logo.png"
+                  src="/images/logo.svg"
                   alt={COMPANY.platformBrand}
                   className="h-10 sm:h-12 w-auto object-contain mb-2"
                   width={884}

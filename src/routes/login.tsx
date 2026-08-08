@@ -342,7 +342,7 @@ function LoginPage() {
         <div className="mx-4 w-full max-w-md">
           <div className="mb-6 text-center">
             <img
-              src="/images/logo.png"
+              src="/images/logo.svg"
               alt="Luxury Bus Rental"
               className="mx-auto mb-4 h-[4.5rem] w-auto object-contain sm:h-[5.25rem]"
               width={884}

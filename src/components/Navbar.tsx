@@ -263,7 +263,7 @@ export function Navbar() {
       <nav className="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8 md:grid md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center md:gap-6 md:py-0 lg:gap-10">
         <Link to="/" className="flex shrink-0 items-center gap-2 overflow-hidden">
           <img
-            src="/images/logo.png"
+            src="/images/logo.svg"
             alt={COMPANY.platformBrand}
             className="h-12 max-h-12 w-auto max-w-[200px] object-contain object-left sm:max-w-[240px]"
             width={884}

@@ -70,12 +70,12 @@ export const Route = createRootRoute({
     links: [
       {
         rel: "icon",
-        type: "image/png",
-        href: "/images/logo.png",
+        type: "image/svg+xml",
+        href: "/images/logo.svg",
       },
       {
         rel: "apple-touch-icon",
-        href: "/images/logo.png",
+        href: "/images/logo.svg",
       },
       {
         rel: "stylesheet",

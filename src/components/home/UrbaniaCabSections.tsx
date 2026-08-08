@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { fleetImages } from "@/lib/media";
 
 export function UrbaniaSection() {
   return (
@@ -25,8 +26,16 @@ export function UrbaniaSection() {
             </Button>
           </div>
         </div>
-        <div className="rounded-2xl border bg-gradient-to-br from-muted to-background aspect-[4/3] flex items-center justify-center p-8">
-          <p className="font-display text-3xl font-bold text-center">Urbania &amp; Force Urbania</p>
+        <div className="rounded-2xl border overflow-hidden aspect-[4/3] bg-muted">
+          <img
+            src={fleetImages.vanUrbaniaFront}
+            alt="Force Urbania style van for corporate team travel"
+            width={960}
+            height={720}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         </div>
       </div>
     </section>
@@ -37,8 +46,16 @@ export function CabSection() {
   return (
     <section className="py-14 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 items-center">
-        <div className="order-2 lg:order-1 rounded-2xl border bg-gradient-to-br from-background to-muted aspect-[4/3] flex items-center justify-center p-8">
-          <p className="font-display text-3xl font-bold text-center">Sedan · SUV · Innova Crysta</p>
+        <div className="order-2 lg:order-1 rounded-2xl border overflow-hidden aspect-[4/3] bg-muted">
+          <img
+            src={fleetImages.executiveSuv}
+            alt="Executive SUV and cab rental for business travel"
+            width={960}
+            height={720}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         </div>
         <div className="order-1 lg:order-2">
           <p className="text-sm font-medium text-primary mb-2">Business cabs</p>

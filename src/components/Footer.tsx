@@ -26,7 +26,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-10">
           <div>
             <img
-              src="/images/logo.png"
+              src="/images/logo.svg"
               alt={COMPANY.platformBrand}
               className="h-16 sm:h-[4.5rem] w-auto mb-4 object-contain object-left"
               width={884}

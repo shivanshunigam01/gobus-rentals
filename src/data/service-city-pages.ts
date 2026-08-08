@@ -1,11 +1,9 @@
 import { COMPANY } from "@/lib/company";
+import { fleetImages } from "@/lib/media";
 
 /**
  * Premium “service city” landing pages at `/service-city/{slug}`.
- *
- * **Image files (place under `public/images/service-cities/`):**
- *   `luxury-bus-rental-{slug}.jpg`  e.g. `luxury-bus-rental-chandigarh.jpg`
- * If the file is missing, the page falls back to a stock coach image in the UI.
+ * Hero imagery uses Unsplash coach photos from `@/lib/media`.
  */
 
 export type ServiceCityPage = {
@@ -17,7 +15,7 @@ export type ServiceCityPage = {
   metaDescription: string;
   /** Keywords for meta tag */
   keywords: string;
-  /** Hero / OG image filename only; full path = `/images/service-cities/${imageFile}` */
+  /** Legacy filename hint (UI uses Unsplash via serviceCityImageUrl) */
   imageFile: string;
   imageAlt: string;
   /** H1 shown on page (can match title intent) */
@@ -121,6 +119,7 @@ export function serviceCityPath(slug: string): `/service-city/${string}` {
 
 export function serviceCityImageUrl(slug: string): string {
   const p = getServiceCityPage(slug);
-  if (!p) return "/images/logo.png";
-  return `/images/service-cities/${p.imageFile}`;
+  if (!p) return fleetImages.coachFrontMountain;
+  // Stable Unsplash coach hero — local service-city JPEGs are not shipped in public/
+  return fleetImages.coachFrontMountain;
 }

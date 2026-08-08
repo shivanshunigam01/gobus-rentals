@@ -73,7 +73,7 @@ function BusTypesForHirePage() {
             <img
               src={fleetImages.coachFrontMountain}
               alt="Bus types for hire in India"
-              className="w-full h-52 sm:h-64 object-contain bg-muted/30"
+              className="w-full h-52 sm:h-64 object-cover bg-muted/30"
               width={1400}
               height={820}
             />

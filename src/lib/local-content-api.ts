@@ -5,8 +5,23 @@ import {
   INDUSTRY_SLUGS,
   SERVICE_SLUGS,
 } from "@/data/platform-slugs";
+import { fleetCardImages, fleetImages } from "@/lib/media";
 
-function mkPage(category: "service" | "corporate" | "industry", title: string, slug: string, featured = false) {
+function bannerForSlug(slug: string, index: number) {
+  const byKeyword: Array<[RegExp, string]> = [
+    [/urbania|tempo|van|mini/i, fleetImages.vanUrbaniaFront],
+    [/cab|car|sedan|innova|suv/i, fleetImages.executiveSedan],
+    [/airport|shuttle|employee/i, fleetImages.cityNightBus],
+    [/wedding|luxury|volvo|coach/i, fleetImages.coachGoldenHour],
+    [/mountain|hill|himachal/i, fleetImages.coachMountainRoad],
+  ];
+  for (const [re, url] of byKeyword) {
+    if (re.test(slug)) return url;
+  }
+  return fleetCardImages[index % fleetCardImages.length];
+}
+
+function mkPage(category: "service" | "corporate" | "industry", title: string, slug: string, featured = false, index = 0) {
   return {
     _id: `local-${slug}`,
     title,
@@ -14,7 +29,7 @@ function mkPage(category: "service" | "corporate" | "industry", title: string, s
     category,
     shortDescription: `${title} with GPS fleets and pan-India coverage.`,
     description: `${title} from Luxury Bus Rental India.`,
-    banner: { url: "", alt: title },
+    banner: { url: bannerForSlug(slug, index), alt: title },
     gallery: [],
     vehicleTypeSlugs: ["luxury-bus", "urbania", "employee-shuttle", "innova-crysta"],
     citySlugs: ["delhi", "mumbai", "bangalore", "hyderabad"],
@@ -51,9 +66,9 @@ const titleFromSlug = (slug: string) =>
     .join(" ");
 
 const services = [
-  ...SERVICE_SLUGS.map((s, i) => mkPage("service", titleFromSlug(s), s, i < 4)),
-  ...CORPORATE_SLUGS.map((s, i) => mkPage("corporate", titleFromSlug(s), s, i < 6)),
-  ...INDUSTRY_SLUGS.map((s, i) => mkPage("industry", titleFromSlug(s), s, i < 8)),
+  ...SERVICE_SLUGS.map((s, i) => mkPage("service", titleFromSlug(s), s, i < 4, i)),
+  ...CORPORATE_SLUGS.map((s, i) => mkPage("corporate", titleFromSlug(s), s, i < 6, i + 10)),
+  ...INDUSTRY_SLUGS.map((s, i) => mkPage("industry", titleFromSlug(s), s, i < 8, i + 20)),
 ];
 
 const blogs = BLOG_SEED_SLUGS.map((slug, i) => ({
@@ -65,7 +80,10 @@ const blogs = BLOG_SEED_SLUGS.map((slug, i) => ({
   author: { name: "Kartar Travels Editorial" },
   categoryIds: [{ _id: "cat-guides", name: "Guides", slug: "guides" }],
   tagIds: [{ _id: "tag-bus", name: "Bus Rental", slug: "bus-rental" }],
-  featuredImage: { url: "" },
+  featuredImage: {
+    url: bannerForSlug(slug, i),
+    alt: titleFromSlug(slug),
+  },
   gallery: [],
   readTimeMinutes: 5,
   status: "published",

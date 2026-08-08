@@ -28,10 +28,23 @@ export function FeaturedServicesSection() {
               key={p.slug}
               to="/services/$serviceSlug"
               params={{ serviceSlug: p.slug }}
-              className="border rounded-xl p-4 bg-card hover:border-primary"
+              className="border rounded-xl overflow-hidden bg-card hover:border-primary"
             >
-              <h3 className="font-semibold mb-1">{p.title}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">{p.shortDescription}</p>
+              {p.banner?.url ? (
+                <img
+                  src={p.banner.url}
+                  alt={p.banner.alt || p.title}
+                  width={480}
+                  height={240}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-28 w-full object-cover"
+                />
+              ) : null}
+              <div className="p-4">
+                <h3 className="font-semibold mb-1">{p.title}</h3>
+                <p className="text-sm text-muted-foreground line-clamp-2">{p.shortDescription}</p>
+              </div>
             </Link>
           ))}
         </div>

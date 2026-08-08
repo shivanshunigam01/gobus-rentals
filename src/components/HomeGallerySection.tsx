@@ -1,13 +1,13 @@
 import { COMPANY } from "@/lib/company";
-import { fleetImages } from "@/lib/media";
+import { galleryImages } from "@/lib/media";
 
 const photos = [
-  { src: "/images/gallery-reclining-seats.png", alt: "Reclining seats on a premium coach", tall: true },
-  { src: "/images/gallery-scenic-mountain-road.png", alt: "Coach on a scenic mountain road", tall: false },
-  { src: "/images/gallery-luxury-sunset.png", alt: "Luxury coach at sunset", tall: false },
-  { src: "/images/gallery-spacious-minibus-cabin.png", alt: "Spacious mini-bus cabin for groups", tall: true },
-  { src: "/images/gallery-mini-bus-airport-city.png", alt: "Mini bus for airport and city transfers", tall: false },
-  { src: "/images/gallery-volvo-hill-routes.png", alt: "Volvo coach ready for hill routes", tall: false },
+  { src: galleryImages.recliningSeats, alt: "Reclining seats on a premium coach", tall: true },
+  { src: galleryImages.scenicMountainRoad, alt: "Coach on a scenic mountain road", tall: false },
+  { src: galleryImages.luxurySunset, alt: "Luxury coach at sunset", tall: false },
+  { src: galleryImages.spaciousCabin, alt: "Spacious mini-bus cabin for groups", tall: true },
+  { src: galleryImages.miniBusAirport, alt: "Mini bus for airport and city transfers", tall: false },
+  { src: galleryImages.volvoHillRoutes, alt: "Volvo coach ready for hill routes", tall: false },
 ];
 
 export function HomeGallerySection() {
@@ -28,13 +28,13 @@ export function HomeGallerySection() {
         {/* Wide highlight */}
         <figure className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-md mb-4 sm:mb-5 group">
           <img
-            src="/images/gallery-charter-hero.png"
+            src={galleryImages.charterHero}
             alt="Fleet of luxury coaches ready for charter"
             width={1600}
             height={640}
             loading="lazy"
             decoding="async"
-            className="w-full h-auto object-contain bg-muted/30 transition-transform duration-700 group-hover:scale-[1.02]"
+            className="w-full aspect-[2.5/1] object-cover bg-muted/30 transition-transform duration-700 group-hover:scale-[1.02]"
           />
         </figure>
 
@@ -42,7 +42,7 @@ export function HomeGallerySection() {
         <div className="columns-2 md:columns-3 gap-4 space-y-4">
           {photos.map((p) => (
             <figure
-              key={p.src}
+              key={p.alt}
               className="break-inside-avoid relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm group"
             >
               <img
@@ -52,7 +52,7 @@ export function HomeGallerySection() {
                 height={p.tall ? 1000 : 640}
                 loading="lazy"
                 decoding="async"
-                className={`w-full object-contain bg-muted/30 transition-transform duration-500 group-hover:scale-105 ${
+                className={`w-full object-cover bg-muted/30 transition-transform duration-500 group-hover:scale-105 ${
                   p.tall ? "min-h-[220px] sm:min-h-[280px]" : "aspect-[4/3]"
                 }`}
               />
