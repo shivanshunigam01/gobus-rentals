@@ -4,7 +4,9 @@ import { ArrowRight, Phone } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { fleetImages } from "@/lib/media";
 import { TravelStickers } from "@/components/brand/TravelStickers";
+import { FloatingEmojiDecor } from "@/components/brand/FloatingEmojiDecor";
 import { Reveal } from "@/components/motion/Reveal";
+import { GlowBookingButton } from "@/components/motion/GlowBookingButton";
 
 export function CTASection() {
   return (
@@ -21,13 +23,14 @@ export function CTASection() {
         />
         <div className="absolute inset-0 bg-gradient-to-br from-hero-gradient-start/95 via-foreground/88 to-hero-gradient-end/95" />
         <TravelStickers variant="cta" />
+        <FloatingEmojiDecor variant="cta" />
       </div>
       <Reveal className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-primary-foreground/70 text-sm font-semibold uppercase tracking-wider mb-3">
-          Trusted by 10,000+ Travelers · Verified Drivers · Sanitized Vehicles
+          ⭐ Trusted by 10,000+ Travelers · ✅ Verified Drivers · 🧼 Sanitized Vehicles
         </p>
         <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-5 drop-shadow-sm">
-          Book Tempo Traveller &amp; Bus Rental — Best Price Guaranteed
+          🚌 Book Tempo Traveller &amp; Bus Rental — Best Price Guaranteed 🛡️
         </h2>
         <p className="text-primary-foreground/85 text-lg sm:text-xl mb-4 max-w-2xl mx-auto">
           Get the best bus rental quote from verified operators across India. Affordable bus hire for weddings, corporate travel, group tours &amp; outstation trips.
@@ -37,9 +40,14 @@ export function CTASection() {
         </p>
         <div className="mx-auto flex w-full max-w-lg flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4">
           <Link to="/book" className="w-full sm:w-auto">
-            <Button variant="hero" size="xl" className="btn-responsive w-full gap-2 bg-card text-primary hover:bg-card/90 sm:w-auto">
+            <GlowBookingButton
+              variant="hero"
+              size="xl"
+              emoji="💰"
+              className="btn-responsive w-full gap-2 bg-card text-primary hover:bg-card/90 sm:w-auto"
+            >
               Get Best Bus Rental Quote <ArrowRight className="h-5 w-5 shrink-0" />
-            </Button>
+            </GlowBookingButton>
           </Link>
           <a href={`tel:+91${COMPANY.contactPhone}`} className="w-full sm:w-auto">
             <Button variant="hero-outline" size="xl" className="btn-responsive w-full gap-2 sm:w-auto">

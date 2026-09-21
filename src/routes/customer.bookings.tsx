@@ -103,34 +103,16 @@ function CustomerBookings() {
 
   async function downloadVoucher(b: BookingRow) {
     if (b.rawStatus === "awaiting_quotes") return;
+    if (!useRazorpayRemote) {
+      toast.error("Trip vouchers are available once the booking API is connected.");
+      return;
+    }
     try {
-      if (useRazorpayRemote) {
-        await downloadAuthenticatedPdf(
-          `/api/customer/vouchers/${b.id}/pdf`,
-          `trip-voucher-${b.bookingRef || b.id.slice(-8)}.pdf`,
-        );
-        toast.success("Trip voucher downloaded");
-      } else {
-        const payload = {
-          issuer: COMPANY.legalName,
-          platform: COMPANY.platformBrand,
-          bookingRef: b.bookingRef || b.id,
-          route: `${b.from} → ${b.to}`,
-          tripDate: b.date,
-          operator: b.vendor,
-          total: b.totalWithGst,
-          amountPaid: b.amountPaid,
-          status: b.status,
-        };
-        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `trip-voucher-${b.id.slice(-8)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        toast.message("Demo mode: voucher summary saved (connect API for PDF).");
-      }
+      await downloadAuthenticatedPdf(
+        `/api/customer/vouchers/${b.id}/pdf`,
+        `trip-voucher-${b.bookingRef || b.id.slice(-8)}.pdf`,
+      );
+      toast.success("Trip voucher downloaded");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not download voucher");
     }
@@ -141,16 +123,16 @@ function CustomerBookings() {
       toast.message("GST invoice is generated after payment is confirmed.");
       return;
     }
+    if (!useRazorpayRemote) {
+      toast.error("GST invoices are available once the booking API is connected.");
+      return;
+    }
     try {
-      if (useRazorpayRemote) {
-        await downloadAuthenticatedPdf(
-          `/api/customer/invoices/${b.invoiceId}/pdf`,
-          `${b.invoiceNumber || "invoice"}.pdf`,
-        );
-        toast.success("GST invoice downloaded");
-      } else {
-        toast.message("Demo mode: invoice PDF requires VITE_API_URL to your backend.");
-      }
+      await downloadAuthenticatedPdf(
+        `/api/customer/invoices/${b.invoiceId}/pdf`,
+        `${b.invoiceNumber || "invoice"}.pdf`,
+      );
+      toast.success("GST invoice downloaded");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not download invoice");
     }
@@ -173,16 +155,10 @@ function CustomerBookings() {
           Policy
         </Link>
         {useRazorpayRemote ? (
-          <span className="block mt-2 text-chart-4">
-            Online checkout uses Razorpay (configure <code className="rounded bg-muted px-1">RAZORPAY_*</code> on the API
-            server).
+          <span className="block mt-2 text-muted-foreground">
+            Secure online payments are processed via Razorpay. GST invoices appear after payment confirmation.
           </span>
-        ) : (
-          <span className="block mt-2">
-            Demo mode: payments record instantly. For Razorpay, set <code className="rounded bg-muted px-1">VITE_API_URL</code>{" "}
-            to your mock API and add Razorpay keys there — see <code className="rounded bg-muted px-1">.env.example</code>.
-          </span>
-        )}
+        ) : null}
       </p>
 
       {bookings.length === 0 ? (

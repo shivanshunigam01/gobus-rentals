@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { PincodeAddressField } from "@/components/booking/PincodeAddressField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,15 +39,23 @@ export function FareEstimator() {
     <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <h2 className="font-display text-lg font-semibold">Route & fare estimate</h2>
       <p className="mt-1 text-xs text-muted-foreground">Live distance + GST-inclusive estimate</p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="space-y-1">
-          <Label htmlFor="fe-origin">Pickup</Label>
-          <Input id="fe-origin" value={origin} onChange={(e) => setOrigin(e.target.value)} placeholder="Chandigarh" />
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor="fe-drop">Drop</Label>
-          <Input id="fe-drop" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="Shimla" />
-        </div>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <PincodeAddressField
+          id="fe-origin"
+          label="Pickup"
+          placeholder="Chandigarh or full address"
+          value={origin}
+          onChange={setOrigin}
+          manualHint="Manual entry works — PIN lookup is optional."
+        />
+        <PincodeAddressField
+          id="fe-drop"
+          label="Drop"
+          placeholder="Shimla or full address"
+          value={destination}
+          onChange={setDestination}
+          manualHint="Manual entry works — PIN lookup is optional."
+        />
         <div className="space-y-1">
           <Label htmlFor="fe-bus">Vehicle</Label>
           <Input id="fe-bus" value={busType} onChange={(e) => setBusType(e.target.value)} />

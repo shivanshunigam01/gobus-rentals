@@ -18,21 +18,21 @@ type Chip = {
 };
 
 const HERO_CHIPS: Chip[] = [
-  { icon: ShieldCheck, label: "GST billing", className: "top-[18%] right-[6%] rotate-[-8deg] hidden md:flex", delay: 0.2 },
-  { icon: MapPin, label: "400+ cities", className: "top-[42%] right-[10%] rotate-[7deg] hidden md:flex", delay: 0.45 },
-  { icon: Clock3, label: "24×7 desk", className: "bottom-[22%] right-[5%] rotate-[-5deg] hidden sm:flex", delay: 0.7 },
-  { icon: Sparkles, label: "Sanitized fleet", className: "bottom-[16%] left-[8%] rotate-[8deg] hidden sm:flex", delay: 0.55 },
+  { icon: ShieldCheck, label: "🛡️ GST billing", className: "top-[18%] right-[6%] rotate-[-8deg] hidden md:flex", delay: 0.2 },
+  { icon: MapPin, label: "📍 400+ cities", className: "top-[42%] right-[10%] rotate-[7deg] hidden md:flex", delay: 0.45 },
+  { icon: Clock3, label: "🕐 24×7 desk", className: "bottom-[22%] right-[5%] rotate-[-5deg] hidden sm:flex", delay: 0.7 },
+  { icon: Sparkles, label: "✨ Sanitized fleet", className: "bottom-[16%] left-[8%] rotate-[8deg] hidden sm:flex", delay: 0.55 },
 ];
 
 const LIGHT_CHIPS: Chip[] = [
-  { icon: Bus, label: "Verified operators", className: "top-4 right-6 rotate-[6deg]", delay: 0.1 },
-  { icon: Star, label: "4.8 rated", className: "bottom-6 left-4 rotate-[-7deg]", delay: 0.25 },
+  { icon: Bus, label: "🚌 Verified operators", className: "top-4 right-6 rotate-[6deg]", delay: 0.1 },
+  { icon: Star, label: "⭐ 4.8 rated", className: "bottom-6 left-4 rotate-[-7deg]", delay: 0.25 },
 ];
 
 const CTA_CHIPS: Chip[] = [
-  { icon: ShieldCheck, label: "GST transparent", className: "top-8 left-[8%] rotate-[-8deg] hidden sm:flex", delay: 0.15 },
-  { icon: Sparkles, label: "Best price", className: "top-10 right-[10%] rotate-[7deg] hidden sm:flex", delay: 0.3 },
-  { icon: MapPin, label: "Pan-India", className: "bottom-10 left-[12%] rotate-[5deg] hidden md:flex", delay: 0.45 },
+  { icon: ShieldCheck, label: "🛡️ GST transparent", className: "top-8 left-[8%] rotate-[-8deg] hidden sm:flex", delay: 0.15 },
+  { icon: Sparkles, label: "💰 Best price", className: "top-10 right-[10%] rotate-[7deg] hidden sm:flex", delay: 0.3 },
+  { icon: MapPin, label: "🇮🇳 Pan-India", className: "bottom-10 left-[12%] rotate-[5deg] hidden md:flex", delay: 0.45 },
 ];
 
 function FloatingChip({ icon: Icon, label, className, delay, tone }: Chip & { tone: "hero" | "light" | "cta" }) {

@@ -45,7 +45,7 @@ function CustomerDashboard() {
   });
 
   const stats = statsQ.data;
-  const mockBookings = (bookingsQ.data?.bookings ?? []).slice(0, 5);
+  const recentBookings = (bookingsQ.data?.bookings ?? []).slice(0, 5);
 
   return (
     <div className={panelPage.standard}>
@@ -84,7 +84,7 @@ function CustomerDashboard() {
         <div className="overflow-x-auto">
           {bookingsQ.isLoading ? (
             <p className="p-5 text-sm text-muted-foreground">Loading…</p>
-          ) : mockBookings.length === 0 ? (
+          ) : recentBookings.length === 0 ? (
             <p className="p-5 text-sm text-muted-foreground">No bookings yet.</p>
           ) : (
             <table className="w-full min-w-[600px] text-sm">
@@ -100,7 +100,7 @@ function CustomerDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {mockBookings.map((b) => (
+                {recentBookings.map((b) => (
                   <tr key={b.id} className="border-b border-border last:border-0 hover:bg-muted/50">
                     <td className="px-5 py-3 font-medium text-foreground font-mono text-xs">{b.id.slice(-8)}</td>
                     <td className="px-5 py-3 text-foreground">{b.from} → {b.to}</td>

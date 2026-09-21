@@ -142,7 +142,7 @@ function VendorRegisterPage() {
     onSuccess: (data) => {
       setOtpSent(true);
       setOtpVerified(false);
-      if (data.devCode) {
+      if (import.meta.env.DEV && data.devCode) {
         setDevCode(data.devCode);
         setOtpCode(data.devCode);
       }
@@ -405,7 +405,9 @@ function VendorRegisterPage() {
                       <Button type="button" onClick={() => verifyOtpMut.mutate()} disabled={otpCode.length < 4 || verifyOtpMut.isPending}>Verify</Button>
                     </div>
                   )}
-                  {devCode && !otpVerified && <p className="text-xs text-amber-200/80">Dev OTP: {devCode}</p>}
+                  {import.meta.env.DEV && devCode && !otpVerified ? (
+                    <p className="text-xs text-amber-200/80">Dev OTP: {devCode}</p>
+                  ) : null}
                 </div>
 
                 <Button className="w-full gap-2 bg-amber-400 text-neutral-950 hover:bg-amber-300" disabled={!canContinueStep1 || registerMut.isPending} onClick={() => registerMut.mutate()}>

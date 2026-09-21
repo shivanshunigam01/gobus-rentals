@@ -7,7 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@tanstack/react-router";
 import { Bot, Bus, Calendar, CheckCircle2, MapPin, Users } from "lucide-react";
 import { api } from "@/lib/api";
+import { getToken } from "@/lib/auth-storage";
 import { COMPANY } from "@/lib/company";
+import { PincodeAddressField } from "@/components/booking/PincodeAddressField";
 import { BOOKING_BUS_TYPES } from "@/data/booking-bus-types";
 import { fetchVehicleTypes } from "@/lib/api/content";
 
@@ -42,8 +44,8 @@ type FormState = {
 };
 
 const steps: { key: StepKey; question: string; optional?: boolean }[] = [
-  { key: "pickup", question: "Hi! I am Priya, your quote assistant. Where is your pickup city?" },
-  { key: "drop", question: "Great. Where should we drop your group?" },
+  { key: "pickup", question: "Hi! I am Priya, your quote assistant. Where is your pickup? Enter a PIN code to auto-fill, or type the address manually." },
+  { key: "drop", question: "Great. Where should we drop your group? Use PIN code quick-fill or type the destination manually." },
   { key: "journeyDate", question: "When is your journey date?" },
   { key: "journeyTime", question: "What is your preferred pickup time?" },
   { key: "passengers", question: "How many passengers are travelling?" },
@@ -111,18 +113,24 @@ function StepInput({
   switch (step) {
     case "pickup":
       return (
-        <Input
-          placeholder="e.g. Chandigarh"
+        <PincodeAddressField
+          id="booking-pickup"
+          label="Pickup city / address"
+          placeholder="e.g. Sector 17, Chandigarh — 160017"
           value={form.pickup}
-          onChange={(e) => setForm((f) => ({ ...f, pickup: e.target.value }))}
+          onChange={(pickup) => setForm((f) => ({ ...f, pickup }))}
+          manualHint="Type your pickup manually, or use PIN code above to auto-fill."
         />
       );
     case "drop":
       return (
-        <Input
-          placeholder="e.g. Delhi"
+        <PincodeAddressField
+          id="booking-drop"
+          label="Destination city / address"
+          placeholder="e.g. Connaught Place, New Delhi — 110001"
           value={form.drop}
-          onChange={(e) => setForm((f) => ({ ...f, drop: e.target.value }))}
+          onChange={(drop) => setForm((f) => ({ ...f, drop }))}
+          manualHint="Type your destination manually, or use PIN code above to auto-fill."
         />
       );
     case "journeyDate":
@@ -205,10 +213,23 @@ function StepInput({
           />
           <Input
             type="email"
-            placeholder="Email (optional)"
+            placeholder="Email (recommended for quote updates)"
             value={form.guestEmail}
             onChange={(e) => setForm((f) => ({ ...f, guestEmail: e.target.value }))}
           />
+          {!getToken() ? (
+            <p className="text-xs text-muted-foreground">
+              Use the same email when you{" "}
+              <Link to="/login" search={{ role: "customer" }} className="text-primary hover:underline">
+                sign in
+              </Link>{" "}
+              or{" "}
+              <Link to="/signup" className="text-primary hover:underline">
+                create an account
+              </Link>{" "}
+              so your quotes appear in My Quotes.
+            </p>
+          ) : null}
         </div>
       );
     case "notes":
@@ -316,12 +337,30 @@ export function BookingForm({
         <h2 className="font-display text-2xl font-bold text-foreground mb-2">
           Requirement Submitted!
         </h2>
-        <p className="text-muted-foreground mb-6">
-          Awesome. Partner operators will now send their best quotes on your trip route.
+        <p className="text-muted-foreground mb-4">
+          Partner operators will now send their best quotes on your trip route.
         </p>
-        <Button onClick={() => setSubmitted(false)} variant="outline" size="lg">
-          Submit Another Request
-        </Button>
+        {!getToken() && form.guestEmail ? (
+          <p className="text-sm text-muted-foreground mb-6">
+            Sign in with <strong className="text-foreground">{form.guestEmail}</strong> to track quotes in{" "}
+            <Link to="/customer/quotes" className="text-primary hover:underline">My Quotes</Link>.
+          </p>
+        ) : (
+          <p className="text-sm text-muted-foreground mb-6">
+            Track responses in{" "}
+            <Link to="/customer/quotes" className="text-primary hover:underline">My Quotes</Link> once vendors reply.
+          </p>
+        )}
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
+          {!getToken() ? (
+            <Button asChild size="lg">
+              <Link to="/login" search={{ role: "customer" }}>Sign in to view quotes</Link>
+            </Button>
+          ) : null}
+          <Button onClick={() => setSubmitted(false)} variant="outline" size="lg">
+            Submit Another Request
+          </Button>
+        </div>
       </div>
     );
   }

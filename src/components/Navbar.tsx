@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { GlowBookingButton } from "@/components/motion/GlowBookingButton";
 import { Menu, X, LogIn, ChevronDown } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { SITE_LOGO_PATH } from "@/lib/brand";
@@ -186,7 +187,9 @@ export function Navbar() {
             </Button>
           </Link>
           <Link to="/book">
-            <Button size="default" className="whitespace-nowrap">Get Quotes</Button>
+            <GlowBookingButton size="default" emoji="🎫" className="whitespace-nowrap">
+              Get Quotes
+            </GlowBookingButton>
           </Link>
         </div>
 
@@ -263,7 +266,9 @@ export function Navbar() {
               </Button>
             </Link>
             <Link to="/book" onClick={() => setMobileOpen(false)}>
-              <Button className="w-full" size="lg">Get Quotes</Button>
+              <GlowBookingButton className="w-full" size="lg" emoji="🎫">
+                Get Quotes
+              </GlowBookingButton>
             </Link>
           </div>
           </motion.div>

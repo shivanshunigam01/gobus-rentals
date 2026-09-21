@@ -15,7 +15,7 @@ export function FleetSliderSection() {
     <section className="py-14 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-2">Fleet for every journey</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-2">🚍 Fleet for every journey</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl">
             Luxury buses, Urbania, shuttles, and executive cabs — one corporate transportation platform.
           </p>
@@ -26,6 +26,7 @@ export function FleetSliderSection() {
               key={v.slug}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -6, scale: 1.02 }}
               viewport={{ once: true }}
               transition={{ delay: Math.min(i * 0.06, 0.4), duration: 0.45 }}
               className="snap-start shrink-0"

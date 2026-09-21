@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, Sparkles, Users } from "lucide-react";
 import { fleetImages } from "@/lib/media";
+import { GlowBookingButton } from "@/components/motion/GlowBookingButton";
 import { Reveal } from "@/components/motion/Reveal";
 import { TrustChip } from "@/components/brand/TravelStickers";
 
@@ -10,8 +11,8 @@ export function UrbaniaSection() {
     <section className="py-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 items-center">
         <Reveal>
-          <p className="text-sm font-medium text-primary mb-2">Premium vans</p>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3">Force Urbania for corporate teams</h2>
+          <p className="text-sm font-medium text-primary mb-2">🚐 Premium vans</p>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-3">Force Urbania for corporate teams ✨</h2>
           <p className="text-muted-foreground mb-5">
             Comfortable 9–17 seater Urbania vans for executive travel, airport runs, and small employee clusters —
             with AC comfort and professional chauffeurs.
@@ -22,11 +23,9 @@ export function UrbaniaSection() {
             <TrustChip icon={ShieldCheck} label="Chauffeur included" />
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button asChild>
-              <Link to="/book" search={{ busType: "Urbania" } as never}>
-                Book Urbania
-              </Link>
-            </Button>
+            <Link to="/book" search={{ busType: "Urbania" } as never}>
+              <GlowBookingButton emoji="🎫">Book Urbania</GlowBookingButton>
+            </Link>
             <Button asChild variant="outline">
               <Link to="/services/$serviceSlug" params={{ serviceSlug: "urbania-rental-for-corporates" }}>
                 Learn more

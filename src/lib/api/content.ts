@@ -82,6 +82,8 @@ function idOf(row: { _id?: string; id?: string }) {
   return String(row.id || row._id || "");
 }
 
+const useLocalContent = import.meta.env.VITE_USE_LOCAL_API === "true";
+
 export async function fetchVehicleTypes(params?: {
   category?: string;
   featured?: boolean;
@@ -94,8 +96,9 @@ export async function fetchVehicleTypes(params?: {
     const res = await api<{ items: VehicleTypeItem[] }>(`/api/public/vehicle-types${qs ? `?${qs}` : ""}`);
     if (res.items?.length) return res.items;
   } catch {
-    /* fallback */
+    /* API unavailable */
   }
+  if (!useLocalContent) return [];
   let items = [...VEHICLE_TYPE_FALLBACK];
   if (params?.category) items = items.filter((v) => v.category === params.category);
   if (params?.featured) items = items.filter((v) => v.featured);
@@ -118,8 +121,9 @@ export async function fetchServices(params?: {
     const res = await api<{ items: ServicePage[] }>(`/api/public/services${qs ? `?${qs}` : ""}`);
     if (res.items?.length) return res.items;
   } catch {
-    /* bundled catalog */
+    /* API unavailable */
   }
+  if (!useLocalContent) return [];
   const { handleLocalContentApi } = await import("@/lib/local-content-api");
   const local = handleLocalContentApi("/api/public/services", "GET", q) as { items?: ServicePage[] } | null;
   return local?.items || [];
@@ -132,17 +136,17 @@ function isServicePage(value: unknown): value is ServicePage {
 }
 
 export async function fetchServiceBySlug(slug: string): Promise<ServicePage> {
-  const { getLocalServiceBySlug } = await import("@/lib/local-content-api");
-  const local = getLocalServiceBySlug(slug) as ServicePage | null;
-  // SSR/prerender must not depend on a live API (Vercel build has no backend).
-  if (globalThis.window === undefined && local) return local;
   try {
     const page = await api<ServicePage>(`/api/public/services/${slug}`);
     if (isServicePage(page)) return page;
   } catch {
-    /* bundled catalog */
+    /* API unavailable */
   }
-  if (local) return local;
+  if (useLocalContent) {
+    const { getLocalServiceBySlug } = await import("@/lib/local-content-api");
+    const local = getLocalServiceBySlug(slug) as ServicePage | null;
+    if (local) return local;
+  }
   throw new Error(`Service page not found: ${slug}`);
 }
 
@@ -165,9 +169,11 @@ export async function fetchBlogBySlug(slug: string): Promise<BlogPost> {
   try {
     return await api<BlogPost>(`/api/public/blogs/${slug}`);
   } catch {
-    const { getLocalBlogBySlug } = await import("@/lib/local-content-api");
-    const local = getLocalBlogBySlug(slug);
-    if (local) return local as BlogPost;
+    if (useLocalContent) {
+      const { getLocalBlogBySlug } = await import("@/lib/local-content-api");
+      const local = getLocalBlogBySlug(slug);
+      if (local) return local as BlogPost;
+    }
     throw new Error(`Blog not found: ${slug}`);
   }
 }
@@ -179,8 +185,12 @@ export async function fetchFaqs(group?: string): Promise<SiteFaq[]> {
 }
 
 export async function fetchFeaturedReviews(limit = 8): Promise<FeaturedReview[]> {
-  const res = await api<{ items: FeaturedReview[] }>(`/api/public/reviews/featured?limit=${limit}`);
-  return res.items || [];
+  try {
+    const res = await api<{ items: FeaturedReview[] }>(`/api/public/reviews/featured?limit=${limit}`);
+    return res.items || [];
+  } catch {
+    return [];
+  }
 }
 
 export { idOf };

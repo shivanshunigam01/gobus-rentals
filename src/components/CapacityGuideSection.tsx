@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { ArrowRight, Bus, ChevronDown, Users } from "lucide-react";
+import { FloatingEmojiDecor } from "@/components/brand/FloatingEmojiDecor";
+import { GlowBookingButton } from "@/components/motion/GlowBookingButton";
 import { Button } from "./ui/button";
 import { BUS_SEAT_MAX, BUS_SEAT_MIN, busCapacities12to66 } from "@/data/bus-capacities";
 import { VEHICLE_CATALOG } from "@/lib/vehicle-catalog";
@@ -192,12 +195,13 @@ export const CapacityGuideSection = ({ city }: CapacityGuideSectionProps) => {
   return (
     <div
       id="capacity-guide"
-      className="mt-16 overflow-hidden rounded-2xl border border-border bg-gradient-to-b from-card to-card/95 shadow-sm ring-1 ring-border/50 sm:rounded-3xl"
+      className="relative mt-16 overflow-hidden rounded-2xl border border-border bg-gradient-to-b from-card to-card/95 shadow-sm ring-1 ring-border/50 sm:rounded-3xl"
     >
-      <div className="border-b border-border/80 bg-muted/40 px-5 py-8 sm:px-8 sm:py-10">
+      <FloatingEmojiDecor variant="guide" />
+      <div className="relative border-b border-border/80 bg-muted/40 px-5 py-8 sm:px-8 sm:py-10">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Capacity guide</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">🚐 Capacity guide</p>
             <h3 className="font-display text-balance text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               {heading}
             </h3>
@@ -224,27 +228,29 @@ export const CapacityGuideSection = ({ city }: CapacityGuideSectionProps) => {
               const seats = Number.parseInt(vehicle.seats, 10);
               const band = capacityBands.find((b) => seats >= b.from && seats <= b.to);
               return (
-                <button
+                <motion.button
                   key={vehicle.slug}
                   type="button"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     if (band) selectBand(band.id);
                     document.getElementById(`seater-${seats}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
                   }}
-                  className="group rounded-xl border border-border/80 bg-background/80 p-3 text-left shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 hover:shadow-md"
+                  className="group rounded-xl border border-border/80 bg-background/80 p-3 text-left shadow-sm transition-colors hover:border-primary/40 hover:bg-primary/5 hover:shadow-md"
                 >
                   <p className="font-display text-xl font-bold tabular-nums text-foreground">{seats}</p>
                   <p className="mt-0.5 line-clamp-2 text-[11px] font-medium leading-snug text-muted-foreground group-hover:text-foreground">
                     {vehicle.title}
                   </p>
-                </button>
+                </motion.button>
               );
             })}
           </div>
         </div>
       </div>
 
-      <div className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <div className="relative px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted-foreground">
             Browse by seat band — one section at a time so you can compare without scrolling through every option.
@@ -294,12 +300,12 @@ export const CapacityGuideSection = ({ city }: CapacityGuideSectionProps) => {
             Book tempo traveller on rent or luxury bus hire — compare verified operators in minutes.
           </p>
         </div>
-        <Button asChild size="lg" className="group shrink-0">
-          <Link to="/book">
+        <Link to="/book" className="shrink-0">
+          <GlowBookingButton size="lg" emoji="🎫" className="group gap-2">
             Book Tempo Traveller &amp; Get Free Bus Quotes
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </Button>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </GlowBookingButton>
+        </Link>
       </div>
     </div>
   );

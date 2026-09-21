@@ -4,7 +4,8 @@ import { localApiRequest } from "./local-api";
 /** Origin of your API (no trailing slash), e.g. http://localhost:4000 — set in `.env` as VITE_API_URL */
 const raw = typeof import.meta.env.VITE_API_URL === "string" ? import.meta.env.VITE_API_URL.trim() : "";
 const base = raw.replace(/\/$/, "");
-const useLocalApi = import.meta.env.VITE_USE_LOCAL_API !== "false";
+/** Local in-browser mock is opt-in only — production must use VITE_API_URL. */
+const useLocalApi = import.meta.env.VITE_USE_LOCAL_API === "true";
 
 export class ApiError extends Error {
   status: number;
@@ -88,7 +89,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
   }
 
   const readLocalPublic = async (): Promise<T | null> => {
-    if (!isPublicPath && !path.startsWith("/api/")) return null;
+    if (!useLocalApi || (!isPublicPath && !path.startsWith("/api/"))) return null;
     try {
       return (await localApiRequest(path, { ...init, headers })) as T;
     } catch {
@@ -96,8 +97,8 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     }
   };
 
-  // SSR / no-window: prefer configured API, else local content fallback for public routes
-  if (globalThis.window === undefined && isPublicPath && !base) {
+  // SSR / no-window: bundled catalog only when local mock is explicitly enabled
+  if (globalThis.window === undefined && isPublicPath && !base && useLocalApi) {
     const local = await readLocalPublic();
     if (local != null) return local;
     throw new ApiError("Local API failed", 404);
@@ -117,15 +118,15 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
       try {
         data = JSON.parse(text) as unknown;
       } catch {
-        if (isPublicPath) {
-          const local = await readLocalPublic();
-          if (local != null) return local;
-        }
-        throw new ApiError("Invalid API response", res.status || 500, { raw: text.slice(0, 180) });
+      if (useLocalApi && isPublicPath) {
+        const local = await readLocalPublic();
+        if (local != null) return local;
+      }
+      throw new ApiError("Invalid API response", res.status || 500, { raw: text.slice(0, 180) });
       }
     }
     if (!res.ok) {
-      if (isPublicPath) {
+      if (useLocalApi && isPublicPath) {
         const local = await readLocalPublic();
         if (local != null) return local;
       }
@@ -139,7 +140,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     return data as T;
   } catch (e) {
     if (e instanceof ApiError) throw e;
-    if (isPublicPath) {
+    if (useLocalApi && isPublicPath) {
       const local = await readLocalPublic();
       if (local != null) return local;
     }

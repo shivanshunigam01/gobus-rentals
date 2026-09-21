@@ -19,6 +19,7 @@ import {
   HomeFaqsSection,
 } from "@/components/home/SolutionsSections";
 import { OffersSection } from "@/components/home/OffersSection";
+import { B2BPortalSection } from "@/components/home/B2BPortalSection";
 import { COMPANY } from "@/lib/company";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
 import { faqPageSchema } from "@/lib/seo/schemas";
@@ -41,6 +42,10 @@ const homeFaqs = [
     question: "Which vehicles can companies book?",
     answer:
       "Luxury buses, mini buses, Tempo Traveller, Urbania, Force Urbania, luxury coaches, employee/corporate/airport shuttles, and cabs including sedan, SUV, MUV, hatchback, and Innova Crysta.",
+  },
+  {
+    question: "Do you offer a B2B portal for corporates?",
+    answer: `Yes. Companies can register at /b2b/register for a dedicated B2B dashboard — manage employees, bulk bookings, wallet & credit, GST invoices, and annual contracts. HR and admin teams log in at /login?role=b2b after approval.`,
   },
 ];
 
@@ -80,6 +85,7 @@ function Index() {
         <CabSection />
         <FeaturedServicesSection />
         <OffersSection />
+        <B2BPortalSection />
         <CorporateSolutionsSection />
         <IndustrySolutionsSection />
         <CustomerReviewsSection />

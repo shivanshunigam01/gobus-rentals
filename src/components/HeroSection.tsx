@@ -6,6 +6,8 @@ import { MapPin, ArrowRight } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { fleetImages, heroBackgroundVideos } from "@/lib/media";
 import { TravelStickers } from "@/components/brand/TravelStickers";
+import { FloatingEmojiDecor } from "@/components/brand/FloatingEmojiDecor";
+import { GlowBookingButton } from "@/components/motion/GlowBookingButton";
 
 /**
  * Double-buffer crossfade video background.
@@ -210,6 +212,7 @@ export function HeroSection() {
 
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/30" />
         <TravelStickers variant="hero" />
+        <FloatingEmojiDecor variant="hero" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-14 pt-20 sm:px-6 sm:pb-16 sm:pt-24 lg:px-8">
@@ -219,13 +222,18 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="mb-4 inline-block rounded-full border border-primary-foreground/20 bg-primary/20 px-4 py-1.5 text-sm font-medium text-primary-foreground backdrop-blur-sm sm:mb-5">
-            Trusted by 10,000+ Travelers · {COMPANY.legalName}
-          </span>
+          <motion.span
+            className="mb-4 inline-block rounded-full border border-primary-foreground/20 bg-primary/20 px-4 py-1.5 text-sm font-medium text-primary-foreground backdrop-blur-sm sm:mb-5"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            ⭐ Trusted by 10,000+ Travelers · 🛡️ {COMPANY.legalName}
+          </motion.span>
 
           <h1 className="mb-3 font-display text-3xl font-extrabold leading-[1.15] text-primary-foreground sm:mb-4 sm:text-4xl lg:text-5xl">
-            India&apos;s Trusted Platform for Bus Rental{" "}
-            <span className="mt-1 block text-accent">Compare. Choose. Book Instantly</span>
+            🚌 India&apos;s Trusted Platform for Bus Rental{" "}
+            <span className="mt-1 block text-accent">Compare. Choose. Book Instantly ✨</span>
           </h1>
 
           <p className="mb-4 max-w-xl text-sm font-medium text-primary-foreground/85 sm:text-base">
@@ -240,13 +248,22 @@ export function HeroSection() {
             <span>Serving all major cities in India — {COMPANY.operatingLocations}</span>
             <span className="text-primary-foreground/45">·</span>
             <span>GST {COMPANY.gstPercentage}% shown at checkout</span>
+            <span className="text-primary-foreground/45">·</span>
+            <a href="#b2b-portal" className="font-medium text-primary-foreground/90 underline-offset-2 hover:underline">
+              💼 B2B corporate portal for companies
+            </a>
           </p>
 
           <div className="flex w-full max-w-xl flex-col gap-3 sm:max-w-none sm:flex-row sm:gap-4">
             <Link to="/book" className="w-full sm:w-auto">
-              <Button variant="hero" size="xl" className="btn-responsive w-full gap-2 bg-primary sm:w-auto">
+              <GlowBookingButton
+                variant="hero"
+                size="xl"
+                emoji="🎫"
+                className="btn-responsive w-full gap-2 bg-primary sm:w-auto"
+              >
                 Get Best Price Instantly <ArrowRight className="h-5 w-5 shrink-0" />
-              </Button>
+              </GlowBookingButton>
             </Link>
             <a href={`tel:+91${COMPANY.contactPhone}`} className="w-full sm:w-auto">
               <Button variant="hero-outline" size="xl" className="btn-responsive w-full sm:w-auto">
