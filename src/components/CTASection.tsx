@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { fleetImages } from "@/lib/media";
+import { TravelStickers } from "@/components/brand/TravelStickers";
+import { Reveal } from "@/components/motion/Reveal";
 
 export function CTASection() {
   return (
@@ -15,11 +17,12 @@ export function CTASection() {
           height={1080}
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-hero-gradient-start/95 via-foreground/88 to-hero-gradient-end/95" />
+        <TravelStickers variant="cta" />
       </div>
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Reveal className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-primary-foreground/70 text-sm font-semibold uppercase tracking-wider mb-3">
           Trusted by 10,000+ Travelers · Verified Drivers · Sanitized Vehicles
         </p>
@@ -46,7 +49,7 @@ export function CTASection() {
             </Button>
           </a>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

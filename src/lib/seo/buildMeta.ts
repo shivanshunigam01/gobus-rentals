@@ -32,15 +32,17 @@ export function buildPageMeta(input: PageMetaInput) {
   const ogW = input.ogImageWidth ?? (usingDefaultOg ? DEFAULT_OG_IMAGE_WIDTH : undefined);
   const ogH = input.ogImageHeight ?? (usingDefaultOg ? DEFAULT_OG_IMAGE_HEIGHT : undefined);
   const ogAlt = input.ogImageAlt ?? `${SITE_NAME} — luxury bus and coach rental in India`;
-  const titleFull = input.title.includes(SITE_NAME) ? input.title : `${input.title} | ${SITE_NAME}`;
+  const title = String(input.title || SITE_NAME);
+  const description = String(input.description || title);
+  const titleFull = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 
   const meta: Array<Record<string, string> | { title: string }> = [
     { title: titleFull },
-    { name: "description", content: input.description },
+    { name: "description", content: description },
     ...(input.keywords ? [{ name: "keywords", content: input.keywords }] : []),
     ...(input.noindex ? [{ name: "robots", content: "noindex, nofollow" }] : []),
     { property: "og:title", content: titleFull },
-    { property: "og:description", content: input.description },
+    { property: "og:description", content: description },
     { property: "og:url", content: url },
     { property: "og:type", content: input.ogType || "website" },
     { property: "og:image", content: ogImage },
@@ -52,7 +54,7 @@ export function buildPageMeta(input: PageMetaInput) {
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:site", content: SITE_TWITTER_HANDLE },
     { name: "twitter:title", content: titleFull },
-    { name: "twitter:description", content: input.description },
+    { name: "twitter:description", content: description },
     { name: "twitter:image", content: ogImage },
   ];
 

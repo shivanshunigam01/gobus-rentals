@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 
 type Offer = {
   id: string;
@@ -25,17 +26,19 @@ export function OffersSection() {
   return (
     <section className="border-y border-border bg-muted/30 py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">Offers & savings</h2>
-        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          Limited-time banners and coupon codes for corporate and personal travel.
-        </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal>
+          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">Offers & savings</h2>
+          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+            Limited-time banners and coupon codes for corporate and personal travel.
+          </p>
+        </Reveal>
+        <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {offers.map((o) => (
-            <a
-              key={o.id}
-              href={o.href?.startsWith("/") ? o.href : "/book"}
-              className="group overflow-hidden rounded-xl border border-border bg-card transition hover:border-primary/40"
-            >
+            <StaggerItem key={o.id}>
+              <a
+                href={o.href?.startsWith("/") ? o.href : "/book"}
+                className="group block overflow-hidden rounded-xl border border-border bg-card card-lift hover:border-primary/40"
+              >
               {o.banner?.url ? (
                 <img src={o.banner.url} alt={o.banner.alt || o.title} className="h-36 w-full object-cover" />
               ) : (
@@ -56,8 +59,9 @@ export function OffersSection() {
                 ) : null}
               </div>
             </a>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

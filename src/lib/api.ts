@@ -64,7 +64,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
       try {
         data = JSON.parse(text) as unknown;
       } catch {
-        data = { raw: text };
+        throw new ApiError("Invalid API response", res.status || 500, { raw: text.slice(0, 180) });
       }
     }
     if (!res.ok) {
@@ -117,7 +117,11 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
       try {
         data = JSON.parse(text) as unknown;
       } catch {
-        data = { raw: text };
+        if (isPublicPath) {
+          const local = await readLocalPublic();
+          if (local != null) return local;
+        }
+        throw new ApiError("Invalid API response", res.status || 500, { raw: text.slice(0, 180) });
       }
     }
     if (!res.ok) {

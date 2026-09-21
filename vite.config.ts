@@ -50,9 +50,12 @@ export default defineConfig(({ command, mode }) => {
         projects: ["./tsconfig.json"],
       }),
       tanstackStart({
+        pages: [{ path: "/" }],
         prerender: {
           enabled: true,
+          crawlLinks: false,
           failOnError: false,
+          autoStaticPathsDiscovery: false,
         },
       }),
       viteReact(),

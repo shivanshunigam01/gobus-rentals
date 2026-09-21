@@ -3,9 +3,10 @@ import { breadcrumbSchema, faqPageSchema, serviceSchema } from "@/lib/seo/schema
 import type { ServicePage } from "@/lib/api/content";
 
 export function landingHead(page: ServicePage, hubLabel: string, hubPath: string) {
+  if (!page?.title) return {};
   const path = page.canonicalPath || `${hubPath}/${page.slug}`;
-  const title = page.metaTitle || page.title;
-  const description = page.metaDescription || page.shortDescription || page.description || page.title;
+  const title = page.metaTitle || page.title || hubLabel;
+  const description = page.metaDescription || page.shortDescription || page.description || title;
   const { meta, links } = buildPageMeta({
     title,
     description,

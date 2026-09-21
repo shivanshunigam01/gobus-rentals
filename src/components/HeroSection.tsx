@@ -1,9 +1,11 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, ArrowRight } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { fleetImages, heroBackgroundVideos } from "@/lib/media";
+import { TravelStickers } from "@/components/brand/TravelStickers";
 
 /**
  * Double-buffer crossfade video background.
@@ -207,10 +209,16 @@ export function HeroSection() {
         ) : null}
 
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/60 to-foreground/30" />
+        <TravelStickers variant="hero" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-14 pt-20 sm:px-6 sm:pb-16 sm:pt-24 lg:px-8">
-        <div className="max-w-5xl">
+        <motion.div
+          className="max-w-5xl"
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="mb-4 inline-block rounded-full border border-primary-foreground/20 bg-primary/20 px-4 py-1.5 text-sm font-medium text-primary-foreground backdrop-blur-sm sm:mb-5">
             Trusted by 10,000+ Travelers · {COMPANY.legalName}
           </span>
@@ -247,7 +255,7 @@ export function HeroSection() {
               </Button>
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

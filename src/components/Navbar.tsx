@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X, LogIn, ChevronDown } from "lucide-react";
 import { COMPANY } from "@/lib/company";
@@ -75,7 +76,7 @@ function NavDropdown({
         <ChevronDown className={cn("h-4 w-4 shrink-0 opacity-70 transition-transform", open && "rotate-180")} aria-hidden />
       </button>
       {open ? (
-        <div
+        <motion.div
           className={cn(
             navDropdownPanelClass,
             navDropdownPanelScrollClass,
@@ -83,9 +84,12 @@ function NavDropdown({
           )}
           role="menu"
           onClick={() => setOpen(false)}
+          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
         >
           {children}
-        </div>
+        </motion.div>
       ) : null}
     </div>
   );
@@ -201,8 +205,15 @@ export function Navbar() {
         </div>
       </nav>
 
-      {mobileOpen ? (
-        <div className="border-b border-border bg-card px-4 pb-4 xl:hidden">
+      <AnimatePresence>
+        {mobileOpen ? (
+          <motion.div
+            className="border-b border-border bg-card px-4 pb-4 xl:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          >
           <div className="max-h-[75vh] space-y-1 overflow-y-auto pt-2">
             <Link to="/" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>Home</Link>
             <Link to="/about" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>About</Link>
@@ -258,8 +269,9 @@ export function Navbar() {
               <Button className="w-full" size="lg">Get Quotes</Button>
             </Link>
           </div>
-        </div>
-      ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

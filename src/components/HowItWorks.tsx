@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { ClipboardList, MessageSquareQuote, CheckCircle2, Bus } from "lucide-react";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 
 const steps = [
   {
@@ -27,7 +29,7 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-20 sm:py-28 bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
+        <Reveal className="text-center mb-14">
           <span className="text-primary font-semibold text-sm uppercase tracking-wider">Simple &amp; Fast Process</span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mt-2">
             How to Book Tempo Traveller &amp; Bus Rental Online
@@ -35,25 +37,29 @@ export function HowItWorks() {
           <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
             Book tempo traveller on rent or luxury bus hire in 4 easy steps — no hassle, best bus rental price guaranteed.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, i) => (
-            <div key={step.title} className="text-center relative">
+            <StaggerItem key={step.title} className="text-center relative">
               {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-10 left-[60%] w-[80%] h-[2px] bg-border" />
+                <div className="hidden lg:block absolute top-10 left-[60%] w-[80%] h-[2px] bg-gradient-to-r from-primary/40 to-transparent" />
               )}
-              <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5 relative">
+              <motion.div
+                className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5 relative shadow-sm"
+                whileHover={{ rotate: -4, scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300, damping: 16 }}
+              >
                 <step.icon className="w-9 h-9 text-primary" />
-                <span className="absolute -top-2 -right-2 w-7 h-7 bg-primary text-primary-foreground rounded-full text-sm font-bold flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-7 h-7 bg-primary text-primary-foreground rounded-full text-sm font-bold flex items-center justify-center shadow-md">
                   {i + 1}
                 </span>
-              </div>
+              </motion.div>
               <h3 className="font-display font-semibold text-foreground text-lg mb-2">{step.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

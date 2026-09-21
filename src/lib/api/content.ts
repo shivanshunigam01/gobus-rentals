@@ -125,15 +125,25 @@ export async function fetchServices(params?: {
   return local?.items || [];
 }
 
+function isServicePage(value: unknown): value is ServicePage {
+  if (!value || typeof value !== "object") return false;
+  const row = value as Partial<ServicePage>;
+  return typeof row.slug === "string" && typeof row.title === "string" && row.title.length > 0;
+}
+
 export async function fetchServiceBySlug(slug: string): Promise<ServicePage> {
+  const { getLocalServiceBySlug } = await import("@/lib/local-content-api");
+  const local = getLocalServiceBySlug(slug) as ServicePage | null;
+  // SSR/prerender must not depend on a live API (Vercel build has no backend).
+  if (globalThis.window === undefined && local) return local;
   try {
-    return await api<ServicePage>(`/api/public/services/${slug}`);
+    const page = await api<ServicePage>(`/api/public/services/${slug}`);
+    if (isServicePage(page)) return page;
   } catch {
-    const { getLocalServiceBySlug } = await import("@/lib/local-content-api");
-    const local = getLocalServiceBySlug(slug);
-    if (local) return local as ServicePage;
-    throw new Error(`Service page not found: ${slug}`);
+    /* bundled catalog */
   }
+  if (local) return local;
+  throw new Error(`Service page not found: ${slug}`);
 }
 
 export async function fetchBlogs(params?: {

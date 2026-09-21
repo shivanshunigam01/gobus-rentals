@@ -42,5 +42,6 @@ export const Route = createFileRoute("/services/$serviceSlug")({
 
 function ServicePageRoute() {
   const page = Route.useLoaderData();
+  if (!page?.title) return null;
   return <ServiceLandingView page={page} hubLabel="Services" hubPath="/services" />;
 }
