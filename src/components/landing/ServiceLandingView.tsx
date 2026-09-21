@@ -204,9 +204,9 @@ export function ServiceLandingView({ page, hubLabel, hubPath }: Props) {
             <section className="mb-12">
               <h2 className="font-display text-2xl font-semibold mb-4">Testimonials</h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                {page.testimonials!.map((t) => (
-                  <blockquote key={t.name + t.quote.slice(0, 10)} className="border rounded-lg p-4 text-sm">
-                    <p className="text-muted-foreground mb-2">“{t.quote}”</p>
+                {page.testimonials!.map((t, i) => (
+                  <blockquote key={`${t.name || "review"}-${i}`} className="border rounded-lg p-4 text-sm">
+                    <p className="text-muted-foreground mb-2">“{t.quote || ""}”</p>
                     <footer className="font-medium">
                       {t.name}
                       {t.company ? ` — ${t.company}` : ""}

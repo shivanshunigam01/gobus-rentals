@@ -114,12 +114,26 @@ export async function fetchServices(params?: {
   if (params?.city) q.set("city", params.city);
   if (params?.vehicleType) q.set("vehicleType", params.vehicleType);
   const qs = q.toString();
-  const res = await api<{ items: ServicePage[] }>(`/api/public/services${qs ? `?${qs}` : ""}`);
-  return res.items || [];
+  try {
+    const res = await api<{ items: ServicePage[] }>(`/api/public/services${qs ? `?${qs}` : ""}`);
+    if (res.items?.length) return res.items;
+  } catch {
+    /* bundled catalog */
+  }
+  const { handleLocalContentApi } = await import("@/lib/local-content-api");
+  const local = handleLocalContentApi("/api/public/services", "GET", q) as { items?: ServicePage[] } | null;
+  return local?.items || [];
 }
 
 export async function fetchServiceBySlug(slug: string): Promise<ServicePage> {
-  return api<ServicePage>(`/api/public/services/${slug}`);
+  try {
+    return await api<ServicePage>(`/api/public/services/${slug}`);
+  } catch {
+    const { getLocalServiceBySlug } = await import("@/lib/local-content-api");
+    const local = getLocalServiceBySlug(slug);
+    if (local) return local as ServicePage;
+    throw new Error(`Service page not found: ${slug}`);
+  }
 }
 
 export async function fetchBlogs(params?: {
@@ -138,7 +152,14 @@ export async function fetchBlogs(params?: {
 }
 
 export async function fetchBlogBySlug(slug: string): Promise<BlogPost> {
-  return api<BlogPost>(`/api/public/blogs/${slug}`);
+  try {
+    return await api<BlogPost>(`/api/public/blogs/${slug}`);
+  } catch {
+    const { getLocalBlogBySlug } = await import("@/lib/local-content-api");
+    const local = getLocalBlogBySlug(slug);
+    if (local) return local as BlogPost;
+    throw new Error(`Blog not found: ${slug}`);
+  }
 }
 
 export async function fetchFaqs(group?: string): Promise<SiteFaq[]> {

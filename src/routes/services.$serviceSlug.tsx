@@ -1,6 +1,7 @@
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect, isRedirect } from "@tanstack/react-router";
 import { ServiceLandingView } from "@/components/landing/ServiceLandingView";
 import { fetchServiceBySlug, type ServicePage } from "@/lib/api/content";
+import { getLocalServiceBySlug } from "@/lib/local-content-api";
 import { landingHead } from "@/lib/landingHead";
 import { LEGACY_SERVICE_REDIRECTS } from "@/data/legacy-service-redirects";
 
@@ -26,7 +27,9 @@ export const Route = createFileRoute("/services/$serviceSlug")({
       }
       return page;
     } catch (e) {
-      if (e && typeof e === "object" && ("to" in e || "status" in e || "isRedirect" in e)) throw e;
+      if (isRedirect(e)) throw e;
+      const local = getLocalServiceBySlug(params.serviceSlug);
+      if (local && local.category === "service") return local as ServicePage;
       throw notFound();
     }
   },

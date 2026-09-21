@@ -71,6 +71,10 @@ const services = [
   ...INDUSTRY_SLUGS.map((s, i) => mkPage("industry", titleFromSlug(s), s, i < 8, i + 20)),
 ];
 
+export function getLocalServiceBySlug(slug: string) {
+  return services.find((s) => s.slug === slug) ?? null;
+}
+
 const blogs = BLOG_SEED_SLUGS.map((slug, i) => ({
   _id: `blog-${slug}`,
   title: titleFromSlug(slug),
@@ -91,6 +95,10 @@ const blogs = BLOG_SEED_SLUGS.map((slug, i) => ({
   publishedAt: new Date().toISOString(),
   keywords: ["Corporate Transport"],
 }));
+
+export function getLocalBlogBySlug(slug: string) {
+  return blogs.find((b) => b.slug === slug) ?? null;
+}
 
 const faqs = [
   {
@@ -128,7 +136,7 @@ export function handleLocalContentApi(path: string, method: string, searchParams
   }
   if (method === "GET" && path.startsWith("/api/public/services/")) {
     const slug = path.split("/").pop()!;
-    const row = services.find((s) => s.slug === slug);
+    const row = getLocalServiceBySlug(slug);
     if (!row) throw Object.assign(new Error("Not found"), { status: 404 });
     return row;
   }
@@ -137,7 +145,7 @@ export function handleLocalContentApi(path: string, method: string, searchParams
   }
   if (method === "GET" && path.startsWith("/api/public/blogs/")) {
     const slug = path.split("/").pop()!;
-    const row = blogs.find((b) => b.slug === slug);
+    const row = getLocalBlogBySlug(slug);
     if (!row) throw Object.assign(new Error("Not found"), { status: 404 });
     return { ...row, related: blogs.filter((b) => b.slug !== slug).slice(0, 2) };
   }

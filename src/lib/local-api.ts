@@ -246,7 +246,17 @@ function seedDb(): LocalDb {
   };
 }
 
+function canUseBrowserStorage() {
+  return globalThis.window !== undefined && typeof localStorage !== "undefined";
+}
+
+let memoryDb: LocalDb | null = null;
+
 function loadDb(): LocalDb {
+  if (!canUseBrowserStorage()) {
+    if (!memoryDb) memoryDb = seedDb();
+    return memoryDb;
+  }
   const raw = localStorage.getItem(DB_KEY);
   if (!raw) {
     const seed = seedDb();
@@ -265,6 +275,10 @@ function loadDb(): LocalDb {
 }
 
 function saveDb(db: LocalDb) {
+  if (!canUseBrowserStorage()) {
+    memoryDb = db;
+    return;
+  }
   localStorage.setItem(DB_KEY, JSON.stringify(db));
 }
 
@@ -341,17 +355,25 @@ function parseJsonBody(init: RequestInit): any {
 
 export async function localApiRequest(path: string, init: RequestInit = {}): Promise<unknown> {
   const method = (init.method || "GET").toUpperCase();
+  const qIndex = path.indexOf("?");
+  const pathname = qIndex >= 0 ? path.slice(0, qIndex) : path;
+  const search = qIndex >= 0 ? path.slice(qIndex + 1) : "";
+
+  try {
+    const { handleLocalContentApi } = await import("./local-content-api");
+    const contentResult = handleLocalContentApi(pathname, method, new URLSearchParams(search));
+    if (contentResult !== null) return contentResult;
+  } catch (err) {
+    const status = err && typeof err === "object" && "status" in err ? Number((err as { status: number }).status) : 0;
+    if (status === 404) throw new LocalApiError(404, err instanceof Error ? err.message : "Not found");
+    throw err;
+  }
+
   const db = loadDb();
   const body = parseJsonBody(init);
   const headers = new Headers(init.headers);
 
   try {
-    const { handleLocalContentApi } = await import("./local-content-api");
-    const qIndex = path.indexOf("?");
-    const pathname = qIndex >= 0 ? path.slice(0, qIndex) : path;
-    const search = qIndex >= 0 ? path.slice(qIndex + 1) : "";
-    const contentResult = handleLocalContentApi(pathname, method, new URLSearchParams(search));
-    if (contentResult !== null) return contentResult;
 
     if (path === "/api/payments/razorpay/order" || path === "/api/payments/razorpay/verify") {
       throw new LocalApiError(

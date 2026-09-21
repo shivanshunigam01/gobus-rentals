@@ -87,14 +87,20 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
     }
   }
 
-  // SSR / no-window: prefer configured API, else local content fallback for public routes
-  if (globalThis.window === undefined && isPublicPath && !base) {
+  const readLocalPublic = async (): Promise<T | null> => {
+    if (!isPublicPath && !path.startsWith("/api/")) return null;
     try {
       return (await localApiRequest(path, { ...init, headers })) as T;
-    } catch (e) {
-      const err = e as { status?: number; message?: string };
-      throw new ApiError(err.message || "Local API failed", err.status || 500);
+    } catch {
+      return null;
     }
+  };
+
+  // SSR / no-window: prefer configured API, else local content fallback for public routes
+  if (globalThis.window === undefined && isPublicPath && !base) {
+    const local = await readLocalPublic();
+    if (local != null) return local;
+    throw new ApiError("Local API failed", 404);
   }
 
   const origin =
@@ -103,23 +109,36 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
       ? String(process.env.VITE_API_URL).replace(/\/$/, "")
       : "") ||
     "http://127.0.0.1:4000";
-  const res = await fetch(`${origin}${path}`, { ...init, headers });
-  const text = await res.text();
-  let data: unknown = {};
-  if (text) {
-    try {
-      data = JSON.parse(text) as unknown;
-    } catch {
-      data = { raw: text };
+  try {
+    const res = await fetch(`${origin}${path}`, { ...init, headers });
+    const text = await res.text();
+    let data: unknown = {};
+    if (text) {
+      try {
+        data = JSON.parse(text) as unknown;
+      } catch {
+        data = { raw: text };
+      }
     }
+    if (!res.ok) {
+      if (isPublicPath) {
+        const local = await readLocalPublic();
+        if (local != null) return local;
+      }
+      const msg =
+        typeof data === "object" && data && "error" in data
+          ? String((data as { error: string }).error)
+          : res.statusText;
+      if (res.status === 401) clearAuth();
+      throw new ApiError(msg || "Request failed", res.status, data);
+    }
+    return data as T;
+  } catch (e) {
+    if (e instanceof ApiError) throw e;
+    if (isPublicPath) {
+      const local = await readLocalPublic();
+      if (local != null) return local;
+    }
+    throw e;
   }
-  if (!res.ok) {
-    const msg =
-      typeof data === "object" && data && "error" in data
-        ? String((data as { error: string }).error)
-        : res.statusText;
-    if (res.status === 401) clearAuth();
-    throw new ApiError(msg || "Request failed", res.status, data);
-  }
-  return data as T;
 }
