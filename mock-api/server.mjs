@@ -246,6 +246,36 @@ function readBody(req) {
   });
 }
 
+function drainBody(req) {
+  return new Promise((resolve, reject) => {
+    req.on("data", () => {});
+    req.on("end", resolve);
+    req.on("error", reject);
+  });
+}
+
+function vendorPortalPayload(s) {
+  const v = vendors.get(s.vendorId);
+  const u = s.user;
+  return {
+    user: { name: u.name, email: u.email, phone: u.phone },
+    vendor: {
+      companyName: v?.companyName,
+      address: v?.address,
+      gstNumber: v?.gstNumber,
+      panNumber: v?.panNumber,
+      status: v?.status,
+      operatingCities: v?.city ? [v.city] : [],
+      documentsStatus: v?.documentsStatus || "incomplete",
+      documents: v?.documents || {},
+    },
+    documentsStatus: v?.documentsStatus || "incomplete",
+    documents: v?.documents || {},
+    status: v?.status,
+    companyName: v?.companyName,
+  };
+}
+
 function seedAdmin() {
   const id = randomUUID();
   users.set(id, {
@@ -432,6 +462,8 @@ async function handle(req, res) {
         city,
         status: "pending",
         buses: [],
+        documentsStatus: "incomplete",
+        documents: {},
       });
       users.get(uid).vendorId = vid;
       const u = users.get(uid);
@@ -812,6 +844,9 @@ async function handle(req, res) {
     }
 
     /* ---------- Vendor ---------- */
+    if (path === "/api/vendor/notifications" || path.startsWith("/api/vendor/notifications/")) {
+      return json(res, 403, { error: "Vendors cannot access notifications" });
+    }
     if (method === "GET" && path === "/api/vendor/leads") {
       const s = userFromAuth(req);
       if (!s || s.user.role !== "vendor" || !s.vendorId) return json(res, 403, { error: "Forbidden" });
@@ -942,19 +977,26 @@ async function handle(req, res) {
     if (method === "GET" && path === "/api/vendor/profile") {
       const s = userFromAuth(req);
       if (!s || s.user.role !== "vendor") return json(res, 403, { error: "Forbidden" });
+      return json(res, 200, vendorPortalPayload(s));
+    }
+
+    if (method === "POST" && path.match(/^\/api\/vendor\/onboarding\/documents\/[^/]+$/)) {
+      const s = userFromAuth(req);
+      if (!s || s.user.role !== "vendor" || !s.vendorId) return json(res, 403, { error: "Forbidden" });
+      await drainBody(req);
       const v = vendors.get(s.vendorId);
-      const u = s.user;
-      return json(res, 200, {
-        user: { name: u.name, email: u.email, phone: u.phone },
-        vendor: {
-          companyName: v?.companyName,
-          address: v?.address,
-          gstNumber: v?.gstNumber,
-          panNumber: v?.panNumber,
-          status: v?.status,
-          operatingCities: v?.city ? [v.city] : [],
-        },
-      });
+      if (!v) return json(res, 404, { error: "Vendor not found" });
+      const key = path.split("/").pop();
+      v.documents = v.documents || {};
+      const row = { url: "#uploaded", status: "pending", fileName: "uploaded", remark: "" };
+      if (key === "vehicleImages") {
+        v.documents.vehicleImages = Array.isArray(v.documents.vehicleImages) ? v.documents.vehicleImages : [];
+        v.documents.vehicleImages.push(row);
+      } else {
+        v.documents[key] = row;
+      }
+      v.documentsStatus = "pending_review";
+      return json(res, 200, vendorPortalPayload(s));
     }
 
     if (method === "PATCH" && path === "/api/vendor/profile") {

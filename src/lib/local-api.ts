@@ -34,6 +34,8 @@ type VendorRow = {
   status: "pending" | "active" | "blocked" | "rejected";
   rating: number;
   city?: string;
+  documentsStatus?: string;
+  documents?: Record<string, any>;
 };
 
 type LeadRow = {
@@ -729,7 +731,19 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
       return { ok: true };
     }
 
-    // Vendor
+    // Vendor — never expose notification logs (they include customer contact details)
+    if (
+      path === "/api/vendor/notifications" ||
+      path.startsWith("/api/vendor/notifications/") ||
+      path === "/api/enterprise/notifications" ||
+      path.startsWith("/api/enterprise/notifications/")
+    ) {
+      const { user } = ensureAuth(db, headers.get("Authorization"));
+      if (user.role === "vendor") {
+        throw new LocalApiError(403, "Vendors cannot access notifications");
+      }
+    }
+
     if (method === "GET" && path === "/api/vendor/leads") {
       const { user, vendorId } = ensureAuth(db, headers.get("Authorization"));
       if (user.role !== "vendor" || !vendorId) throw new LocalApiError(403, "Forbidden");
@@ -855,6 +869,11 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
       const vendor = db.vendors.find((v) => v.id === vendorId);
       if (!vendor) throw new LocalApiError(404, "Vendor not found");
       return {
+        user: { name: user.name, email: user.email, phone: user.phone },
+        documentsStatus: vendor.documentsStatus || "incomplete",
+        documents: vendor.documents || {},
+        status: vendor.status,
+        companyName: vendor.companyName,
         profile: {
           name: user.name,
           email: user.email,
@@ -865,6 +884,34 @@ export async function localApiRequest(path: string, init: RequestInit = {}): Pro
           address: vendor.address || "",
           status: vendor.status,
         },
+      };
+    }
+
+    if (method === "POST" && path.match(/^\/api\/vendor\/onboarding\/documents\/[^/]+$/)) {
+      const { vendorId } = ensureAuth(db, headers.get("Authorization"));
+      if (!vendorId) throw new LocalApiError(403, "Forbidden");
+      const vendor = db.vendors.find((v) => v.id === vendorId);
+      if (!vendor) throw new LocalApiError(404, "Vendor not found");
+      const key = path.split("/").pop()!;
+      let fileName = "document";
+      if (typeof FormData !== "undefined" && init.body instanceof FormData) {
+        const uploaded = init.body.get("file");
+        if (uploaded instanceof File) fileName = uploaded.name;
+      }
+      vendor.documents = vendor.documents || {};
+      const row = { url: "#uploaded", status: "pending", fileName, remark: "" };
+      if (key === "vehicleImages") {
+        const list = Array.isArray(vendor.documents.vehicleImages) ? vendor.documents.vehicleImages : [];
+        list.push(row);
+        vendor.documents.vehicleImages = list;
+      } else {
+        vendor.documents[key] = row;
+      }
+      vendor.documentsStatus = "pending_review";
+      saveDb(db);
+      return {
+        documentsStatus: vendor.documentsStatus,
+        documents: vendor.documents,
       };
     }
 

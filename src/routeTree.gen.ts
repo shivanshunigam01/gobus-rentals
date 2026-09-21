@@ -35,7 +35,6 @@ import { Route as VendorRegisterRouteImport } from './routes/vendor.register'
 import { Route as VendorQuotesRouteImport } from './routes/vendor.quotes'
 import { Route as VendorProfileRouteImport } from './routes/vendor.profile'
 import { Route as VendorPaymentsRouteImport } from './routes/vendor.payments'
-import { Route as VendorNotificationsRouteImport } from './routes/vendor.notifications'
 import { Route as VendorLoginRouteImport } from './routes/vendor.login'
 import { Route as VendorLeadsRouteImport } from './routes/vendor.leads'
 import { Route as VendorFleetRouteImport } from './routes/vendor.fleet'
@@ -229,11 +228,6 @@ const VendorProfileRoute = VendorProfileRouteImport.update({
 const VendorPaymentsRoute = VendorPaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
-  getParentRoute: () => VendorRoute,
-} as any)
-const VendorNotificationsRoute = VendorNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
   getParentRoute: () => VendorRoute,
 } as any)
 const VendorLoginRoute = VendorLoginRouteImport.update({
@@ -642,7 +636,6 @@ export interface FileRoutesByFullPath {
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
-  '/vendor/notifications': typeof VendorNotificationsRoute
   '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
@@ -735,7 +728,6 @@ export interface FileRoutesByTo {
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
-  '/vendor/notifications': typeof VendorNotificationsRoute
   '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
@@ -829,7 +821,6 @@ export interface FileRoutesById {
   '/vendor/fleet': typeof VendorFleetRoute
   '/vendor/leads': typeof VendorLeadsRoute
   '/vendor/login': typeof VendorLoginRoute
-  '/vendor/notifications': typeof VendorNotificationsRoute
   '/vendor/payments': typeof VendorPaymentsRoute
   '/vendor/profile': typeof VendorProfileRoute
   '/vendor/quotes': typeof VendorQuotesRoute
@@ -924,7 +915,6 @@ export interface FileRouteTypes {
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
-    | '/vendor/notifications'
     | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
@@ -1017,7 +1007,6 @@ export interface FileRouteTypes {
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
-    | '/vendor/notifications'
     | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
@@ -1110,7 +1099,6 @@ export interface FileRouteTypes {
     | '/vendor/fleet'
     | '/vendor/leads'
     | '/vendor/login'
-    | '/vendor/notifications'
     | '/vendor/payments'
     | '/vendor/profile'
     | '/vendor/quotes'
@@ -1334,13 +1322,6 @@ declare module '@tanstack/react-router' {
       path: '/payments'
       fullPath: '/vendor/payments'
       preLoaderRoute: typeof VendorPaymentsRouteImport
-      parentRoute: typeof VendorRoute
-    }
-    '/vendor/notifications': {
-      id: '/vendor/notifications'
-      path: '/notifications'
-      fullPath: '/vendor/notifications'
-      preLoaderRoute: typeof VendorNotificationsRouteImport
       parentRoute: typeof VendorRoute
     }
     '/vendor/login': {
@@ -1954,7 +1935,6 @@ interface VendorRouteChildren {
   VendorFleetRoute: typeof VendorFleetRoute
   VendorLeadsRoute: typeof VendorLeadsRoute
   VendorLoginRoute: typeof VendorLoginRoute
-  VendorNotificationsRoute: typeof VendorNotificationsRoute
   VendorPaymentsRoute: typeof VendorPaymentsRoute
   VendorProfileRoute: typeof VendorProfileRoute
   VendorQuotesRoute: typeof VendorQuotesRoute
@@ -1972,7 +1952,6 @@ const VendorRouteChildren: VendorRouteChildren = {
   VendorFleetRoute: VendorFleetRoute,
   VendorLeadsRoute: VendorLeadsRoute,
   VendorLoginRoute: VendorLoginRoute,
-  VendorNotificationsRoute: VendorNotificationsRoute,
   VendorPaymentsRoute: VendorPaymentsRoute,
   VendorProfileRoute: VendorProfileRoute,
   VendorQuotesRoute: VendorQuotesRoute,

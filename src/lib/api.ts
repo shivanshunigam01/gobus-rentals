@@ -20,11 +20,10 @@ export class ApiError extends Error {
 
 export async function api<T = unknown>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);
-  if (
-    init.body &&
-    typeof init.body === "string" &&
-    !headers.has("Content-Type")
-  ) {
+  const isFormData = typeof FormData !== "undefined" && init.body instanceof FormData;
+  if (isFormData) {
+    headers.delete("Content-Type");
+  } else if (init.body && typeof init.body === "string" && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
   const t = getToken();

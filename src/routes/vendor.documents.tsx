@@ -31,11 +31,12 @@ function VendorDocuments() {
   const uploadMut = useMutation({
     mutationFn: async ({ key, file }: { key: string; file: File }) => {
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", file, file.name);
       return api(`/api/vendor/onboarding/documents/${key}`, { method: "POST", body: fd });
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
       toast.success("Uploaded for review");
+      qc.setQueryData(["vendor-portal-profile"], res);
       qc.invalidateQueries({ queryKey: ["vendor-portal-profile"] });
     },
     onError: (e: Error) => toast.error(e.message || "Document upload failed"),
@@ -45,7 +46,7 @@ function VendorDocuments() {
   const docs = data?.documents || {};
 
   return (
-    <div className={panelPage}>
+    <div className={panelPage.standard}>
       <h1 className="text-2xl font-bold mb-1">Documents</h1>
       <p className="text-sm text-muted-foreground mb-6">
         Status: <span className="font-medium text-foreground">{data?.documentsStatus || "incomplete"}</span>
@@ -62,7 +63,7 @@ function VendorDocuments() {
               </div>
               {row.url ? (
                 <a href={row.url} target="_blank" rel="noreferrer" className="text-sm text-primary underline">
-                  View uploaded file
+                  View uploaded file{row.fileName ? ` (${row.fileName})` : ""}
                 </a>
               ) : (
                 <p className="text-sm text-muted-foreground">Not uploaded</p>
@@ -70,7 +71,7 @@ function VendorDocuments() {
               {row.remark ? <p className="text-xs text-destructive mt-1">{row.remark}</p> : null}
               <Input
                 type="file"
-                accept="image/*,.pdf"
+                accept="image/*,.pdf,application/pdf"
                 className="mt-3"
                 disabled={uploadMut.isPending}
                 onChange={(e) => {
@@ -86,6 +87,7 @@ function VendorDocuments() {
       <div className="mt-4">
         <Button
           variant="outline"
+          disabled={uploadMut.isPending}
           onClick={() => {
             const input = document.createElement("input");
             input.type = "file";

@@ -69,7 +69,7 @@ function VendorLeads() {
         }),
       }),
     onSuccess: () => {
-      toast.success("Quote submitted. The customer gets an email when your API sends it (see Admin → Notifications history in local dev).");
+      toast.success("Quote submitted. The customer will be emailed when your quote is sent.");
       setQuoteLead(null);
       setAmount("");
       qc.invalidateQueries({ queryKey: ["vendor-leads"] });
