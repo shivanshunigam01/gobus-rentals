@@ -7,6 +7,7 @@ import { COMPANY } from "@/lib/company";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
 import { faqPageSchema } from "@/lib/seo/schemas";
 import { Badge } from "@/components/ui/badge";
+import { fleetImages } from "@/lib/media";
 import { CheckSquare, Compass, FileText, ShieldCheck } from "lucide-react";
 
 const faqs = [
@@ -50,13 +51,13 @@ function BusRentalGuidesPage() {
           <Breadcrumbs items={[{ label: "Bus rental guides" }]} />
           <section className="rounded-2xl border border-border bg-card overflow-hidden mb-8">
             <img
-              src="/images/bus-rental-guides-hero.png"
+              src={fleetImages.coachMountainRoad}
               alt="Bus rental guides for India — luxury coach travel"
               width={1600}
               height={900}
               loading="eager"
               decoding="async"
-              className="block w-full h-auto object-contain bg-muted/30"
+              className="block w-full aspect-[16/9] object-cover bg-muted/30"
             />
             <div className="p-5 sm:p-7">
               <Badge variant="secondary" className="mb-3">Planning hub</Badge>

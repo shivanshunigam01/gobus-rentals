@@ -4,6 +4,7 @@ import { LogOut, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { clearAuth } from "@/lib/auth-storage";
 import { COMPANY } from "@/lib/company";
+import { SITE_LOGO_PATH } from "@/lib/brand";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { PanelNavLink } from "./panel-links";
@@ -61,7 +62,7 @@ function SidebarHeader({ panelLabel, panelLabelClassName }: Pick<Props, "panelLa
     <div className="p-4 sm:p-5 border-b border-border shrink-0">
       <Link to="/" className="flex items-center gap-2 min-h-10" onClick={() => undefined}>
         <img
-          src="/images/logo.png"
+          src={SITE_LOGO_PATH}
           alt={COMPANY.platformBrand}
           className="h-9 w-auto max-w-[200px] object-contain object-left"
           width={884}
@@ -90,8 +91,12 @@ export function ResponsivePanelLayout({
 
   const closeMobile = () => setMobileOpen(false);
   const tools = (
-    <div className="flex items-center gap-2">
-      {showAdminTools ? <GlobalSearch /> : null}
+    <div className="flex items-center gap-1 sm:gap-2">
+      {showAdminTools ? (
+        <div className="hidden sm:block">
+          <GlobalSearch />
+        </div>
+      ) : null}
       <NotificationBell basePath={notificationBasePath} />
       <ThemeToggle />
     </div>
@@ -130,7 +135,7 @@ export function ResponsivePanelLayout({
         </Sheet>
         <Link to="/" className="flex min-w-0 items-center gap-2 flex-1" onClick={closeMobile}>
           <img
-            src="/images/logo.png"
+            src={SITE_LOGO_PATH}
             alt=""
             className="h-8 w-auto max-h-8 object-contain object-left shrink-0"
             width={884}

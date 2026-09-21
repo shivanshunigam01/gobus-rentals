@@ -50,6 +50,7 @@
   --color-surface-foreground: var(--surface-foreground);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-sans: var(--font-body);
 }
 
 :root {
@@ -90,9 +91,8 @@
   --hero-gradient-end: oklch(0.50 0.20 230);
   --surface: oklch(0.97 0.008 240);
   --surface-foreground: oklch(0.30 0.04 250);
-  /* Use system stacks to remove render-blocking webfont CSS on mobile. */
-  --font-display: "Segoe UI", "Inter", "Poppins", "Roboto", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --font-body: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 .dark {
@@ -141,16 +141,37 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
+    line-height: 1.65;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+
+  .font-display {
+    letter-spacing: -0.025em;
   }
 
   button {
@@ -175,5 +196,64 @@
   .skip-link:focus {
     left: 1rem;
     top: 1rem;
+  }
+}
+
+@layer components {
+  .table-scroll-shell {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .table-scroll-shell {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .table-scroll-hint {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: var(--color-muted-foreground);
+  }
+
+  @media (min-width: 768px) {
+    .table-scroll-hint {
+      display: none;
+    }
+  }
+
+  .table-scroll-inner {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-card);
+  }
+
+  .btn-responsive {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+    height: auto;
+    min-height: 3rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .btn-responsive {
+      width: auto;
+      min-height: 0;
+      white-space: nowrap;
+    }
   }
 }

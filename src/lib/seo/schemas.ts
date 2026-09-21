@@ -1,7 +1,8 @@
 import { COMPANY } from "@/lib/company";
+import { SITE_LOGO_PATH } from "@/lib/brand";
 import { SITE_URL, SITE_NAME, absoluteUrl } from "@/lib/site";
 
-const logoUrl = () => absoluteUrl("/images/logo.png");
+const logoUrl = () => absoluteUrl(SITE_LOGO_PATH);
 import type { CityRecord } from "@/data/indian-cities";
 
 export function organizationSchema() {

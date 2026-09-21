@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { COMPANY } from "@/lib/company";
+import { SITE_LOGO_PATH } from "@/lib/brand";
 import {
   Dialog,
   DialogContent,
@@ -23,10 +24,10 @@ export function Footer() {
     <footer className="bg-foreground text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10"> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-8 sm:gap-10">
           <div>
             <img
-              src="/images/logo.png"
+              src={SITE_LOGO_PATH}
               alt={COMPANY.platformBrand}
               className="h-16 sm:h-[4.5rem] w-auto mb-4 object-contain object-left"
               width={884}

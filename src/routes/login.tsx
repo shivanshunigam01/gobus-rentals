@@ -12,6 +12,7 @@ import { Mail, Lock, ArrowRight, User, Bus, ShieldCheck, Eye, EyeOff, Briefcase 
 import { api } from "@/lib/api";
 import { setAuth, type StoredUser } from "@/lib/auth-storage";
 import { buildPageMeta } from "@/lib/seo/buildMeta";
+import { SITE_LOGO_PATH } from "@/lib/brand";
 
 export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -342,7 +343,7 @@ function LoginPage() {
         <div className="mx-4 w-full max-w-md">
           <div className="mb-6 text-center">
             <img
-              src="/images/logo.png"
+              src={SITE_LOGO_PATH}
               alt="Luxury Bus Rental"
               className="mx-auto mb-4 h-[4.5rem] w-auto object-contain sm:h-[5.25rem]"
               width={884}

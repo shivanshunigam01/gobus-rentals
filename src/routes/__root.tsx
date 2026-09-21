@@ -9,6 +9,7 @@ import { StickyLeadBar } from "@/components/seo/StickyLeadBar";
 import { ThemeProvider } from "@/lib/theme";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TWITTER_HANDLE, absoluteUrl } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schemas";
+import { SITE_LOGO_PATH } from "@/lib/brand";
 
 function NotFoundComponent() {
   return (
@@ -69,13 +70,26 @@ export const Route = createRootRoute({
     ],
     links: [
       {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap",
+      },
+      {
         rel: "icon",
-        type: "image/png",
-        href: "/images/logo.png",
+        type: "image/svg+xml",
+        href: SITE_LOGO_PATH,
       },
       {
         rel: "apple-touch-icon",
-        href: "/images/logo.png",
+        href: SITE_LOGO_PATH,
       },
       {
         rel: "stylesheet",
@@ -115,7 +129,8 @@ function RootComponent() {
     /^\/b2b(\/|$)/.test(pathname) ||
     pathname === "/" ||
     pathname === "/login" ||
-    pathname === "/signup";
+    pathname === "/signup" ||
+    pathname === "/book";
 
   return (
     <ThemeProvider>

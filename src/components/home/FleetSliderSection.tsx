@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchVehicleTypes } from "@/lib/api/content";
-import { Bus } from "lucide-react";
+import { fleetImages } from "@/lib/media";
 
 export function FleetSliderSection() {
   const { data = [] } = useQuery({
@@ -16,22 +16,34 @@ export function FleetSliderSection() {
         <p className="text-muted-foreground mb-6 max-w-2xl">
           Luxury buses, Urbania, shuttles, and executive cabs — one corporate transportation platform.
         </p>
-        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
+        <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:mx-0 sm:px-0">
           {data.map((v) => (
             <Link
               key={v.slug}
               to="/book"
               search={{ busType: v.name } as never}
-              className="snap-start shrink-0 w-56 border rounded-xl p-4 bg-card hover:border-primary transition-colors"
+              className="snap-start shrink-0 w-56 border rounded-xl overflow-hidden bg-card hover:border-primary transition-colors"
             >
-              <Bus className="w-8 h-8 text-primary mb-3" />
-              <p className="font-semibold">{v.name}</p>
-              <p className="text-xs text-muted-foreground mt-1 capitalize">{v.category}</p>
-              {v.seatsMax ? (
-                <p className="text-xs mt-2">
-                  {v.seatsMin}–{v.seatsMax} seats
-                </p>
-              ) : null}
+              <div className="aspect-[16/10] bg-muted">
+                <img
+                  src={v.imageUrl || fleetImages.coachFrontMountain}
+                  alt={v.name}
+                  width={448}
+                  height={280}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <p className="font-semibold">{v.name}</p>
+                <p className="text-xs text-muted-foreground mt-1 capitalize">{v.category}</p>
+                {v.seatsMax ? (
+                  <p className="text-xs mt-2">
+                    {v.seatsMin}–{v.seatsMax} seats
+                  </p>
+                ) : null}
+              </div>
             </Link>
           ))}
         </div>

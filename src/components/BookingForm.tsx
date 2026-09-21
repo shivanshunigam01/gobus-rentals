@@ -309,7 +309,7 @@ export function BookingForm({
 
   if (submitted) {
     return (
-      <div className="bg-card rounded-2xl shadow-xl border border-border ring-1 ring-primary/10 p-10 text-center">
+      <div className="bg-card rounded-2xl shadow-xl border border-border ring-1 ring-primary/10 p-6 sm:p-10 text-center">
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Bus className="w-8 h-8 text-primary" />
         </div>

@@ -155,13 +155,13 @@ export const Route = createFileRoute("/$seoSlug")({
       const page = getServiceCityPage(scSlug);
       if (!page) throw notFound();
       const path = `/${scSlug}-bus-rental-guide`;
-      const ogImagePath = `/images/service-cities/${page.imageFile}`;
+      const ogImage = serviceCityImageUrl(page.slug);
       const { meta, links } = buildPageMeta({
         title: page.pageTitle,
         description: page.metaDescription,
         path,
         keywords: page.keywords,
-        ogImage: absoluteUrl(ogImagePath),
+        ogImage: ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage),
         ogType: "article",
       });
       const faqs = [
@@ -812,13 +812,6 @@ function ServiceCityGuidePage({ citySlug }: Readonly<{ citySlug: string }>) {
             </p>
 
             <HeroImage src={imgUrl} alt={page.imageAlt} />
-            <p className="mt-2 text-xs text-muted-foreground">
-              Image:{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">
-                public/images/service-cities/{page.imageFile}
-              </code>{" "}
-              (replace with your photography; falls back if missing).
-            </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/book">

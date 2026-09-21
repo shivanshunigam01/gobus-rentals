@@ -1,21 +1,45 @@
 /**
- * Category-matched transport imagery using fixed Unsplash photo IDs.
- * This avoids random unrelated images while keeping strong visual quality.
+ * Marketing imagery — local files under `public/images/`.
+ * Hero clips live under `public/videos/`.
  */
-const premiumImage = (photoId: string, width: number, height: number) =>
-  `https://source.unsplash.com/${photoId}/${width}x${height}`;
-
 export const fleetImages = {
-  coachFrontMountain: premiumImage("zK0MWN31qQo", 1600, 1000),
-  coachGoldenHour: premiumImage("v4BzhqGVeNI", 1920, 1080),
-  coachMountainRoad: premiumImage("DJvwF7U6FC0", 1600, 1066),
-  coachDepotLine: premiumImage("ubxqlmH3bFk", 1800, 900),
-  coachSeatsReclining: premiumImage("ziwpr6iItpk", 1280, 960),
-  coachInteriorSemiSleeper: premiumImage("BOAJwI3WXKs", 1280, 960),
-  busInteriorOverheadRacks: premiumImage("ufC1gjg0dXs", 1280, 960),
-  vanUrbaniaFront: premiumImage("LYA-0k00fUw", 1280, 960),
-  vanTravellerSide: premiumImage("UguKo19QCfg", 1280, 960),
-  vanInteriorAisle: premiumImage("07k9_DUujBw", 1280, 960),
+  coachFrontMountain: "/images/fleet/coach-front-mountain.png",
+  coachGoldenHour: "/images/fleet/coach-golden-hour.png",
+  coachMountainRoad: "/images/fleet/coach-mountain-road.png",
+  coachDepotLine: "/images/fleet/coach-depot-line.png",
+  coachSeatsReclining: "/images/fleet/coach-seats-reclining.png",
+  coachInteriorSemiSleeper: "/images/fleet/coach-interior-semi-sleeper.png",
+  busInteriorOverheadRacks: "/images/fleet/bus-interior-overhead-racks.png",
+  vanUrbaniaFront: "/images/fleet/van-urbania-front.png",
+  vanTravellerSide: "/images/fleet/van-traveller-side.png",
+  vanInteriorAisle: "/images/fleet/van-interior-aisle.png",
+  cityNightBus: "/images/fleet-26-seater-ac-bus.png",
+  executiveSedan: "/images/fleet/van-traveller-side.png",
+  executiveSuv: "/images/fleet/van-urbania-front.png",
+  mountainScenic: "/images/fleet/coach-mountain-road.png",
+} as const;
+
+/** Rotating fleet card images for seat-class sections. */
+export const fleetCardImages = [
+  fleetImages.vanUrbaniaFront,
+  fleetImages.vanTravellerSide,
+  fleetImages.vanInteriorAisle,
+  fleetImages.coachDepotLine,
+  fleetImages.coachFrontMountain,
+  fleetImages.coachGoldenHour,
+  fleetImages.coachInteriorSemiSleeper,
+  fleetImages.cityNightBus,
+] as const;
+
+/** Home gallery mosaic — coach / van / route atmosphere. */
+export const galleryImages = {
+  charterHero: "/images/gallery-charter-hero.png",
+  recliningSeats: "/images/gallery-reclining-seats.png",
+  scenicMountainRoad: "/images/gallery-scenic-mountain-road.png",
+  luxurySunset: "/images/gallery-luxury-sunset.png",
+  spaciousCabin: "/images/gallery-spacious-minibus-cabin.png",
+  miniBusAirport: "/images/gallery-mini-bus-airport-city.png",
+  volvoHillRoutes: "/images/gallery-volvo-hill-routes.png",
 } as const;
 
 /** Hero background clips under `public/videos/` — played in order, then repeat from the first. */

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { api } from "@/lib/api";
 import { panelPage, panelStatePadding } from "@/lib/panel-page";
+import { ResponsiveTable } from "@/components/ui/responsive-table";
 
 export const Route = createFileRoute("/vendor/bookings")({
   component: VendorBookings,
@@ -76,8 +77,8 @@ function VendorBookings() {
       {bookings.length === 0 ? (
         <p className="text-sm text-muted-foreground border border-border rounded-xl p-8 text-center bg-card">No bookings yet.</p>
       ) : (
-        <div className="bg-card rounded-xl border border-border overflow-x-auto">
-          <table className="w-full min-w-[880px] text-sm">
+        <ResponsiveTable minWidth="880px">
+          <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-muted-foreground">
                 <th className="text-left px-5 py-3 font-medium">Booking ID</th>
@@ -130,7 +131,7 @@ function VendorBookings() {
               })}
             </tbody>
           </table>
-        </div>
+        </ResponsiveTable>
       )}
     </div>
   );

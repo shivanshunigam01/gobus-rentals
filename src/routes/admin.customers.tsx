@@ -7,6 +7,7 @@ import { Eye, Ban, Mail } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { api } from "@/lib/api";
 import { panelPage, panelStatePadding } from "@/lib/panel-page";
+import { ResponsiveTable } from "@/components/ui/responsive-table";
 
 export const Route = createFileRoute("/admin/customers")({
   component: AdminCustomers,
@@ -60,8 +61,8 @@ function AdminCustomers() {
         .
       </p>
 
-      <div className="bg-card rounded-xl border border-border overflow-x-auto">
-        <table className="w-full min-w-[720px] text-sm">
+      <ResponsiveTable minWidth="720px">
+        <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border text-muted-foreground">
               <th className="text-left px-5 py-3 font-medium">ID</th>
@@ -115,7 +116,7 @@ function AdminCustomers() {
             ))}
           </tbody>
         </table>
-      </div>
+      </ResponsiveTable>
 
       <Dialog open={!!view} onOpenChange={(o) => !o && setView(null)}>
         <DialogContent>

@@ -32,15 +32,17 @@ export function CTASection() {
         <p className="text-primary-foreground/70 text-sm mb-10 max-w-xl mx-auto">
           Serving all major cities in India — {COMPANY.operatingLocations.split(",")[0]}, Delhi, Mumbai, Bangalore &amp; beyond. GST-transparent pricing at checkout.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/book">
-            <Button variant="hero" size="xl" className="gap-2 bg-card text-primary hover:bg-card/90">
-              Get Best Bus Rental Quote <ArrowRight className="w-5 h-5" />
+        <div className="mx-auto flex w-full max-w-lg flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4">
+          <Link to="/book" className="w-full sm:w-auto">
+            <Button variant="hero" size="xl" className="btn-responsive w-full gap-2 bg-card text-primary hover:bg-card/90 sm:w-auto">
+              Get Best Bus Rental Quote <ArrowRight className="h-5 w-5 shrink-0" />
             </Button>
           </Link>
-          <a href={`tel:+91${COMPANY.contactPhone}`}>
-            <Button variant="hero-outline" size="xl" className="gap-2">
-              <Phone className="w-5 h-5" /> Call Now for Affordable Bus Hire
+          <a href={`tel:+91${COMPANY.contactPhone}`} className="w-full sm:w-auto">
+            <Button variant="hero-outline" size="xl" className="btn-responsive w-full gap-2 sm:w-auto">
+              <Phone className="h-5 w-5 shrink-0" />
+              <span className="sm:hidden">Call now</span>
+              <span className="hidden sm:inline">Call Now for Affordable Bus Hire</span>
             </Button>
           </a>
         </div>

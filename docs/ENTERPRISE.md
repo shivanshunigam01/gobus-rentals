@@ -26,3 +26,6 @@ B2B: full portal (existing)
 
 ## Env
 `VITE_API_URL` required for authenticated APIs.
+
+## Full release documentation
+See **[TODAY_FEATURE_DOCUMENTATION.md](./TODAY_FEATURE_DOCUMENTATION.md)** for complete frontend + backend flows (booking, B2B, vendor, admin, SEO, offers, PDFs) shipped 4 Aug 2026.

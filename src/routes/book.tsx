@@ -43,7 +43,7 @@ function BookPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="pt-20 pb-20 md:pb-16">
+      <main className="pt-20 pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 lg:mb-10 max-w-2xl">
             <p className="text-sm font-medium text-primary mb-2">Free quotes · No obligation · Best price guaranteed</p>

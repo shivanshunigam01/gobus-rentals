@@ -6,6 +6,7 @@ import { Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { api } from "@/lib/api";
 import { panelPage, panelStatePadding } from "@/lib/panel-page";
+import { ResponsiveTable } from "@/components/ui/responsive-table";
 
 export const Route = createFileRoute("/vendor/quotes")({
   component: VendorQuotes,
@@ -41,8 +42,8 @@ function VendorQuotes() {
       {quotes.length === 0 ? (
         <p className="text-sm text-muted-foreground border border-border rounded-xl p-8 text-center bg-card">No quotes sent yet.</p>
       ) : (
-        <div className="bg-card rounded-xl border border-border overflow-x-auto">
-          <table className="w-full min-w-[560px] text-sm">
+        <ResponsiveTable minWidth="560px">
+          <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-muted-foreground">
                 <th className="text-left px-5 py-3 font-medium">Quote ID</th>
@@ -68,7 +69,7 @@ function VendorQuotes() {
               ))}
             </tbody>
           </table>
-        </div>
+        </ResponsiveTable>
       )}
 
       <Dialog open={!!view} onOpenChange={(o) => !o && setView(null)}>

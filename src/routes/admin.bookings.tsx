@@ -9,6 +9,7 @@ import { Eye, Lock, Unlock } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { api } from "@/lib/api";
 import { panelPage, panelStatePadding } from "@/lib/panel-page";
+import { ResponsiveTable } from "@/components/ui/responsive-table";
 
 export const Route = createFileRoute("/admin/bookings")({
   component: AdminBookings,
@@ -151,8 +152,8 @@ function AdminBookings() {
         <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-x-auto">
-        <table className="w-full min-w-[980px] text-sm">
+      <ResponsiveTable minWidth="980px">
+        <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border text-muted-foreground">
               <th className="text-left px-4 py-3 font-medium">ID</th>
@@ -231,7 +232,7 @@ function AdminBookings() {
             ))}
           </tbody>
         </table>
-      </div>
+      </ResponsiveTable>
 
       <Dialog open={!!viewId} onOpenChange={(o) => !o && setViewId(null)}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">

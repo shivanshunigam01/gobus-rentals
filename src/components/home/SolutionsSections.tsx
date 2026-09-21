@@ -13,7 +13,7 @@ export function FeaturedServicesSection() {
   return (
     <section className="py-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-6 gap-3">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
           <div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold">Featured services</h2>
             <p className="text-muted-foreground">High-demand corporate mobility offerings</p>
@@ -28,10 +28,23 @@ export function FeaturedServicesSection() {
               key={p.slug}
               to="/services/$serviceSlug"
               params={{ serviceSlug: p.slug }}
-              className="border rounded-xl p-4 bg-card hover:border-primary"
+              className="border rounded-xl overflow-hidden bg-card hover:border-primary"
             >
-              <h3 className="font-semibold mb-1">{p.title}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">{p.shortDescription}</p>
+              {p.banner?.url ? (
+                <img
+                  src={p.banner.url}
+                  alt={p.banner.alt || p.title}
+                  width={480}
+                  height={240}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-28 w-full object-cover"
+                />
+              ) : null}
+              <div className="p-4">
+                <h3 className="font-semibold mb-1">{p.title}</h3>
+                <p className="text-sm text-muted-foreground line-clamp-2">{p.shortDescription}</p>
+              </div>
             </Link>
           ))}
         </div>
@@ -48,7 +61,7 @@ export function CorporateSolutionsSection() {
   return (
     <section className="py-14 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-6">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold">Corporate solutions</h2>
             <p className="text-muted-foreground">Employee commute to executive travel</p>
@@ -83,7 +96,7 @@ export function IndustrySolutionsSection() {
   return (
     <section className="py-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-6">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold">Industry solutions</h2>
             <p className="text-muted-foreground">Built for IT, BPO, factories, airports, and more</p>
@@ -167,7 +180,7 @@ export function LatestBlogsSection() {
   return (
     <section className="py-14 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between mb-6">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="font-display text-2xl sm:text-3xl font-bold">Latest blogs</h2>
           <Link to="/blog" className="text-sm text-primary hover:underline">
             View blog
