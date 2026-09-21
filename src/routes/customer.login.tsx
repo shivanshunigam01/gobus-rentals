@@ -1,10 +1,17 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useLayoutEffect } from "react";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 /** Legacy-style URL — unified login at `/login` with customer portal pre-selected */
 export const Route = createFileRoute("/customer/login")({
   component: CustomerLoginRedirect,
-  head: () => ({ meta: [{ title: "Customer Login — Luxury Bus Rental" }] }),
+  head: () =>
+    buildPageMeta({
+      title: "Customer Login",
+      description: "Customer sign-in for Luxury Bus Rental.",
+      path: "/customer/login",
+      noindex: true,
+    }),
 });
 
 function CustomerLoginRedirect() {

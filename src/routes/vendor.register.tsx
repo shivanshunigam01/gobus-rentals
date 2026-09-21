@@ -24,18 +24,17 @@ import { fetchVehicleTypes } from "@/lib/api/content";
 import { VEHICLE_TYPE_FALLBACK } from "@/data/vehicle-types";
 import { COMPANY } from "@/lib/company";
 import { cn } from "@/lib/utils";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 export const Route = createFileRoute("/vendor/register")({
   component: VendorRegisterPage,
-  head: () => ({
-    meta: [
-      { title: "Vendor Registration — Luxury Bus Rental" },
-      {
-        name: "description",
-        content: "Join India's corporate transportation marketplace. Register your fleet in minutes.",
-      },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: "Vendor Registration",
+      description: "Join India's corporate transportation marketplace. Register your fleet in minutes.",
+      path: "/vendor/register",
+      noindex: true,
+    }),
 });
 
 const BUSINESS_TYPES = [

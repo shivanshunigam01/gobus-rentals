@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VendorRouteImport } from './routes/vendor'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as RoutesRouteImport } from './routes/routes'
 import { Route as LoginRouteImport } from './routes/login'
@@ -103,6 +104,11 @@ import { Route as SeoSlugRentalBusTypeSlugRouteImport } from './routes/$seoSlug.
 const VendorRoute = VendorRouteImport.update({
   id: '/vendor',
   path: '/vendor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -571,6 +577,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/routes': typeof RoutesRoute
   '/signup': typeof SignupRoute
+  '/sitemap': typeof SitemapRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
   '/admin/activity': typeof AdminActivityRoute
@@ -663,6 +670,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/routes': typeof RoutesRoute
   '/signup': typeof SignupRoute
+  '/sitemap': typeof SitemapRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
   '/admin/activity': typeof AdminActivityRoute
@@ -756,6 +764,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/routes': typeof RoutesRoute
   '/signup': typeof SignupRoute
+  '/sitemap': typeof SitemapRoute
   '/vendor': typeof VendorRouteWithChildren
   '/$seoSlug/$busTypeSlug': typeof SeoSlugBusTypeSlugRoute
   '/admin/activity': typeof AdminActivityRoute
@@ -850,6 +859,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/routes'
     | '/signup'
+    | '/sitemap'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
     | '/admin/activity'
@@ -942,6 +952,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/routes'
     | '/signup'
+    | '/sitemap'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
     | '/admin/activity'
@@ -1034,6 +1045,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/routes'
     | '/signup'
+    | '/sitemap'
     | '/vendor'
     | '/$seoSlug/$busTypeSlug'
     | '/admin/activity'
@@ -1127,6 +1139,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RoutesRoute: typeof RoutesRoute
   SignupRoute: typeof SignupRoute
+  SitemapRoute: typeof SitemapRoute
   VendorRoute: typeof VendorRouteWithChildren
   AgentLoginRoute: typeof AgentLoginRoute
   CorporateSlugRoute: typeof CorporateSlugRoute
@@ -1146,6 +1159,13 @@ declare module '@tanstack/react-router' {
       path: '/vendor'
       fullPath: '/vendor'
       preLoaderRoute: typeof VendorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -1980,6 +2000,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RoutesRoute: RoutesRoute,
   SignupRoute: SignupRoute,
+  SitemapRoute: SitemapRoute,
   VendorRoute: VendorRouteWithChildren,
   AgentLoginRoute: AgentLoginRoute,
   CorporateSlugRoute: CorporateSlugRoute,

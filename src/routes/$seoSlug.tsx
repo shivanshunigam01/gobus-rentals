@@ -20,6 +20,7 @@ import { CapacityGuideSection } from "@/components/CapacityGuideSection";
 import { CitySeoLandingView } from "@/components/landing/CitySeoLandingView";
 import { InternalLinkBlocks } from "@/components/seo/InternalLinkBlocks";
 import { fetchCitySeo, fetchProgrammaticSeo, type CitySeoResponse } from "@/lib/api/seo";
+import { headForProgrammaticSlug } from "@/lib/seo/programmaticHead";
 
 const CITY_SUFFIX = "-bus-rental";
 const SERVICE_CITY_SUFFIX = "-bus-rental-guide";
@@ -193,6 +194,11 @@ export const Route = createFileRoute("/$seoSlug")({
         keywords: `bus rental ${plainCity.name}, volvo bus ${plainCity.name}, mini bus ${plainCity.name}, luxury bus ${plainCity.name}, tempo traveller ${plainCity.name}`,
       });
       return { meta, links };
+    }
+
+    // Programmatic intent×city pages (e.g. corporate-bus-rental-delhi)
+    if (params.seoSlug.includes("-") && params.seoSlug.length > 8) {
+      return headForProgrammaticSlug(params.seoSlug);
     }
 
     throw notFound();

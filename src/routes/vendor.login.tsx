@@ -1,10 +1,17 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useLayoutEffect } from "react";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 /** Legacy URL — unified login at `/login` with vendor pre-selected */
 export const Route = createFileRoute("/vendor/login")({
   component: VendorLoginRedirect,
-  head: () => ({ meta: [{ title: "Vendor Login — Luxury Bus Rental" }] }),
+  head: () =>
+    buildPageMeta({
+      title: "Vendor Login",
+      description: "Vendor sign-in for Luxury Bus Rental.",
+      path: "/vendor/login",
+      noindex: true,
+    }),
 });
 
 function VendorLoginRedirect() {

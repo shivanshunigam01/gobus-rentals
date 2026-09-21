@@ -4,16 +4,17 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/company";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
-  head: () => ({
-    meta: [
-      { title: `Contact Us | Book Tempo Traveller & Bus Rental — ${COMPANY.legalName}` },
-      { name: "description", content: `Contact ${COMPANY.legalName} to book tempo traveller on rent, luxury bus hire or get a free bus rental quote. Call, WhatsApp or email for the best bus rental service in India.` },
-      { name: "keywords", content: "contact bus rental India, book tempo traveller online, bus hire enquiry, luxury bus rental contact, affordable bus hire India" },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: `Contact Us | Book Tempo Traveller & Bus Rental — ${COMPANY.legalName}`,
+      description: `Contact ${COMPANY.legalName} to book tempo traveller on rent, luxury bus hire or get a free bus rental quote. Call, WhatsApp or email for the best bus rental service in India.`,
+      path: "/contact",
+      keywords: "contact bus rental India, book tempo traveller online, bus hire enquiry, luxury bus rental contact, affordable bus hire India",
+    }),
 });
 
 function ContactPage() {

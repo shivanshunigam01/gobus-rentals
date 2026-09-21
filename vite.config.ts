@@ -5,6 +5,9 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { componentTagger } from "lovable-tagger";
+import { collectPrerenderPaths } from "./scripts/seo-public-paths.ts";
+
+const prerenderPaths = collectPrerenderPaths();
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
@@ -50,7 +53,7 @@ export default defineConfig(({ command, mode }) => {
         projects: ["./tsconfig.json"],
       }),
       tanstackStart({
-        pages: [{ path: "/" }],
+        pages: prerenderPaths.map((p) => ({ path: p })),
         prerender: {
           enabled: true,
           crawlLinks: false,

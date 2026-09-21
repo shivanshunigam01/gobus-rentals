@@ -9,19 +9,17 @@ import { Button } from "@/components/ui/button";
 import { INDIAN_CITIES } from "@/data/indian-cities";
 import { fleetImages } from "@/lib/media";
 import { Building2, CalendarRange, CheckCircle2, Headset, MapPin, MessageCircle, Phone, ShieldCheck, Users } from "lucide-react";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
-  head: () => ({
-    meta: [
-      { title: `About ${COMPANY.legalName} | Best Bus Rental Service in India Since 2018` },
-      {
-        name: "description",
-        content: `${COMPANY.legalName} — trusted tempo traveller & luxury bus rental service since 2018. Verified drivers, sanitized vehicles, affordable bus hire across India. Know our story.`,
-      },
-      { name: "keywords", content: "about Kartar Travels, best bus rental service India, luxury bus rental company, tempo traveller service provider, trusted bus hire India" },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: `About ${COMPANY.legalName} | Best Bus Rental Service in India Since 2018`,
+      description: `${COMPANY.legalName} — trusted tempo traveller & luxury bus rental service since 2018. Verified drivers, sanitized vehicles, affordable bus hire across India. Know our story.`,
+      path: "/about",
+      keywords: "about Kartar Travels, best bus rental service India, luxury bus rental company, tempo traveller service provider, trusted bus hire India",
+    }),
 });
 
 function AboutPage() {

@@ -2,18 +2,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { COMPANY } from "@/lib/company";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 export const Route = createFileRoute("/policies/refund-cancellation")({
   component: RefundPolicyPage,
-  head: () => ({
-    meta: [
-      { title: `Refund & Cancellation — ${COMPANY.legalName}` },
-      {
-        name: "description",
-        content: "Refund, cancellation, and payment rules for Kartar Travels / Luxury Bus Rental bookings.",
-      },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: `Refund & Cancellation — ${COMPANY.legalName}`,
+      description: "Refund, cancellation, and payment rules for Kartar Travels / Luxury Bus Rental bookings.",
+      path: "/policies/refund-cancellation",
+    }),
 });
 
 /** Client policy copy — structured for legal clarity; replace with signed-off text if the client supplies a different version. */

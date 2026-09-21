@@ -40,7 +40,9 @@ export function buildPageMeta(input: PageMetaInput) {
     { title: titleFull },
     { name: "description", content: description },
     ...(input.keywords ? [{ name: "keywords", content: input.keywords }] : []),
-    ...(input.noindex ? [{ name: "robots", content: "noindex, nofollow" }] : []),
+    ...(input.noindex
+      ? [{ name: "robots", content: "noindex, nofollow" }]
+      : [{ name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" }]),
     { property: "og:title", content: titleFull },
     { property: "og:description", content: description },
     { property: "og:url", content: url },

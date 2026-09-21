@@ -1,10 +1,17 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useLayoutEffect } from "react";
+import { buildPageMeta } from "@/lib/seo/buildMeta";
 
 /** Legacy URL — unified login at `/login` with admin pre-selected */
 export const Route = createFileRoute("/admin/login")({
   component: AdminLoginRedirect,
-  head: () => ({ meta: [{ title: "Admin Login — Luxury Bus Rental" }] }),
+  head: () =>
+    buildPageMeta({
+      title: "Admin Login",
+      description: "Admin sign-in for Luxury Bus Rental.",
+      path: "/admin/login",
+      noindex: true,
+    }),
 });
 
 function AdminLoginRedirect() {

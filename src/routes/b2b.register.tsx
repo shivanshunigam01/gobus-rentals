@@ -19,6 +19,7 @@ export const Route = createFileRoute("/b2b/register")({
       title: "B2B Corporate Registration",
       description: "Register your company for corporate bus hire and employee transportation.",
       path: "/b2b/register",
+      noindex: true,
     }),
 });
 

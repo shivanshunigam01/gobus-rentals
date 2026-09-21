@@ -53,6 +53,37 @@ export const SERVICE_SLUGS = [
   "airport-shuttle-services",
 ] as const;
 
+/** Service-city guide pages (`/:slug-bus-rental-guide`) — alias-free for build scripts. */
+export const SERVICE_CITY_SLUGS = ["chandigarh"] as const;
+
+/** Vehicle-type rental landing slugs (`/:slug-rental`) — alias-free for build scripts. */
+export const VEHICLE_RENTAL_SLUGS = [
+  "mini-bus",
+  "tempo-traveller",
+  "luxury-bus",
+  "large-coach",
+  "luxury-coach",
+  "volvo-buses",
+  "mercedes-coach",
+  "bharatbenz-bus",
+  "bus-with-washroom",
+  "toyota-minibus",
+  "isuzu-bus",
+  "mitsubishi-bus",
+  "motorhome",
+  "urbania",
+  "force-urbania",
+  "cab",
+  "sedan",
+  "suv",
+  "muv",
+  "hatchback",
+  "innova-crysta",
+  "employee-shuttle",
+  "corporate-shuttle",
+  "airport-shuttle",
+] as const;
+
 export const BLOG_SEED_SLUGS = [
   "corporate-bus-rental-india-2026-guide",
   "employee-transportation-best-practices-it-bpo",

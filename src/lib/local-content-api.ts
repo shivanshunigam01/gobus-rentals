@@ -253,7 +253,7 @@ export function handleLocalContentApi(path: string, method: string, searchParams
   if (method === "GET" && path === "/api/public/nav-links") {
     return {
       headerLinks: [{ href: "/corporate", anchor: "Corporate" }],
-      footerLinks: [{ href: "/sitemap", anchor: "Sitemap" }],
+      footerLinks: [{ href: "/sitemap", anchor: "Sitemap" }, { href: "/sitemap.xml", anchor: "XML Sitemap" }],
       trendingCities: [{ href: "/delhi-bus-rental", anchor: "Delhi" }],
       popularSearches: [{ href: "/book", anchor: "Book now" }],
       latestBlogs: [],
