@@ -15,7 +15,12 @@ function VendorLayout() {
   }
 
   return (
-    <ResponsivePanelLayout links={vendorPanelLinks} panelLabel="Vendor Panel" logoutTo="/vendor/login">
+    <ResponsivePanelLayout
+      links={vendorPanelLinks}
+      panelLabel="Vendor Panel"
+      logoutTo="/vendor/login"
+      showNotifications={false}
+    >
       <Outlet />
     </ResponsivePanelLayout>
   );

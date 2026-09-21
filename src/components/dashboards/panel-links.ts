@@ -75,7 +75,6 @@ export const vendorPanelLinks: PanelNavLink[] = [
   { to: "/vendor/documents", icon: FileText, label: "Documents" },
   { to: "/vendor/payments", icon: IndianRupee, label: "Payments" },
   { to: "/vendor/earnings", icon: IndianRupee, label: "Earnings" },
-  { to: "/vendor/notifications", icon: Bell, label: "Notifications" },
   { to: "/vendor/profile", icon: User, label: "Profile" },
 ];
 

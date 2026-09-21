@@ -38,7 +38,7 @@ function VendorDocuments() {
       toast.success("Uploaded for review");
       qc.invalidateQueries({ queryKey: ["vendor-portal-profile"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) => toast.error(e.message || "Document upload failed"),
   });
 
   if (isLoading) return <div className={panelStatePadding}>Loading documents…</div>;
@@ -49,6 +49,7 @@ function VendorDocuments() {
       <h1 className="text-2xl font-bold mb-1">Documents</h1>
       <p className="text-sm text-muted-foreground mb-6">
         Status: <span className="font-medium text-foreground">{data?.documentsStatus || "incomplete"}</span>
+        {uploadMut.isPending ? <span className="ml-2">Uploading…</span> : null}
       </p>
       <div className="grid sm:grid-cols-2 gap-4">
         {DOCS.map((d) => {
@@ -71,9 +72,11 @@ function VendorDocuments() {
                 type="file"
                 accept="image/*,.pdf"
                 className="mt-3"
+                disabled={uploadMut.isPending}
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) uploadMut.mutate({ key: d.key, file });
+                  e.target.value = "";
                 }}
               />
             </div>

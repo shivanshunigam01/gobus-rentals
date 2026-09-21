@@ -21,6 +21,7 @@ type Props = {
   /** e.g. Login button when browsing the customer shell without a session */
   mobileHeaderEnd?: ReactNode;
   showAdminTools?: boolean;
+  showNotifications?: boolean;
   notificationBasePath?: string;
   children: ReactNode;
 };
@@ -81,6 +82,7 @@ export function ResponsivePanelLayout({
   logoutTo,
   mobileHeaderEnd,
   showAdminTools = false,
+  showNotifications = true,
   notificationBasePath = "/api/enterprise",
   children,
 }: Props) {
@@ -96,7 +98,7 @@ export function ResponsivePanelLayout({
           <GlobalSearch />
         </div>
       ) : null}
-      <NotificationBell basePath={notificationBasePath} />
+      {showNotifications ? <NotificationBell basePath={notificationBasePath} /> : null}
     </div>
   );
 
