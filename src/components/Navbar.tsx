@@ -6,7 +6,6 @@ import { Menu, X, LogIn, ChevronDown } from "lucide-react";
 import { COMPANY } from "@/lib/company";
 import { SITE_LOGO_PATH } from "@/lib/brand";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/enterprise/ThemeToggle";
 import { NAVBAR_CITY_WISE_LINKS } from "@/data/navbar-city-wise-links";
 import { NAVBAR_BUS_TYPE_LINKS } from "@/data/navbar-bus-type-links";
 import { NAVBAR_SERVICE_TYPE_LINKS, NavbarServiceTypeLink } from "@/data/service-links";
@@ -176,7 +175,6 @@ export function Navbar() {
         </div>
 
         <div className="hidden shrink-0 items-center gap-2 xl:flex xl:gap-3">
-          <ThemeToggle />
           <Link to="/book" className="hidden text-sm font-medium text-foreground hover:text-primary 2xl:inline">
             Book
           </Link>
@@ -193,7 +191,6 @@ export function Navbar() {
         </div>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-2 xl:hidden">
-          <ThemeToggle />
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}

@@ -1,37 +1,13 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-
-type Theme = "light" | "dark";
-
-const ThemeContext = createContext<{ theme: Theme; toggle: () => void; setTheme: (t: Theme) => void }>({
-  theme: "light",
-  toggle: () => undefined,
-  setTheme: () => undefined,
-});
+import { useEffect, type ReactNode } from "react";
 
 const KEY = "lbr_theme";
 
+/** Forces light mode only — dark mode has been removed from the product. */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
-
   useEffect(() => {
-    const stored = localStorage.getItem(KEY) as Theme | null;
-    const preferred =
-      stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setThemeState(preferred);
+    document.documentElement.classList.remove("dark");
+    localStorage.removeItem(KEY);
   }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle("dark", theme === "dark");
-    localStorage.setItem(KEY, theme);
-  }, [theme]);
-
-  const setTheme = (t: Theme) => setThemeState(t);
-  const toggle = () => setThemeState((t) => (t === "dark" ? "light" : "dark"));
-
-  return <ThemeContext.Provider value={{ theme, toggle, setTheme }}>{children}</ThemeContext.Provider>;
-}
-
-export function useTheme() {
-  return useContext(ThemeContext);
+  return <>{children}</>;
 }

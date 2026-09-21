@@ -93,7 +93,7 @@ function BlogArticle() {
               loading="eager"
             />
           ) : null}
-          <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line mb-10">
+          <div className="prose prose-neutral max-w-none whitespace-pre-line mb-10">
             {post.content}
           </div>
 

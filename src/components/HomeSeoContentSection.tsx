@@ -79,7 +79,7 @@ export function HomeSeoContentSection() {
                   {tocBands.map((b) => (
                     <a
                       key={b.label}
-                      href={`#seater-${b.from}`}
+                      href={`#capacity-band-${b.from}-${b.to}`}
                       className="rounded-lg border border-border bg-background px-3 py-2 text-xs font-semibold text-foreground shadow-sm transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                     >
                       {b.label} seater
@@ -105,7 +105,7 @@ export function HomeSeoContentSection() {
                   <ChevronDown className="cap-chevron-guide h-5 w-5 shrink-0 text-primary transition-transform duration-200" />
                 </summary>
                 <div className="border-t border-border/60 px-4 pb-5 pt-1 sm:px-6 sm:pb-6">
-                  <div className="prose prose-sm prose-neutral max-w-none dark:prose-invert prose-p:leading-relaxed prose-headings:font-display prose-a:text-primary sm:prose-base">
+                  <div className="prose prose-sm prose-neutral max-w-none prose-p:leading-relaxed prose-headings:font-display prose-a:text-primary sm:prose-base">
                     {sec.paragraphs.map((p, i) => (
                       <p key={`${sec.id}-${i}`}>{p}</p>
                     ))}

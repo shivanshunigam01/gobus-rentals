@@ -76,7 +76,7 @@ function RefundPolicyPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="pt-20 pb-16">
-        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-neutral dark:prose-invert max-w-none">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-neutral max-w-none">
           <h1 className="font-display text-3xl font-bold text-foreground mb-2">Refund &amp; cancellation policy</h1>
           <p className="text-sm text-muted-foreground mb-10 not-prose">
             {COMPANY.legalName} · Last updated April 2026

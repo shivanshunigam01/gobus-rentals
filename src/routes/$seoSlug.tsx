@@ -833,7 +833,7 @@ function ServiceCityGuidePage({ citySlug }: Readonly<{ citySlug: string }>) {
               — this guide adds long-form content and a branded title.
             </p>
 
-            <div className="prose prose-neutral mt-12 max-w-none dark:prose-invert prose-headings:font-display prose-a:text-primary">
+            <div className="prose prose-neutral mt-12 max-w-none prose-headings:font-display prose-a:text-primary">
               {page.sections.map((sec) => (
                 <section key={sec.id} className="mb-10">
                   <h2 className="text-2xl font-semibold text-foreground">{sec.heading}</h2>

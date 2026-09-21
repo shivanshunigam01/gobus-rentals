@@ -62,7 +62,7 @@ function VendorDashboard() {
         <h1 className="font-display text-2xl font-bold text-foreground">Vendor Dashboard</h1>
         <p className="text-muted-foreground text-sm mt-1">Overview of your bus rental business</p>
         {needsOnboarding && (
-          <div className="mt-4 rounded-xl border border-amber-300/40 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm">
+          <div className="mt-4 rounded-xl border border-amber-300/40 bg-amber-50 px-4 py-3 text-sm">
             <p className="font-medium text-foreground">Complete verification to receive leads</p>
             <p className="text-muted-foreground mt-1">
               Account status: <strong>{profile.status}</strong> · Docs: {profile.documentsStatus} · Step {profile.registrationStep}/4

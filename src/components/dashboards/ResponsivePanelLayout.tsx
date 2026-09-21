@@ -8,7 +8,6 @@ import { SITE_LOGO_PATH } from "@/lib/brand";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { PanelNavLink } from "./panel-links";
-import { ThemeToggle } from "@/components/enterprise/ThemeToggle";
 import { GlobalSearch } from "@/components/enterprise/GlobalSearch";
 import { NotificationBell } from "@/components/enterprise/NotificationBell";
 
@@ -98,7 +97,6 @@ export function ResponsivePanelLayout({
         </div>
       ) : null}
       <NotificationBell basePath={notificationBasePath} />
-      <ThemeToggle />
     </div>
   );
 

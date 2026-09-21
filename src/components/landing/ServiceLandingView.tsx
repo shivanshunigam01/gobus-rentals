@@ -55,7 +55,7 @@ export function ServiceLandingView({ page, hubLabel, hubPath }: Props) {
           </section>
 
           {page.description ? (
-            <section className="mb-12 prose prose-neutral dark:prose-invert max-w-none">
+            <section className="mb-12 prose prose-neutral max-w-none">
               <h2 className="font-display text-2xl font-semibold mb-3">Overview</h2>
               <p className="text-muted-foreground whitespace-pre-line">{page.description}</p>
             </section>
